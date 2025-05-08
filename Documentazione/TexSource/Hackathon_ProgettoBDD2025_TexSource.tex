@@ -1,0 +1,257 @@
+\documentclass[a4paper, 15pt, oneside]{article}
+\linespread{1.15} %interlinea
+\pagestyle{plain}
+\usepackage{geometry} %margini
+\usepackage[]{tabto}
+\geometry{a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, bindingoffset=5mm}
+\usepackage{graphicx}
+\graphicspath{Documentazione/Immagini/}
+\usepackage{multicol} %più colonne
+\usepackage{ragged2e} %allineamento testo
+\usepackage{float}
+\author{Gioele Manzoni}
+\title{Documentazione per Progettazione Base di Dati}
+\begin{document}
+	\begin{center}
+		\begin{figure}[hb]
+			\includegraphics[width=1\textwidth]{../Immagini/coverpic.png}
+		\end{figure}
+		{\LARGE DOCUMENTAZIONE PER PROGETTAZIONE \\BASE DI DATI \par}
+		{\Large{Progetto in Carico: Biblioteca Digitale \par}}
+		\vfill
+		{\large{ \textbf{\textsc{CdL Triennale in Informatica}}}}\\
+		{\large{\textsc{Corso di Basi di Dati I}}}\\
+		{\large{\textsc{GIOELE MANZONI}}}\\
+		{\large{\textsc{N86004562}}}\\
+		{\large{\textsc{\today}}}\\
+		\Large{\textsc{Anno Accademico: 2024/2025}}
+	\end{center}
+	\newpage
+	\tableofcontents
+	\newpage
+	\section{Traccia del Progetto e Analisi dei Requisiti}
+	Si sviluppi un frammento di una base di dati relazionale per la gestione di una biblioteca digitale.
+	Le pubblicazioni che possono essere incluse nella biblioteca digitale sono di due tipi:
+	\begin{itemize} 
+		\item \textit{Articoli Scientifici}
+		\item \textit{Libri} (di testo o narrativa)
+	\end{itemize}
+	I libri di testo sono associati a una categoria specifica (es: \textit{Informatica, Psicologia, Storia...}).
+	Per ogni pubblicazione devono essere specificati:
+	\begin{itemize}
+		\item il \textit{titolo}
+		\item \textit{l’anno di pubblicazione}
+		\item gli \textit{autori}
+		\item \textit{l’editore}
+	\end{itemize}
+	Vanno inoltre definite le \textbf{modalità di fruizione} di ogni copia, che possono essere:
+	\begin{itemize}
+		\item \textit{testo} (es: MOBI, EPUB, PDF)
+		\item \textit{audiolibro}
+	\end{itemize}
+	Per i libri è importante definire la \textbf{data di uscita} e la \textbf{sala/libreria} in cui è fatta un’eventuale presentazione.
+	Un libro può anche far parte di una \textbf{collana}, la quale può raggruppare tutte le opere che condividono una determinata caratteristica (\textit{non tutti i libri fanno parte di collane}). Per ogni collana si vuole tener traccia del numero di libri correntemente pubblicati.
+	Per gli articoli, è necessario definire in quale \textbf{rivista} o in quale \textbf{conferenza} è stato pubblicato l’articolo. 
+	Della rivista si considerano le seguenti informazioni:
+	\begin{itemize}
+		\item \textit{Nome}
+		\item \textit{Argomento}
+		\item \textit{Anno di pubblicazione}
+		\item \textit{Responsabile}
+	\end{itemize}
+	Della conferenza si vogliono conservare:
+	\begin{itemize}
+		\item il \textit{luogo} dove è stata tenuta
+		\item la \textit{data di inizio} e la \textit{data di fine}
+		\item la \textit{struttura} che l’ha organizzata
+		\item il \textit{responsabile}
+	\end{itemize}
+	Per la corretta riuscita di questo progetto, il nostro primo passo da compiere sarà quello di trovare tutte le parti essenziali per rendere il nostro database il più coerente possibile.
+	Leggendo la traccia e prendendo in considerazione la Libreria come nostro \emph{Miniworld}, il modo migliore per dare un senso alla struttura preliminare del database è quella di far partire la nostra progettazione da un'entità \textit{"Padre"} denominata \textbf{Pubblicazione}, che andrà a rappresentare ciascuna pubblicazione che verrà introdotta nel nostro Database. I tipi di pubblicazione sono essenzialmente due: \textbf{Libro} e \textbf{Articolo Scientifico}, ciascuna con applicazioni diverse dall'altra ma entrambe derivanti da \textbf{Pubblicazione}. \textbf{Libro} avrà rapporti con la \textbf{Collana} alla quale potrebbe appartenere. \textbf{Articolo} deve avere rapporto con una \textbf{Rivista} o una \textbf{Conferenza}. Non può avere rapporto con entramabe contemporaneamente, tantomeno non può non averne con nessuna delle due.
+	\newpage
+	\section{Progettazione Concettuale}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\textwidth]{../Immagini/ERPre/Homework2_ProgettazionePreliminareLibreria_EER}
+		\caption[Grafico ER]{Grafico EER Concettuale}
+		\vspace*{0.5cm}
+		\includegraphics[width=\textwidth]{../Immagini/UMLPre/Homework2_ProgettazionePreliminareLibreria_UML}
+		\caption[Grafico UML]{Grafico UML Concettuale}
+	\end{figure}
+	\subsection{Analisi delle Entità e degli Attributi}
+	Seguendo la traccia, nella fase di progettazione preliminare sono state identificate 5 Entità, che verranno elencate di seguito una per volta, descritte con l'ausilio di:
+	\begin{itemize}
+		\item \textbf{Notazione Formale};
+		\item \textbf{Lista di Attributi};
+	\end{itemize}
+	\subsubsection{Pubblicazione}
+	Superclasse dedicata a tutte le pubblicazioni presenti nel nostro Database.
+	\begin{itemize}
+		\item \textbf{Pubblicazione} ($\underline{Titolo, Editore, \{Autore}\}$, Anno\_pubblicazione, Modalità)
+	\end{itemize}
+	\textbf{Attributi Pubblicazione}
+	\begin{itemize}
+		\item \textit{Titolo}: Titolo della pubblicazione (Attributo Chiave parziale);
+		\item \textit{Editore}: Nome dell'editore della pubblicazione (Attributo Chiave parziale);
+		\item \textit{Autore}: Autore o, occasionalmente, lista di autori che hanno partecipato alla realizzazione della pubblicazione. Attributo multivalore (Attributo chiave parziale);
+		\item \textit{Anno\_pubblicazione}: Anno di pubblicazione;
+		\item \textit{Modalità}: Modalità di lettura;
+	\end{itemize}
+	\subsubsection{Libro}
+	Specializzazione della Superclasse \textbf{Pubblicazione}, dedicata ai libri di narrativa e di testo.
+	\begin{itemize}
+		\item \textbf{Libro} (Data\_uscita, Collana, Categoria, Libreria\_presentazione)
+	\end{itemize}
+	\textbf{Attributi Libro}
+	\begin{itemize}
+		\item \textit{Data\_uscita}: Data completa di pubblicazione del libro;
+		\item \textit{Collana}: Attributo collegato all'entità \textbf{Collana}, farà riferimento alla collana alla quale appartiene il libro, se dovesse averne una di appartenenza;
+		\item \textit{Categoria}: Attributo utile per distinguere i libri di testo dai libri narrativi. Se lasciato vuoto, il libro sarà considerato automaticamente un libro narrativo;
+		\item \textit{Libreria\_presentazione}: Libreria nella quale è stato presentato il libro.
+	\end{itemize}
+	\subsubsection{Articolo Scientifico}
+	Specializzazione della Superclasse \textbf{Pubblicazione}, dedicata agli articoli scientifici.
+	\begin{itemize}
+		\item \textbf{Articolo\_scientifico} (Rivista, Conferenza)
+	\end{itemize}
+	\textbf{Attributi Articolo Scientifico}
+	\begin{itemize}
+		\item \textit{Rivista}: Attributo collegato all'entità \textbf{Rivista}, descriverà a quale rivista farà parte l'articolo;
+		\item \textit{Conferenza}: Attributo collegato all'entità \textbf{Conferenza}, descriverà a quale conferenza è stato presentato l'articolo;
+	\end{itemize}
+	\subsubsection{Collana}
+	Entità rappresentante il raggruppamento di più libri di un determinato genere o con delle caratteristiche in comune.
+	\begin{itemize}
+		\item \textbf{Collana} ($\underline{Nome, Genere}$, Numero\_libri)
+	\end{itemize}
+	\textbf{Attributi Collana}
+	\begin{itemize}
+		\item \textit{Nome}: Nome della collana (Attributo chiave parziale);
+		\item \textit{Genere}: Genere attribuito alla collana (Attributo chiave parziale);
+		\item \textit{Numero\_libri}: Conteggio del numero dei libri appartenenti alla singola istanza di collana;
+	\end{itemize}
+	\subsubsection{Conferenza}
+	Entità che descrive la Conferenza nella quale è stato presentato un determinato articolo scientifico. L'entità è stata definita come "\textit{entità tutta-chiave}".
+	\begin{itemize}
+		\item \textbf{Conferenza} ($\underline{Struttura\_organizzazione, Luogo, Responsabile, Data\_inizio, Data\_fine}$)
+	\end{itemize}
+	\textbf{Attributi Conferenza}
+	\begin{itemize}
+		\item \textit{Struttura\_organizzazione}: Nome della struttura responsabile dell'organizzazione della conferenza (Attributo Chiave parziale);
+		\item \textit{Luogo}: Luogo in cui è stata tenuta la conferenza (Attributo Chiave parziale);
+		\item \textit{Responsabile}: Nome del responsabile dell'organizzazione della conferenza (Attributo Chiave parziale);
+		\item \textit{Data\_inizio}: Data dell'inizio della conferenza (Attributo Chiave parziale);
+		\item \textit{Data\_fine}: Data della fine della conferenza (Attributo Chiave parziale);
+	\end{itemize}
+	\subsubsection{Rivista}
+	Entità che descrive la Rivista nella quale è stato pubblicato un determinato articolo scientifico. L'entità è stata definita come "\textit{entità tutta-chiave}".
+	\begin{itemize}
+		\item \textbf{Rivista} ($\underline{Nome, Argomento, Anno\_pubblicazione, Responsabile}$)
+	\end{itemize}
+	\textbf{Attributi Rivista}
+	\begin{itemize}
+		\item \textit{Nome}: Nome della rivista (Attributo Chiave parziale);
+		\item \textit{Argomento}: Argomento della rivista (Attributo Chiave parziale);
+		\item \textit{Anno\_pubblicazione}: Anno della pubblicazione della rivista (Attributo Chiave parziale);
+		\item \textit{Responsabile}: Responsabile della pubblicazione della rivista (Attributo Chiave parziale);
+	\end{itemize}
+	\subsection{Analisi delle Relazioni}
+	Qui verranno descritte tutte le relazioni e le specializzazioni presenti all'interno della struttura concettuale non ancora ristrutturata.
+	\begin{itemize}
+		\item \textit{Racchiude} (\textbf{Libro} - \textbf{Collana}: N - N):\\Un libro può essere racchiuso dentro a fino N collane, può anche non essere racchiuso a priori. Una collana, per esistere, deve obbligatoriamente racchiudere da 1 a N libri.
+		\item \textit{Divulga} (\textbf{Articolo\_scientifico} - \textbf{Rivista}: 1 - N):\\Un articolo scientifico può essere divulgato solo ed esclusivamente in una rivista. Una rivista può divulgare fino ad N articoli scientifici ma, per esistere, deve divulgarne obbligatoriamente da 1 ad N. Non esistono riviste senza articoli scientifici.
+		\item \textit{Presenta} (\textbf{Articolo\_scientifico} - \textbf{Conferenza}: 1 - N):\\Un articolo scientifico può essere presentato solo ed esclusivamente ad una conferenza. Una conferenza può presentare fino ad N articoli scientifici ma, per esistere, deve presentarne obbligatoriamente da 1 ad N. Non esistono conferenze che non abbiano presentato alcun articolo scientifico.
+	\end{itemize}
+	\newpage
+	\section{Ristrutturazione del Modello Concettuale}
+	Dopo aver analizzato i requisiti, le entità e le relazioni ed aver prodotto uno schema concettuale passeremo alla sua Ristrutturazione, seguendo i passaggi necessari elencati nelle prossime sottosezioni.
+	\subsection{Analisi delle Ridondanze}
+	\begin{itemize}
+		\item E' stato eliminato l'attributo derivato \textit{Anno\_pubblicazione} poiché semplice da ricavare dall'attributo \textit{Data\_uscita}. Considerando che la sua informazione non ha bisogno di calcoli ed è possibile accederci direttamente dalla data di uscita del libro, la presenza dell'anno di pubblicazione è praticamente un dato di troppo senza utilità che la data di uscita già non possiede da sé.
+		\item L'attributo \textit{Numero\_libri} all'interno di \textbf{Collana} è stato mantenuto. Sebbene sia possibile ricavare il numero di libri appartenenti ad una collana attraverso un operazione di ricerca, è naturale pensare che il numero di accessi richiesti possa risultare pesante per librerie particolarmente voluminose.
+	\end{itemize}
+	\subsection{Rimozione delle Generalizzazioni}
+	La gerarchia tra l'entità \textbf{Pubblicazione} e le entità \textbf{Libro} e \textbf{Articolo\_scientifico} è stata rimossa, accorpando l'entità padre nelle entità figlie.
+	\subsection{Rimozione degli Attributi Multivalore}
+	L'attributo multivalore \textit{Autore} è stata resa un'entità esterna associata alle due entità \textbf{Libro} e \textbf{Articolo\_scientifico}.
+	\begin{itemize}
+		\item \textbf{Autore} (\underline{Nome, Cognome, Nazionalità, Data\_nascita, Data\_morte}, Sito\_web)
+	\end{itemize}
+	\textbf{Attributi Autore}
+	\begin{itemize}
+		\item \textit{Nome}: Nome dell'autore (Attributo Chiave parziale);
+		\item \textit{Cognome}: Cognome dell'autore (Attributo Chiave parziale);
+		\item \textit{Nazionalità}: Luogo di nascita dell'autore (Attributo Chiave parziale);
+		\item \textit{Data\_nascita}: Data di nascita dell'autore (Attributo Chiave parziale);
+		\item \textit{Data\_morte}: Data di morte dell'autore (Attributo Chiave parziale);
+		\item \textit{Sito\_web}: Sito internet dell'autore. Possono esistere autori ancora in vita con dei propri siti dedicati, o siti dedicati ad autori deceduti che potrebbero tornare utili per la libreria;
+	\end{itemize}
+	\textbf{Relazioni Autore}
+	\begin{itemize}
+			\item \textit{Scrittura\_libro} (\textbf{Autore} - \textbf{Libro}: N - N): Un autore può scrivere più libri. Un libro può essere scritto da più autori.
+			\item \textit{Scrittura\_articolo} (\textbf{Autore} - \textbf{Articolo\_scientifico}: N - N): Un autore può scrivere più articoli. Un articolo può essere scritto da più autori.
+	\end{itemize}
+	\subsection{Rimozione degli Attributi Strutturati}
+	Nella nostra struttura non sono stati identificati attributi strutturati.
+	\subsection{Accorpamento/Partizionamento di Entità e Associazioni}
+	\begin{itemize}
+		\item Partizionata l'associazione tra \textbf{Autore} e \textbf{Libro}, resa un'entità associativa con due associazioni \textit{1 - N} tra \textbf{Autore} e \textbf{Libro}, denominata come \textbf{Scrittura\_libro};
+		\item Partizionata l'associazione tra \textbf{Autore} e \textbf{Articolo\_scientifico}, resa un'entità associativa con due associazioni \textit{1 - N} tra \textbf{Autore} e \textbf{Articolo\_scientifico}, denominata come \textbf{Scrittura\_articolo};
+		\item Partizionata l'associazione tra \textbf{Libro} e \textbf{Collana}, resa un'entità associativa con due associazioni \textit{1 - N} tra \textbf{Libro} e \textbf{Collana}, denominata come \textbf{Raccolta};
+	\end{itemize}
+	\subsection{Identificazione Chiavi Primarie}
+	\begin{itemize}
+		\item \textbf{Autore}: \underline{Auth\_ID}\\Sebbene abbia ID al proprio interno, questa chiave non è formata da un valore auto-incrementante. Nel caso dell'autore di un \textbf{Articolo\_scientifico}, la sua chiave prenderà il valore del suo codice ORCID. Nel caso degli autori letterari, invece, c'è sia la possibilità di ottenere il suo ORCID (nel caso di un autore moderno) o, in alternativa, sarà la libreria stessa a dare un codice univoco all'autore che fonda le sue caratteristiche uniche (Nome, Cognome, Data di nascita, Nazionalità), rispettando lo stesso dominio dell'ORCID;
+		\item \textbf{Libro}: \underline{ISBN};
+		\item \textbf{Articolo\_scientifico}: \underline{DOI}\\Il codice DOI (\textit{Digital Object Identifier}) è un codice che viene utilizzato per definire in maniera univoca documenti ed articoli di ricerca scientifica;
+		\item \textbf{Collana}: \underline{ISSN}\\L'ISSN (International Standard Serial Number) è un codice che riguarda la pubblicazione in serie. Verrà utilizzato sia per le collana che per le riviste, poiché facenti parte della stessa categoria;
+		\item \textbf{Rivista}: \underline{ISSN};
+		\item \textbf{Conferenza}: \underline{ID\_Conf}\\Nel caso della conferenza verrà usato un ID auto-incrementante.
+	\end{itemize}
+	\newpage
+	\subsection{Modello Ristrutturato}
+	\subsubsection{Diagramma ER Ristrutturato}
+	\begin{figure}[H]
+		\includegraphics[width=1\textwidth]{../Immagini/ERPre/Homework3_DiagrammaRistrutturato_EER}
+	\end{figure}
+	\subsubsection{Diagramma UML Ristrutturato}	
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{../Immagini/UMLPre/Homework3_DiagrammaRistrutturato_UML}
+	\end{figure}
+	\newpage
+	\section{Progettazione Logica}
+	\subsection{Mapping Logico Entità}
+	\subsubsection{Autore}
+	\texttt{Autore(\underline{ID\_Auth}, Nome, Cognome, Nazionalità, Data\_nascita, Data\_morte, Sito\_web)}
+	\subsubsection{Libro}
+	\texttt{Libro(\underline{ISBN}, Titolo, Editore, Categoria, Modalità, Data\_uscita, Libreria\_presentazione)}
+	\subsubsection{Articolo\_scientifico}
+	\texttt{Articolo\_scientifico(\underline{DOI}, Titolo, Editore, Modalità, Anno\_pubblicazione,\\ \tabto{110pt}\underline{ISSN\_Rivista, ID\_Conferenza})}
+	\subsubsection{Collana}
+	\texttt{Collana(\underline{ISSN}, Nome, Genere, Numero\_libri)}
+	\subsubsection{Rivista}
+	\texttt{Rivista(\underline{ISSN}, Nome, Anno\_pubblicazione, Responsabile, Argomento)}
+	\subsubsection{Conferenza}
+	\texttt{Conferenza(\underline{ID\_Conf}, Responsabile, Struttura\_organizzazione, Luogo, Data\_inizio, Data\_fine)}
+	\subsection{Mapping Logico Relazioni}
+	\subsubsection{Scrittura\_libro (Autore - Libro)}
+	\texttt{Scrittura\_libro(\underline{ISBN\_L, ID\_Auth\_A})
+		\tabto{50pt} Scrittura\_libro.ISBN\_L $\longrightarrow$ Libro.ISBN
+		\tabto{50pt} Scrittura\_libro.ID\_Auth\_A $\longrightarrow$ Autore.ID\_Auth}
+	\subsubsection{Scrittura\_articolo (Autore - Articolo\_scientifico)}
+	\texttt{Scrittura\_articolo(\underline{DOI\_Art, ID\_Auth\_Aut})\\
+		\tabto{50pt}Scrittura\_articolo.DOI\_Art $\longrightarrow$ Articolo\_scientifico.DOI\\
+		\tabto{50pt}Scrittura\_articolo.ID\_Auth\_Aut $\longrightarrow$ Autore.ID\_Auth}
+	\subsubsection{Raccolta (Libro - Collana)}
+	\texttt{Raccolta(\underline{ISBN\_L, ISSN\_C})\\
+		\tabto{50pt} Raccolta.ISBN\_L $\longrightarrow$ Libro.ISBN\\
+		\tabto{50pt} Raccolta.ISSN\_C $\longrightarrow$ Collana.ISSN}
+	\subsubsection{Divulgazione (Articolo\_scientifico - Rivista)}
+	\texttt{Divulgazione(\underline{DOI\_A, ISSN\_R})\\
+	\tabto{50pt} Divulgazione.DOI\_A $\longrightarrow$ Articolo.DOI\\
+	\tabto{50pt} Divulgazione.ISSN\_R $\longrightarrow$ Rivista.ISSN}
+	\subsubsection{Presentazione (Articolo\_scientifico - Conferenza)}
+	\texttt{Presentazione(\underline{DOI\_A, ID\_CONF\_C})\\
+		\tabto{50pt} Presentazione.DOI\_A $\longrightarrow$ Articolo.DOI\\
+		\tabto{50pt} Presentazione.ID\_CONF\_C $\longrightarrow$ Conferenza.ID\_Conf}
+\end{document}
