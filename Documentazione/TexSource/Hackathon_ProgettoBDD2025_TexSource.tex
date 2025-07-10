@@ -9,6 +9,13 @@
 \usepackage{multicol} %più colonne
 \usepackage{ragged2e} %allineamento testo
 \usepackage{float}
+\usepackage[]{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead{}
+\cfoot{\thepage}
+\lfoot{Gioele Manzoni}
+\rfoot{Luca Lucci}
 \author{Gioele Manzoni}
 \title{Documentazione per Progettazione Base di Dati}
 \begin{document}
@@ -17,241 +24,124 @@
 			\includegraphics[width=1\textwidth]{../Immagini/coverpic.png}
 		\end{figure}
 		{\LARGE DOCUMENTAZIONE PER PROGETTAZIONE \\BASE DI DATI \par}
-		{\Large{Progetto in Carico: Biblioteca Digitale \par}}
+		{\Large{Progetto in Carico: Hackathon \par}}
 		\vfill
 		{\large{ \textbf{\textsc{CdL Triennale in Informatica}}}}\\
 		{\large{\textsc{Corso di Basi di Dati I}}}\\
 		{\large{\textsc{GIOELE MANZONI}}}\\
 		{\large{\textsc{N86004562}}}\\
+		{\large{\textsc{LUCA LUCCI}}}\\
+		{\large{\textsc{N86005180}}}\\
 		{\large{\textsc{\today}}}\\
 		\Large{\textsc{Anno Accademico: 2024/2025}}
 	\end{center}
 	\newpage
 	\tableofcontents
 	\newpage
-	\section{Traccia del Progetto e Analisi dei Requisiti}
-	Si sviluppi un frammento di una base di dati relazionale per la gestione di una biblioteca digitale.
-	Le pubblicazioni che possono essere incluse nella biblioteca digitale sono di due tipi:
-	\begin{itemize} 
-		\item \textit{Articoli Scientifici}
-		\item \textit{Libri} (di testo o narrativa)
-	\end{itemize}
-	I libri di testo sono associati a una categoria specifica (es: \textit{Informatica, Psicologia, Storia...}).
-	Per ogni pubblicazione devono essere specificati:
+	\section{Introduzione}
+	Questa documentazione descriverà il processo di progettazione e sviluppo di un Database relazionale che gestirà il flusso di dati di un applicativo dedicato all'organizzazione di Hackathon. Questo è un progetto a cura degli studenti Gioele Manzoni e Luca Lucci del CdL di Informatica presso l'Università degli Studi di Napoli "Federico II".
+	\subsection{Traccia del Progetto}
+	Un hackathon, ovvero una "maratona di hacking", è un evento durante il quale team di partecipanti si sfidano per progettare e implementare nuove soluzioni basate su una certa tecnologia o mirate a un certo ambito applicativo. 
+	Ogni hackathon ha un titolo identificativo, si svolge in una certa sede e in un certo intervallo di tempo (solitamente 2 giorni) e ha un organizzatore specifico (registrato alla piattaforma). L'organizzatore seleziona un gruppo di giudici (selezionati tra gli utenti della piattaforma, invitandoli). Infine, l'organizzatore apre le registrazioni, che si chiuderanno 2 giorni prima dell'evento. Ogni evento avrà un numero massimo di iscritti e una dimensione massima del team.
+	Durante il periodo di registrazione, gli utenti possono registrarsi per l'Hackathon di loro scelta (eventualmente registrandosi sulla piattaforma se non lo hanno già fatto). Una volta iscritti, gli utenti possono formare team. I team diventano definitivi quando si chiudono le iscrizioni. All'inizio dell'hackathon, i giudici pubblicano una descrizione del problema da affrontare. 
+	Durante l'hackathon, i team lavorano separatamente per risolvere il problema e devono caricare periodicamente gli aggiornamenti sui "progressi" sulla piattaforma come documento, che può essere esaminato e commentato dai giudici. Alla fine dell'hackathon, ogni giudice assegna un voto (da 0 a 10) a ciascun team e la piattaforma, dopo aver acquisito tutti i voti, pubblica le classifiche dei team.
+	
+	
+	\subsection*{Caratteristiche dell'Hackathon}
+	
+	Ogni Hackathon ha le seguenti caratteristiche:
+	
 	\begin{itemize}
-		\item il \textit{titolo}
-		\item \textit{l’anno di pubblicazione}
-		\item gli \textit{autori}
-		\item \textit{l’editore}
+		\item Un \textbf{titolo identificativo};
+		\item Una \textbf{sede} in cui si svolge;
+		\item Un \textbf{intervallo di tempo}, solitamente di due giorni;
+		\item Un \textbf{organizzatore specifico}, registrato sulla piattaforma.
 	\end{itemize}
-	Vanno inoltre definite le \textbf{modalità di fruizione} di ogni copia, che possono essere:
+	
+	\subsection*{Giudici e Registrazioni}
+	
 	\begin{itemize}
-		\item \textit{testo} (es: MOBI, EPUB, PDF)
-		\item \textit{audiolibro}
+		\item L'organizzatore seleziona un gruppo di \textbf{giudici}, invitandoli tra gli utenti registrati sulla piattaforma.
+		\item L'organizzatore apre le \textbf{registrazioni}, che si chiudono due giorni prima dell'inizio dell'evento.
+		\item Ogni evento prevede un \textbf{numero massimo di iscritti} e una \textbf{dimensione massima del team}.
+		\item Durante il periodo di registrazione, gli utenti possono registrarsi all'Hackathon di loro scelta, previa registrazione sulla piattaforma se non ancora effettuata.
 	\end{itemize}
-	Per i libri è importante definire la \textbf{data di uscita} e la \textbf{sala/libreria} in cui è fatta un’eventuale presentazione.
-	Un libro può anche far parte di una \textbf{collana}, la quale può raggruppare tutte le opere che condividono una determinata caratteristica (\textit{non tutti i libri fanno parte di collane}). Per ogni collana si vuole tener traccia del numero di libri correntemente pubblicati.
-	Per gli articoli, è necessario definire in quale \textbf{rivista} o in quale \textbf{conferenza} è stato pubblicato l’articolo. 
-	Della rivista si considerano le seguenti informazioni:
+	
+	\subsection*{Formazione dei Team}
+	
 	\begin{itemize}
-		\item \textit{Nome}
-		\item \textit{Argomento}
-		\item \textit{Anno di pubblicazione}
-		\item \textit{Responsabile}
+		\item Una volta iscritti, gli utenti possono \textbf{formare team}.
+		\item I team diventano \textbf{definitivi alla chiusura delle iscrizioni}.
 	\end{itemize}
-	Della conferenza si vogliono conservare:
+	
+	\subsection*{Svolgimento dell'Hackathon}
+	
 	\begin{itemize}
-		\item il \textit{luogo} dove è stata tenuta
-		\item la \textit{data di inizio} e la \textit{data di fine}
-		\item la \textit{struttura} che l’ha organizzata
-		\item il \textit{responsabile}
+		\item All'inizio dell'evento, i giudici \textbf{pubblicano una descrizione del problema} da affrontare.
+		\item Durante l’Hackathon, i team lavorano separatamente per risolvere il problema.
+		\item I team devono \textbf{caricare periodicamente aggiornamenti sui progressi} tramite documenti sulla piattaforma.
+		\item I documenti possono essere \textbf{esaminati e commentati dai giudici}.
 	\end{itemize}
-	Per la corretta riuscita di questo progetto, il nostro primo passo da compiere sarà quello di trovare tutte le parti essenziali per rendere il nostro database il più coerente possibile.
-	Leggendo la traccia e prendendo in considerazione la Libreria come nostro \emph{Miniworld}, il modo migliore per dare un senso alla struttura preliminare del database è quella di far partire la nostra progettazione da un'entità \textit{"Padre"} denominata \textbf{Pubblicazione}, che andrà a rappresentare ciascuna pubblicazione che verrà introdotta nel nostro Database. I tipi di pubblicazione sono essenzialmente due: \textbf{Libro} e \textbf{Articolo Scientifico}, ciascuna con applicazioni diverse dall'altra ma entrambe derivanti da \textbf{Pubblicazione}. \textbf{Libro} avrà rapporti con la \textbf{Collana} alla quale potrebbe appartenere. \textbf{Articolo} deve avere rapporto con una \textbf{Rivista} o una \textbf{Conferenza}. Non può avere rapporto con entramabe contemporaneamente, tantomeno non può non averne con nessuna delle due.
+	
+	\subsection*{Valutazione e Classifica}
+	
+	\begin{itemize}
+		\item Alla fine dell'Hackathon, ogni giudice assegna un \textbf{voto da 0 a 10} a ciascun team.
+		\item La piattaforma, dopo aver acquisito tutti i voti, \textbf{pubblica le classifiche dei team}.
+	\end{itemize}
+	
 	\newpage
 	\section{Progettazione Concettuale}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=1\textwidth]{../Immagini/ERPre/Homework2_ProgettazionePreliminareLibreria_EER}
-		\caption[Grafico ER]{Grafico EER Concettuale}
-		\vspace*{0.5cm}
-		\includegraphics[width=\textwidth]{../Immagini/UMLPre/Homework2_ProgettazionePreliminareLibreria_UML}
+		\includegraphics[width=1\textwidth]{../Immagini/EERDiagram_Hackathon}
 		\caption[Grafico UML]{Grafico UML Concettuale}
 	\end{figure}
 	\subsection{Analisi delle Entità e degli Attributi}
-	Seguendo la traccia, nella fase di progettazione preliminare sono state identificate 5 Entità, che verranno elencate di seguito una per volta, descritte con l'ausilio di:
+	Seguendo la traccia, nella fase di progettazione concettuale sono state trovate le suddette entità:
+	\subsubsection{Hackathon}
+	Entità dedicata a tutte le maratone di Hacking organizzate.
 	\begin{itemize}
-		\item \textbf{Notazione Formale};
-		\item \textbf{Lista di Attributi};
+		\item \textbf{Hackathon} ($\underline{Titolo\_identificativo}$, Descrizione\_problema, Sede, Classifica,\\ DataInizio\_registrazioni, DataFine\_registrazioni, DataInizio\_Evento, DataFine\_Evento, \\Num\_iscrittiCorrente, MaxNum\_membriTeam, MaxNum\_iscritti)
 	\end{itemize}
-	\subsubsection{Pubblicazione}
-	Superclasse dedicata a tutte le pubblicazioni presenti nel nostro Database.
+	\subsubsection{Utente}
+	Generalizzazione dedicata a tutti i tipi di utenti che è possibile avere all'interno della piattaforma.
+	La generalizzazione è considerata come \textbf{DISGIUNTA PARZIALE}, poiché è possibile avere utenti della piattaforma che non sono né organizzatori né giudici.
 	\begin{itemize}
-		\item \textbf{Pubblicazione} ($\underline{Titolo, Editore, \{Autore}\}$, Anno\_pubblicazione, Modalità)
+		\item \textbf{Utente} ($\underline{Login}$, Password)
 	\end{itemize}
-	\textbf{Attributi Pubblicazione}
+	\subsubsection{Organizzatore}
+	Specializzazione dell'entità \textbf{Utente}, rappresentante gli organizzatori di maratone di Hacking.
+	Non possiede alcun attributo specifico a sé stesso, la sua specializzazione definisce soltanto gli utenti con le giuste credenziali per poter gestire la piattaforma.
+	\subsubsection{Giudice}
+	Specializzazione dell'entità \textbf{Utente}, rappresentante i giudici che daranno le loro valutazioni ai documenti e supervisioneranno le Hackathon.
+	\subsubsection{Team}
+	Entità che definisce una squadra organizzata da un Utente e composta da N Utenti.
 	\begin{itemize}
-		\item \textit{Titolo}: Titolo della pubblicazione (Attributo Chiave parziale);
-		\item \textit{Editore}: Nome dell'editore della pubblicazione (Attributo Chiave parziale);
-		\item \textit{Autore}: Autore o, occasionalmente, lista di autori che hanno partecipato alla realizzazione della pubblicazione. Attributo multivalore (Attributo chiave parziale);
-		\item \textit{Anno\_pubblicazione}: Anno di pubblicazione;
-		\item \textit{Modalità}: Modalità di lettura;
+		\item \textbf{Conferenza} ($\underline{NomeTeam}$, VotoFinale)
 	\end{itemize}
-	\subsubsection{Libro}
-	Specializzazione della Superclasse \textbf{Pubblicazione}, dedicata ai libri di narrativa e di testo.
+	\subsubsection{Documento}
+	Entità debole che definisce un documento scritto da un team.
 	\begin{itemize}
-		\item \textbf{Libro} (Data\_uscita, Collana, Categoria, Libreria\_presentazione)
-	\end{itemize}
-	\textbf{Attributi Libro}
-	\begin{itemize}
-		\item \textit{Data\_uscita}: Data completa di pubblicazione del libro;
-		\item \textit{Collana}: Attributo collegato all'entità \textbf{Collana}, farà riferimento alla collana alla quale appartiene il libro, se dovesse averne una di appartenenza;
-		\item \textit{Categoria}: Attributo utile per distinguere i libri di testo dai libri narrativi. Se lasciato vuoto, il libro sarà considerato automaticamente un libro narrativo;
-		\item \textit{Libreria\_presentazione}: Libreria nella quale è stato presentato il libro.
-	\end{itemize}
-	\subsubsection{Articolo Scientifico}
-	Specializzazione della Superclasse \textbf{Pubblicazione}, dedicata agli articoli scientifici.
-	\begin{itemize}
-		\item \textbf{Articolo\_scientifico} (Rivista, Conferenza)
-	\end{itemize}
-	\textbf{Attributi Articolo Scientifico}
-	\begin{itemize}
-		\item \textit{Rivista}: Attributo collegato all'entità \textbf{Rivista}, descriverà a quale rivista farà parte l'articolo;
-		\item \textit{Conferenza}: Attributo collegato all'entità \textbf{Conferenza}, descriverà a quale conferenza è stato presentato l'articolo;
-	\end{itemize}
-	\subsubsection{Collana}
-	Entità rappresentante il raggruppamento di più libri di un determinato genere o con delle caratteristiche in comune.
-	\begin{itemize}
-		\item \textbf{Collana} ($\underline{Nome, Genere}$, Numero\_libri)
-	\end{itemize}
-	\textbf{Attributi Collana}
-	\begin{itemize}
-		\item \textit{Nome}: Nome della collana (Attributo chiave parziale);
-		\item \textit{Genere}: Genere attribuito alla collana (Attributo chiave parziale);
-		\item \textit{Numero\_libri}: Conteggio del numero dei libri appartenenti alla singola istanza di collana;
-	\end{itemize}
-	\subsubsection{Conferenza}
-	Entità che descrive la Conferenza nella quale è stato presentato un determinato articolo scientifico. L'entità è stata definita come "\textit{entità tutta-chiave}".
-	\begin{itemize}
-		\item \textbf{Conferenza} ($\underline{Struttura\_organizzazione, Luogo, Responsabile, Data\_inizio, Data\_fine}$)
-	\end{itemize}
-	\textbf{Attributi Conferenza}
-	\begin{itemize}
-		\item \textit{Struttura\_organizzazione}: Nome della struttura responsabile dell'organizzazione della conferenza (Attributo Chiave parziale);
-		\item \textit{Luogo}: Luogo in cui è stata tenuta la conferenza (Attributo Chiave parziale);
-		\item \textit{Responsabile}: Nome del responsabile dell'organizzazione della conferenza (Attributo Chiave parziale);
-		\item \textit{Data\_inizio}: Data dell'inizio della conferenza (Attributo Chiave parziale);
-		\item \textit{Data\_fine}: Data della fine della conferenza (Attributo Chiave parziale);
-	\end{itemize}
-	\subsubsection{Rivista}
-	Entità che descrive la Rivista nella quale è stato pubblicato un determinato articolo scientifico. L'entità è stata definita come "\textit{entità tutta-chiave}".
-	\begin{itemize}
-		\item \textbf{Rivista} ($\underline{Nome, Argomento, Anno\_pubblicazione, Responsabile}$)
-	\end{itemize}
-	\textbf{Attributi Rivista}
-	\begin{itemize}
-		\item \textit{Nome}: Nome della rivista (Attributo Chiave parziale);
-		\item \textit{Argomento}: Argomento della rivista (Attributo Chiave parziale);
-		\item \textit{Anno\_pubblicazione}: Anno della pubblicazione della rivista (Attributo Chiave parziale);
-		\item \textit{Responsabile}: Responsabile della pubblicazione della rivista (Attributo Chiave parziale);
+		\item \textbf{Documento} ($\underline{NomeTeam}$, Testo)
 	\end{itemize}
 	\subsection{Analisi delle Relazioni}
 	Qui verranno descritte tutte le relazioni e le specializzazioni presenti all'interno della struttura concettuale non ancora ristrutturata.
 	\begin{itemize}
-		\item \textit{Racchiude} (\textbf{Libro} - \textbf{Collana}: N - N):\\Un libro può essere racchiuso dentro a fino N collane, può anche non essere racchiuso a priori. Una collana, per esistere, deve obbligatoriamente racchiudere da 1 a N libri.
-		\item \textit{Divulga} (\textbf{Articolo\_scientifico} - \textbf{Rivista}: 1 - N):\\Un articolo scientifico può essere divulgato solo ed esclusivamente in una rivista. Una rivista può divulgare fino ad N articoli scientifici ma, per esistere, deve divulgarne obbligatoriamente da 1 ad N. Non esistono riviste senza articoli scientifici.
-		\item \textit{Presenta} (\textbf{Articolo\_scientifico} - \textbf{Conferenza}: 1 - N):\\Un articolo scientifico può essere presentato solo ed esclusivamente ad una conferenza. Una conferenza può presentare fino ad N articoli scientifici ma, per esistere, deve presentarne obbligatoriamente da 1 ad N. Non esistono conferenze che non abbiano presentato alcun articolo scientifico.
+		\item \textit{Organizzazione} (\textbf{Hackathon} - \textbf{Organizzatore}: 1 - N):\\Un Hackathon può essere organizzata da un solo organizzatore. Un organizzatore può organizzare più Hackathon.
+		\item \textit{Partecipazione} (\textbf{Team} - \textbf{Hackathon}: 1 - 2..N):\\Un Team può partecipare ad una sola Hackathon. Un Hackathon, per essere valida, deve avere un minimo di 2 Team fino ad un massimo di N.
+		\item \textit{Supervisione} (\textbf{Giudice} - \textbf{Hackathon}: 1..N - N):\\Un Giudice può supervisionare N Hackathon. Un Hackathon deve essere monitorata da almeno un giudice.
+		\item \textit{Appartenenza} (\textbf{Utente} - \textbf{Team}: 0..N - 1..N):\\Un Utente può partecipare ad uno o più team, o può non parteciparci affatto. Un Team deve essere composto da un minimo di un Utente fino ad un massimo di N (il limite di utenti appartenenti ad un Team è deciso dall'Hackathon alla quale si partecipa).
+		\item \textit{Invito} (\textbf{Giudice} - \textbf{Hackathon}: 1..N - 1..N):\\Un giudice deve invitare un minimo di un utente fino ad un massimo di N utenti per essere giudici. Un giudice, per ricevere un invito, deve riceverlo da almeno un organizzatore.
+		\item \textit{Voto} (\textbf{Giudice} - \textbf{Team}: 1..N - 1..N):\\Un Giudice può esprimere una votazione ad un minimo di un Team. Un team può ricevere voti da almeno un giudice.
+		\item \textit{Valutazione} (\textbf{Giudice} - \textbf{Documento}: 1..N - 1..N):\\Un Giudice deve esprimere una valutazione per almeno un documento. Un documento deve ottenere una valutazione da almeno un giudice.
+		\item \textit{Pubblicazione} (\textbf{Documento} - \textbf{Team}: 1..N - N):\\Relazione identificante per l'entità debole Documento, in quanto generato direttamente da un Team e non può esistere senza un associazione ad un Team.
 	\end{itemize}
 	\newpage
 	\section{Ristrutturazione del Modello Concettuale}
 	Dopo aver analizzato i requisiti, le entità e le relazioni ed aver prodotto uno schema concettuale passeremo alla sua Ristrutturazione, seguendo i passaggi necessari elencati nelle prossime sottosezioni.
 	\subsection{Analisi delle Ridondanze}
 	\begin{itemize}
-		\item E' stato eliminato l'attributo derivato \textit{Anno\_pubblicazione} poiché semplice da ricavare dall'attributo \textit{Data\_uscita}. Considerando che la sua informazione non ha bisogno di calcoli ed è possibile accederci direttamente dalla data di uscita del libro, la presenza dell'anno di pubblicazione è praticamente un dato di troppo senza utilità che la data di uscita già non possiede da sé.
-		\item L'attributo \textit{Numero\_libri} all'interno di \textbf{Collana} è stato mantenuto. Sebbene sia possibile ricavare il numero di libri appartenenti ad una collana attraverso un operazione di ricerca, è naturale pensare che il numero di accessi richiesti possa risultare pesante per librerie particolarmente voluminose.
+		\item 
 	\end{itemize}
-	\subsection{Rimozione delle Generalizzazioni}
-	La gerarchia tra l'entità \textbf{Pubblicazione} e le entità \textbf{Libro} e \textbf{Articolo\_scientifico} è stata rimossa, accorpando l'entità padre nelle entità figlie.
-	\subsection{Rimozione degli Attributi Multivalore}
-	L'attributo multivalore \textit{Autore} è stata resa un'entità esterna associata alle due entità \textbf{Libro} e \textbf{Articolo\_scientifico}.
-	\begin{itemize}
-		\item \textbf{Autore} (\underline{Nome, Cognome, Nazionalità, Data\_nascita, Data\_morte}, Sito\_web)
-	\end{itemize}
-	\textbf{Attributi Autore}
-	\begin{itemize}
-		\item \textit{Nome}: Nome dell'autore (Attributo Chiave parziale);
-		\item \textit{Cognome}: Cognome dell'autore (Attributo Chiave parziale);
-		\item \textit{Nazionalità}: Luogo di nascita dell'autore (Attributo Chiave parziale);
-		\item \textit{Data\_nascita}: Data di nascita dell'autore (Attributo Chiave parziale);
-		\item \textit{Data\_morte}: Data di morte dell'autore (Attributo Chiave parziale);
-		\item \textit{Sito\_web}: Sito internet dell'autore. Possono esistere autori ancora in vita con dei propri siti dedicati, o siti dedicati ad autori deceduti che potrebbero tornare utili per la libreria;
-	\end{itemize}
-	\textbf{Relazioni Autore}
-	\begin{itemize}
-			\item \textit{Scrittura\_libro} (\textbf{Autore} - \textbf{Libro}: N - N): Un autore può scrivere più libri. Un libro può essere scritto da più autori.
-			\item \textit{Scrittura\_articolo} (\textbf{Autore} - \textbf{Articolo\_scientifico}: N - N): Un autore può scrivere più articoli. Un articolo può essere scritto da più autori.
-	\end{itemize}
-	\subsection{Rimozione degli Attributi Strutturati}
-	Nella nostra struttura non sono stati identificati attributi strutturati.
-	\subsection{Accorpamento/Partizionamento di Entità e Associazioni}
-	\begin{itemize}
-		\item Partizionata l'associazione tra \textbf{Autore} e \textbf{Libro}, resa un'entità associativa con due associazioni \textit{1 - N} tra \textbf{Autore} e \textbf{Libro}, denominata come \textbf{Scrittura\_libro};
-		\item Partizionata l'associazione tra \textbf{Autore} e \textbf{Articolo\_scientifico}, resa un'entità associativa con due associazioni \textit{1 - N} tra \textbf{Autore} e \textbf{Articolo\_scientifico}, denominata come \textbf{Scrittura\_articolo};
-		\item Partizionata l'associazione tra \textbf{Libro} e \textbf{Collana}, resa un'entità associativa con due associazioni \textit{1 - N} tra \textbf{Libro} e \textbf{Collana}, denominata come \textbf{Raccolta};
-	\end{itemize}
-	\subsection{Identificazione Chiavi Primarie}
-	\begin{itemize}
-		\item \textbf{Autore}: \underline{Auth\_ID}\\Sebbene abbia ID al proprio interno, questa chiave non è formata da un valore auto-incrementante. Nel caso dell'autore di un \textbf{Articolo\_scientifico}, la sua chiave prenderà il valore del suo codice ORCID. Nel caso degli autori letterari, invece, c'è sia la possibilità di ottenere il suo ORCID (nel caso di un autore moderno) o, in alternativa, sarà la libreria stessa a dare un codice univoco all'autore che fonda le sue caratteristiche uniche (Nome, Cognome, Data di nascita, Nazionalità), rispettando lo stesso dominio dell'ORCID;
-		\item \textbf{Libro}: \underline{ISBN};
-		\item \textbf{Articolo\_scientifico}: \underline{DOI}\\Il codice DOI (\textit{Digital Object Identifier}) è un codice che viene utilizzato per definire in maniera univoca documenti ed articoli di ricerca scientifica;
-		\item \textbf{Collana}: \underline{ISSN}\\L'ISSN (International Standard Serial Number) è un codice che riguarda la pubblicazione in serie. Verrà utilizzato sia per le collana che per le riviste, poiché facenti parte della stessa categoria;
-		\item \textbf{Rivista}: \underline{ISSN};
-		\item \textbf{Conferenza}: \underline{ID\_Conf}\\Nel caso della conferenza verrà usato un ID auto-incrementante.
-	\end{itemize}
-	\newpage
-	\subsection{Modello Ristrutturato}
-	\subsubsection{Diagramma ER Ristrutturato}
-	\begin{figure}[H]
-		\includegraphics[width=1\textwidth]{../Immagini/ERPre/Homework3_DiagrammaRistrutturato_EER}
-	\end{figure}
-	\subsubsection{Diagramma UML Ristrutturato}	
-	\begin{figure}[H]
-		\includegraphics[width=\textwidth]{../Immagini/UMLPre/Homework3_DiagrammaRistrutturato_UML}
-	\end{figure}
-	\newpage
-	\section{Progettazione Logica}
-	\subsection{Mapping Logico Entità}
-	\subsubsection{Autore}
-	\texttt{Autore(\underline{ID\_Auth}, Nome, Cognome, Nazionalità, Data\_nascita, Data\_morte, Sito\_web)}
-	\subsubsection{Libro}
-	\texttt{Libro(\underline{ISBN}, Titolo, Editore, Categoria, Modalità, Data\_uscita, Libreria\_presentazione)}
-	\subsubsection{Articolo\_scientifico}
-	\texttt{Articolo\_scientifico(\underline{DOI}, Titolo, Editore, Modalità, Anno\_pubblicazione,\\ \tabto{110pt}\underline{ISSN\_Rivista, ID\_Conferenza})}
-	\subsubsection{Collana}
-	\texttt{Collana(\underline{ISSN}, Nome, Genere, Numero\_libri)}
-	\subsubsection{Rivista}
-	\texttt{Rivista(\underline{ISSN}, Nome, Anno\_pubblicazione, Responsabile, Argomento)}
-	\subsubsection{Conferenza}
-	\texttt{Conferenza(\underline{ID\_Conf}, Responsabile, Struttura\_organizzazione, Luogo, Data\_inizio, Data\_fine)}
-	\subsection{Mapping Logico Relazioni}
-	\subsubsection{Scrittura\_libro (Autore - Libro)}
-	\texttt{Scrittura\_libro(\underline{ISBN\_L, ID\_Auth\_A})
-		\tabto{50pt} Scrittura\_libro.ISBN\_L $\longrightarrow$ Libro.ISBN
-		\tabto{50pt} Scrittura\_libro.ID\_Auth\_A $\longrightarrow$ Autore.ID\_Auth}
-	\subsubsection{Scrittura\_articolo (Autore - Articolo\_scientifico)}
-	\texttt{Scrittura\_articolo(\underline{DOI\_Art, ID\_Auth\_Aut})\\
-		\tabto{50pt}Scrittura\_articolo.DOI\_Art $\longrightarrow$ Articolo\_scientifico.DOI\\
-		\tabto{50pt}Scrittura\_articolo.ID\_Auth\_Aut $\longrightarrow$ Autore.ID\_Auth}
-	\subsubsection{Raccolta (Libro - Collana)}
-	\texttt{Raccolta(\underline{ISBN\_L, ISSN\_C})\\
-		\tabto{50pt} Raccolta.ISBN\_L $\longrightarrow$ Libro.ISBN\\
-		\tabto{50pt} Raccolta.ISSN\_C $\longrightarrow$ Collana.ISSN}
-	\subsubsection{Divulgazione (Articolo\_scientifico - Rivista)}
-	\texttt{Divulgazione(\underline{DOI\_A, ISSN\_R})\\
-	\tabto{50pt} Divulgazione.DOI\_A $\longrightarrow$ Articolo.DOI\\
-	\tabto{50pt} Divulgazione.ISSN\_R $\longrightarrow$ Rivista.ISSN}
-	\subsubsection{Presentazione (Articolo\_scientifico - Conferenza)}
-	\texttt{Presentazione(\underline{DOI\_A, ID\_CONF\_C})\\
-		\tabto{50pt} Presentazione.DOI\_A $\longrightarrow$ Articolo.DOI\\
-		\tabto{50pt} Presentazione.ID\_CONF\_C $\longrightarrow$ Conferenza.ID\_Conf}
 \end{document}
