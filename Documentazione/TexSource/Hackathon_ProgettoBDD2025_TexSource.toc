@@ -9,5 +9,17 @@
 \contentsline {subsubsection}{\numberline {2.1.5}Team}{6}{}%
 \contentsline {subsubsection}{\numberline {2.1.6}Documento}{6}{}%
 \contentsline {subsection}{\numberline {2.2}Analisi delle Relazioni}{6}{}%
-\contentsline {section}{\numberline {3}Ristrutturazione del Modello Concettuale}{7}{}%
-\contentsline {subsection}{\numberline {3.1}Analisi delle Ridondanze}{7}{}%
+\contentsline {subsection}{\numberline {2.3}Ristrutturazione del Modello Concettuale}{7}{}%
+\contentsline {subsubsection}{\numberline {2.3.1}Analisi delle Ridondanze}{7}{}%
+\contentsline {subsubsection}{\numberline {2.3.2}Analisi delle Generalizzazioni/Gerarchie di Specializzazione}{7}{}%
+\contentsline {subsubsection}{\numberline {2.3.3}Analisi degli Attributi Multivalore}{7}{}%
+\contentsline {subsubsection}{\numberline {2.3.4}Analisi degli Attributi Strutturati}{7}{}%
+\contentsline {subsubsection}{\numberline {2.3.5}Partizionamento/Accorpamento di Entità e Relazioni}{7}{}%
+\contentsline {subsubsection}{\numberline {2.3.6}Analisi delle Chiavi}{7}{}%
+\contentsline {subsection}{\numberline {2.4}Class Diagram Ristrutturato}{7}{}%
+\contentsline {subsection}{\numberline {2.5}Dizionario delle Classi}{8}{}%
+\contentsline {subsection}{\numberline {2.6}Dizionario delle Associazioni}{8}{}%
+\contentsline {subsection}{\numberline {2.7}Dizionario dei Vincoli}{8}{}%
+\contentsline {section}{\numberline {3}Progettazione Logica}{8}{}%
+\contentsline {subsection}{\numberline {3.1}Schema Logico}{8}{}%
+\contentsline {section}{\numberline {4}Progettazione Fisica}{8}{}%

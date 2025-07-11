@@ -9,6 +9,7 @@
 \usepackage{multicol} %più colonne
 \usepackage{ragged2e} %allineamento testo
 \usepackage{float}
+\usepackage{inconsolata}
 \usepackage[]{fancyhdr}
 
 \pagestyle{fancy}
@@ -138,10 +139,58 @@
 		\item \textit{Pubblicazione} (\textbf{Documento} - \textbf{Team}: 1..N - N):\\Relazione identificante per l'entità debole Documento, in quanto generato direttamente da un Team e non può esistere senza un associazione ad un Team.
 	\end{itemize}
 	\newpage
-	\section{Ristrutturazione del Modello Concettuale}
-	Dopo aver analizzato i requisiti, le entità e le relazioni ed aver prodotto uno schema concettuale passeremo alla sua Ristrutturazione, seguendo i passaggi necessari elencati nelle prossime sottosezioni.
-	\subsection{Analisi delle Ridondanze}
+	\subsection{Ristrutturazione del Modello Concettuale}
+	Dopo aver analizzato i requisiti, le entità e le relazioni ed aver prodotto uno schema concettuale passeremo alla sua Ristrutturazione, seguendo i passaggi necessari elencati nelle prossime sottosezioni, ordinate in:
 	\begin{itemize}
-		\item 
+		\item Analisi delle Ridondanze
+		\item Analisi delle Generalizzazioni/Gerarchie di Specializzazione
+		\item Analisi degli Attributi Multivalore
+		\item Analisi degli Attributi Strutturati
+		\item Partizionamento/Accorpamento di Entità e Relazioni
+		\item Analisi delle Chiavi
 	\end{itemize}
+	\subsubsection{Analisi delle Ridondanze}
+	\subsubsection{Analisi delle Generalizzazioni/Gerarchie di Specializzazione}
+	\subsubsection{Analisi degli Attributi Multivalore}
+	\subsubsection{Analisi degli Attributi Strutturati}
+	\subsubsection{Partizionamento/Accorpamento di Entità e Relazioni}
+	\subsubsection{Analisi delle Chiavi}
+	\subsection{Class Diagram Ristrutturato}
+	\includegraphics[width=1\textwidth]{../Immagini/Hackathon_UMLRistrutturato}
+	\subsection{Dizionario delle Classi}
+	\subsection{Dizionario delle Associazioni}
+	\subsection{Dizionario dei Vincoli}
+	\section{Progettazione Logica}
+	\subsection{Schema Logico}
+	\begin{itemize}
+		\item \texttt{Hackathon(\underline{Titolo\_identificativo}, Sede, Classifica, DataInizio\_registrazione, DataFine\_registrazione, Descrizione\_problema, DataInizio\_evento, DataFine\_evento, NumIscritti\_corrente, MaxNum\_iscritti)}
+		\item \texttt{Utente(\underline{Username}, Password)}
+		\item \texttt{Organizzatore(\underline{Username\_organizzatore}, Password)}
+		\item \texttt{Giudice(\underline{ID\_giudice}, \underline{\underline{Username\_utente}}, \underline{\underline{Titolo\_hackathon}})}
+		\tab \texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
+		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\item \texttt{Team(\underline{Nome\_team}, \underline{\underline{Titolo\_hackathon}}, Punteggio\_finale)}
+		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\item \texttt{Documento(\underline{ID\_documento}, \underline{\underline{Nome\_team}}, \underline{\underline{Titolo\_hackathon}}, Titolo, Contenuto, Data\_stesura)}
+		\tab \texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
+		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\item \texttt{Membership(\underline{ID\_adesione}, \underline{\underline{Username\_utente}}, \underline{\underline{Nome\_team}}, \underline{\underline{Titolo\_hackathon}}, Data\_adesione)}
+		\tab \texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
+		\tab \texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
+		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\item \texttt{Voto(\underline{\underline{ID\_giudice}},\underline{\underline{Username\_giudice}}, \underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, Punteggio)}
+		\tab \texttt{ID\_giudice $\Rightarrow$ Giudice.ID\_giudice}\\
+		\tab \texttt{Username\_giudice $\Rightarrow$ Utente.Username}\\
+		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\tab \texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}
+			\item \texttt{Valutazione(\underline{\underline{ID\_giudice}}, \underline{\underline{Username\_giudice}},\underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, \underline{\underline{ID\_documento}}, Valutazione\_giudice)}\\
+			\tab \texttt{ID\_giudice $\Rightarrow$ Giudice.ID\_giudice}\\
+			\tab \texttt{Username\_giudice $\Rightarrow$ Utente.Username}\\
+			\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+			\tab \texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
+			\tab \texttt{ID\_documento $\Rightarrow$ Documento.ID\_documento}\\
+	\end{itemize}
+		
+	\section{Progettazione Fisica}
+	
 \end{document}

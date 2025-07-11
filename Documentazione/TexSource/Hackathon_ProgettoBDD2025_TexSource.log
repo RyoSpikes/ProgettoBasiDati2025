@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  8 JUL 2025 19:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  11 JUL 2025 13:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -168,6 +168,26 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks20
 \@floatcapt=\box98
 )
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/inconsolata\inconsolata
+.sty
+Package: inconsolata 2019/05/17 v1.12
+ `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkeyval.tex
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkvutils.tex
+\XKV@toks=\toks21
+\XKV@tempa@toks=\toks22
+)
+\XKV@depth=\count273
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\zifour@ocount=\count274
+)
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 
@@ -185,12 +205,12 @@ Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 \f@nch@widthL=\skip77
 \f@nch@widthC=\skip78
 \f@nch@widthR=\skip79
-\@temptokenb=\toks21
+\@temptokenb=\toks23
 )
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2023-04-19 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count273
+\l__color_backend_stack_int=\count275
 \l__pdf_internal_box=\box99
 )
 
@@ -200,20 +220,20 @@ LaTeX Warning: Unused global option(s):
 (Hackathon_ProgettoBDD2025_TexSource.aux)
 \openout1 = `Hackathon_ProgettoBDD2025_TexSource.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -254,17 +274,17 @@ LaTeX Font Info:    ... okay on input line 21.
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count274
+\scratchcounter=\count276
 \scratchdimen=\dimen162
 \scratchbox=\box100
-\nofMPsegments=\count275
-\nofMParguments=\count276
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count277
+\nofMPsegments=\count277
+\nofMParguments=\count278
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count279
 \MPscratchDim=\dimen163
-\MPnumerator=\count278
-\makeMPintoPDFobject=\count279
-\everyMPtoPDFconversion=\toks23
+\MPnumerator=\count280
+\makeMPintoPDFobject=\count281
+\everyMPtoPDFconversion=\toks25
 )
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
 ase.sty
@@ -276,15 +296,19 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/upquote\upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+)
 <../Immagini/coverpic.png, id=1, 1004.75375pt x 296.10625pt>
 File: ../Immagini/coverpic.png Graphic file (type png)
 <use ../Immagini/coverpic.png>
-Package pdftex.def Info: ../Immagini/coverpic.png  used on input line 24.
+Package pdftex.def Info: ../Immagini/coverpic.png  used on input line 25.
 (pdftex.def)             Requested size: 412.56499pt x 121.58507pt.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
-(Font)              using `OT1/cmr/bx/n' instead on input line 29.
+(Font)              using `OT1/cmr/bx/n' instead on input line 30.
 
 [1
 
@@ -299,7 +323,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout3 = `Hackathon_ProgettoBDD2025_TexSource.toc'.
 
  [2]
-Overfull \hbox (12.41585pt too wide) in paragraph at lines 65--66
+Overfull \hbox (12.41585pt too wide) in paragraph at lines 66--67
 []\OT1/cmr/m/n/10 L'organizzatore apre le \OT1/cmr/bx/n/10 reg-is-trazioni\OT1/
 cmr/m/n/10 , che si chi-udono due giorni prima dell'inizio dell'evento. 
  []
@@ -309,10 +333,53 @@ cmr/m/n/10 , che si chi-udono due giorni prima dell'inizio dell'evento.
 File: ../Immagini/EERDiagram_Hackathon.png Graphic file (type png)
 <use ../Immagini/EERDiagram_Hackathon.png>
 Package pdftex.def Info: ../Immagini/EERDiagram_Hackathon.png  used on input li
-ne 97.
+ne 98.
 (pdftex.def)             Requested size: 412.56499pt x 243.52496pt.
- [5 <../Immagini/EERDiagram_Hackathon.png>] [6] [7]
-(Hackathon_ProgettoBDD2025_TexSource.aux)
+ [5 <../Immagini/EERDiagram_Hackathon.png>] [6]
+<../Immagini/Hackathon_UMLRistrutturato.png, id=34, 1366.10374pt x 733.74126pt>
+
+File: ../Immagini/Hackathon_UMLRistrutturato.png Graphic file (type png)
+<use ../Immagini/Hackathon_UMLRistrutturato.png>
+Package pdftex.def Info: ../Immagini/Hackathon_UMLRistrutturato.png  used on in
+put line 159.
+(pdftex.def)             Requested size: 412.56499pt x 221.59074pt.
+LaTeX Font Info:    Trying to load font information for OT1+zi4 on input line 1
+66.
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/inconsolata\ot1zi4.fd
+File: ot1zi4.fd 2018/01/14 OT1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 166.
+
+Overfull \hbox (7.82689pt too wide) in paragraph at lines 166--167
+\OT1/zi4/m/n/10 DataFine[]registrazione, Descrizione[]problema, DataInizio[]eve
+nto, DataFine[]evento,
+ []
+
+[7 <../Immagini/Hackathon_UMLRistrutturato.png>]
+Overfull \hbox (25.15477pt too wide) in paragraph at lines 174--175
+[]\OT1/zi4/m/n/10 Documento($[]$, $[]$, $[]$, Titolo, Contenuto, Data[]stesura)
+
+ []
+
+
+Overfull \hbox (20.09084pt too wide) in paragraph at lines 177--178
+[]\OT1/zi4/m/n/10 Membership($[]$, $[]$, $[]$, $[]$, Data[]adesione)
+ []
+
+
+Overfull \hbox (16.4269pt too wide) in paragraph at lines 186--187
+[]\OT1/zi4/m/n/10 Valutazione($[]$, $[]$,$[]$, $[]$, $[]$,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 191--192
+
+ []
+
+[8{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i4-
+ot1-0.enc}] (Hackathon_ProgettoBDD2025_TexSource.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
@@ -323,27 +390,30 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 2563 strings out of 475248
- 44426 string characters out of 5757813
- 1928785 words of memory out of 5000000
- 24092 multiletter control sequences out of 15000+600000
- 561169 words of font info for 46 fonts, out of 8000000 for 9000
+ 2954 strings out of 475248
+ 52134 string characters out of 5757813
+ 1934785 words of memory out of 5000000
+ 24457 multiletter control sequences out of 15000+600000
+ 561373 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,11n,65p,530b,349s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\gioma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
-1000.pk><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmbx10.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/gioma/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/gioma/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/gioma/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/gioma/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/
-gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (7 pages, 242161 byte
+1000.pk><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/incons
+olata/Inconsolata-zi4r.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/gioma/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/gioma/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/gioma/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/gioma
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Use
+rs/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb
+><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
+mr17.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmsy10.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/amsfonts/cm/cmti10.pfb>
+Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (8 pages, 312635 byte
 s).
 PDF statistics:
- 76 PDF objects out of 1000 (max. 8388607)
+ 92 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
