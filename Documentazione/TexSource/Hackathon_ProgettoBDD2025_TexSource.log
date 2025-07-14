@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  11 JUL 2025 13:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  14 JUL 2025 17:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
-File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo
+File: size12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count185
 \c@section=\count186
@@ -75,32 +75,83 @@ File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen151
 \Gin@req@width=\dimen152
-) (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tools\multicol.sty
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\adjustbox.sty
+Package: adjustbox 2025/02/26 v1.3c Adjusting TeX boxes (trim, clip, ...)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkeyval.tex
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkvutils.tex
+\XKV@toks=\toks19
+\XKV@tempa@toks=\toks20
+)
+\XKV@depth=\count196
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
+-ends (calc, etex, pgfmath)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\trimclip.sty
+Package: trimclip 2025/02/21 v1.2a Trim and clip general TeX material
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/collectbox\collectbox.s
+ty
+Package: collectbox 2022/10/17 v0.4c Collect macro arguments as boxes
+\collectedbox=\box51
+)
+\tc@llx=\dimen153
+\tc@lly=\dimen154
+\tc@urx=\dimen155
+\tc@ury=\dimen156
+Package trimclip Info: Using driver 'tc-pdftex.def'.
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\tc-pdftex.def
+File: tc-pdftex.def 2025/02/26 v2.3 Clipping driver for pdftex
+))
+\adjbox@Width=\dimen157
+\adjbox@Height=\dimen158
+\adjbox@Depth=\dimen159
+\adjbox@Totalheight=\dimen160
+\adjbox@pwidth=\dimen161
+\adjbox@pheight=\dimen162
+\adjbox@pdepth=\dimen163
+\adjbox@ptotalheight=\dimen164
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/ifoddpage\ifoddpage.sty
+Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
+\c@checkoddpage=\count197
+) (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/varwidth\varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box52
+\sift@deathcycles=\count198
+\@vwid@loff=\dimen165
+\@vwid@roff=\dimen166
+)) (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tools\multicol.sty
 Package: multicol 2023/03/30 v1.9f multicolumn formatting (FMi)
-\c@tracingmulticols=\count196
-\mult@box=\box51
-\multicol@leftmargin=\dimen153
-\c@unbalance=\count197
-\c@collectmore=\count198
-\doublecol@number=\count199
-\multicoltolerance=\count266
-\multicolpretolerance=\count267
-\full@width=\dimen154
-\page@free=\dimen155
-\premulticols=\dimen156
-\postmulticols=\dimen157
+\c@tracingmulticols=\count199
+\mult@box=\box53
+\multicol@leftmargin=\dimen167
+\c@unbalance=\count266
+\c@collectmore=\count267
+\doublecol@number=\count268
+\multicoltolerance=\count269
+\multicolpretolerance=\count270
+\full@width=\dimen168
+\page@free=\dimen169
+\premulticols=\dimen170
+\postmulticols=\dimen171
 \multicolsep=\skip50
 \multicolbaselineskip=\skip51
-\partial@page=\box52
-\last@line=\box53
-\mc@boxedresult=\box54
-\maxbalancingoverflow=\dimen158
-\mult@rightbox=\box55
-\mult@grightbox=\box56
-\mult@firstbox=\box57
-\mult@gfirstbox=\box58
-\@tempa=\box59
-\@tempa=\box60
+\partial@page=\box54
+\last@line=\box55
+\mc@boxedresult=\box56
+\maxbalancingoverflow=\dimen172
+\mult@rightbox=\box57
+\mult@grightbox=\box58
+\mult@firstbox=\box59
+\mult@gfirstbox=\box60
 \@tempa=\box61
 \@tempa=\box62
 \@tempa=\box63
@@ -135,16 +186,19 @@ Package: multicol 2023/03/30 v1.9f multicolumn formatting (FMi)
 \@tempa=\box92
 \@tempa=\box93
 \@tempa=\box94
-\c@minrows=\count268
-\c@columnbadness=\count269
-\c@finalcolumnbadness=\count270
-\last@try=\dimen159
-\multicolovershoot=\dimen160
-\multicolundershoot=\dimen161
-\mult@nat@firstbox=\box95
-\colbreak@box=\box96
-\mc@col@check@num=\count271
-) (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/ragged2e\ragged2e.sty
+\@tempa=\box95
+\@tempa=\box96
+\c@minrows=\count271
+\c@columnbadness=\count272
+\c@finalcolumnbadness=\count273
+\last@try=\dimen173
+\multicolovershoot=\dimen174
+\multicolundershoot=\dimen175
+\mult@nat@firstbox=\box97
+\colbreak@box=\box98
+\mc@col@check@num=\count274
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/ragged2e\ragged2e.sty
 Package: ragged2e 2023/06/22 v3.6 ragged2e Package
 \CenteringLeftskip=\skip52
 \RaggedLeftLeftskip=\skip53
@@ -160,13 +214,14 @@ Package: ragged2e 2023/06/22 v3.6 ragged2e Package
 \RaggedLeftParindent=\skip63
 \RaggedRightParindent=\skip64
 \JustifyingParindent=\skip65
-) (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count272
-\float@exts=\toks19
-\float@box=\box97
-\@float@everytoks=\toks20
-\@floatcapt=\box98
+\c@float@type=\count275
+\float@exts=\toks21
+\float@box=\box99
+\@float@everytoks=\toks22
+\@floatcapt=\box100
 )
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/inconsolata\inconsolata
 .sty
@@ -175,18 +230,7 @@ Package: inconsolata 2019/05/17 v1.12
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 )
-(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
-Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
-
-(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkeyval.tex
-(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkvutils.tex
-\XKV@toks=\toks21
-\XKV@tempa@toks=\toks22
-)
-\XKV@depth=\count273
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-))
-\zifour@ocount=\count274
+\zifour@ocount=\count276
 )
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
@@ -207,33 +251,462 @@ Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 \f@nch@widthR=\skip79
 \@temptokenb=\toks23
 )
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks24
+\inpenc@posthook=\toks25
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
+Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen176
+\ar@mcellbox=\box101
+\extrarowheight=\dimen177
+\NC@list=\toks26
+\extratabsurround=\skip80
+\backup@length=\skip81
+\ar@cellbox=\box102
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tools\tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+\TX@col@width=\dimen178
+\TX@old@table=\dimen179
+\TX@old@col=\dimen180
+\TX@target=\dimen181
+\TX@delta=\dimen182
+\TX@cols=\count277
+\TX@ftn=\toks27
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty
+Package: enumitem 2019/06/20 v3.9 Customized lists
+\labelindent=\skip82
+\enit@outerparindent=\dimen183
+\enit@toks=\toks28
+\enit@inbox=\box103
+\enit@count@id=\count278
+\enitdp@description=\count279
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/multirow\multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip83
+\multirow@cntb=\count280
+\multirow@dima=\skip84
+\bigstrutjot=\dimen184
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty
+Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
+\LTleft=\skip85
+\LTright=\skip86
+\LTpre=\skip87
+\LTpost=\skip88
+\LTchunksize=\count281
+\LTcapwidth=\dimen185
+\LT@head=\box104
+\LT@firsthead=\box105
+\LT@foot=\box106
+\LT@lastfoot=\box107
+\LT@gbox=\box108
+\LT@cols=\count282
+\LT@rows=\count283
+\c@LT@tables=\count284
+\c@LT@chunks=\count285
+\LT@p@ftn=\toks29
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcolorbox.sty
+Package: tcolorbox 2023/09/26 version 6.1.0 text color boxes
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.st
+y
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-common.tex
+\pgfutil@everybye=\toks30
+\pgfutil@tempdima=\dimen186
+\pgfutil@tempdimb=\dimen187
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-latex.def
+\pgfutil@abb=\box109
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.
+code.tex
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+))
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.
+sty
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.
+sty
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex
+\pgfkeys@pathtoks=\toks31
+\pgfkeys@temptoks=\toks32
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+libraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks33
+))
+\pgf@x=\dimen188
+\pgf@y=\dimen189
+\pgf@xa=\dimen190
+\pgf@ya=\dimen191
+\pgf@xb=\dimen192
+\pgf@yb=\dimen193
+\pgf@xc=\dimen194
+\pgf@yc=\dimen195
+\pgf@xd=\dimen196
+\pgf@yd=\dimen197
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count286
+\c@pgf@countb=\count287
+\c@pgf@countc=\count288
+\c@pgf@countd=\count289
+\t@pgf@toka=\toks34
+\t@pgf@tokb=\toks35
+\t@pgf@tokc=\toks36
+\pgf@sys@id@count=\count290
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.c
+fg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-pdftex.def
+File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+ssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count291
+\pgfsyssoftpath@bigbuffer@items=\count292
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+sprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1357.
+Package xcolor Info: Model `RGB' extended on input line 1369.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1371.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+e.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil.
+code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparse
+r.code.tex
+\pgfmath@dimen=\dimen198
+\pgfmath@count=\count293
+\pgfmath@box=\box110
+\pgfmath@toks=\toks37
+\pgfmath@stack@operand=\toks38
+\pgfmath@stack@operation=\toks39
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.basic.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.trigonometric.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.random.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.comparison.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.base.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.round.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.misc.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.integerarithmetics.code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc.
+code.tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat
+.code.tex
+\c@pgfmathroundto@lastzeros=\count294
+))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.
+tex)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen199
+\pgf@picmaxx=\dimen256
+\pgf@picminy=\dimen257
+\pgf@picmaxy=\dimen258
+\pgf@pathminx=\dimen259
+\pgf@pathmaxx=\dimen260
+\pgf@pathminy=\dimen261
+\pgf@pathmaxy=\dimen262
+\pgf@xx=\dimen263
+\pgf@xy=\dimen264
+\pgf@yx=\dimen265
+\pgf@yy=\dimen266
+\pgf@zx=\dimen267
+\pgf@zy=\dimen268
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen269
+\pgf@path@lasty=\dimen270
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathusage.code.tex
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen271
+\pgf@shorten@start@additional=\dimen272
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+escopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfpic=\box111
+\pgf@hbox=\box112
+\pgf@layerbox@main=\box113
+\pgf@picture@serial@count=\count295
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+egraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen273
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransformations.code.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen274
+\pgf@pt@y=\dimen275
+\pgf@pt@temp=\dimen276
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+equick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+earrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen277
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen278
+\pgf@sys@shading@range@num=\count296
+\pgf@shadingcount=\count297
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfexternal@startupbox=\box114
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+elayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransparency.code.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+erdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+shapes.code.tex
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodeparttextbox=\box115
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+plot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-0-65.sty
+Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+\pgf@nodesepstart=\dimen279
+\pgf@nodesepend=\dimen280
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-1-18.sty
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tools\verbatim.sty
+Package: verbatim 2022-07-02 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks40
+\verbatim@line=\toks41
+\verbatim@in@stream=\read3
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/environ\environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/trimspaces\trimspaces.s
+ty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+)
+\@envbody=\toks42
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count298
+)
+\tcb@titlebox=\box116
+\tcb@upperbox=\box117
+\tcb@lowerbox=\box118
+\tcb@phantombox=\box119
+\c@tcbbreakpart=\count299
+\c@tcblayer=\count300
+\c@tcolorbox@number=\count301
+\tcb@temp=\box120
+\tcb@temp=\box121
+\tcb@temp=\box122
+\tcb@temp=\box123
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbskins.code
+.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.1.0'
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.
+sty
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgffor.st
+y
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.s
+ty
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/pgf/math\pgfmath.sty
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgffor.
+code.tex
+Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+\pgffor@iter=\dimen281
+\pgffor@skip=\dimen282
+\pgffor@stack=\toks43
+\pgffor@toks=\toks44
+))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z\tikz.code.tex
+Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@plot@mark@count=\count302
+\pgfplotmarksize=\dimen283
+)
+\tikz@lastx=\dimen284
+\tikz@lasty=\dimen285
+\tikz@lastxsaved=\dimen286
+\tikz@lastysaved=\dimen287
+\tikz@lastmovetox=\dimen288
+\tikz@lastmovetoy=\dimen289
+\tikzleveldistance=\dimen290
+\tikzsiblingdistance=\dimen291
+\tikz@figbox=\box124
+\tikz@figbox@bg=\box125
+\tikz@tempbox=\box126
+\tikz@tempbox@bg=\box127
+\tikztreelevel=\count303
+\tikznumberofchildren=\count304
+\tikznumberofcurrentchild=\count305
+\tikz@fig@count=\count306
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+matrix.code.tex
+File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfmatrixcurrentrow=\count307
+\pgfmatrixcurrentcolumn=\count308
+\pgf@matrix@numberofcolumns=\count309
+)
+\tikz@expandcount=\count310
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzfill.image
+.sty
+Package: tikzfill.image 2023/08/08 v1.0.1 Image filling library for TikZ
+
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzfill-commo
+n.sty
+Package: tikzfill-common 2023/08/08 v1.0.1 Auxiliary code for tikzfill
+)
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzlibraryfil
+l.image.code.tex
+File: tikzlibraryfill.image.code.tex 2023/08/08 v1.0.1 Image filling library
+\l__tikzfill_img_box=\box128
+))
+(C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbskinsjigsa
+w.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.1.0'
+))
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2023-04-19 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count275
-\l__pdf_internal_box=\box99
-)
-
-LaTeX Warning: Unused global option(s):
-    [15pt].
-
-(Hackathon_ProgettoBDD2025_TexSource.aux)
+\l__color_backend_stack_int=\count311
+\l__pdf_internal_box=\box129
+) (Hackathon_ProgettoBDD2025_TexSource.aux)
 \openout1 = `Hackathon_ProgettoBDD2025_TexSource.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -244,23 +717,23 @@ LaTeX Font Info:    ... okay on input line 22.
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * bindingoffset: 14.22636pt
 * modes: 
-* h-part:(L,W,R)=(85.35826pt, 412.56499pt, 85.35826pt)
-* v-part:(T,H,B)=(85.35826pt, 674.33032pt, 85.35826pt)
+* h-part:(L,W,R)=(65.44142pt, 452.39867pt, 65.44142pt)
+* v-part:(T,H,B)=(65.44142pt, 714.164pt, 65.44142pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=412.56499pt
-* \textheight=674.33032pt
-* \oddsidemargin=27.31464pt
-* \evensidemargin=13.08827pt
-* \topmargin=-23.91173pt
+* \textwidth=452.39867pt
+* \textheight=714.164pt
+* \oddsidemargin=7.3978pt
+* \evensidemargin=-6.82857pt
+* \topmargin=-43.82857pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=10.0pt
+* \topskip=12.0pt
 * \footskip=30.0pt
-* \marginparwidth=57.0pt
-* \marginparsep=11.0pt
+* \marginparwidth=35.0pt
+* \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -274,17 +747,17 @@ LaTeX Font Info:    ... okay on input line 22.
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count276
-\scratchdimen=\dimen162
-\scratchbox=\box100
-\nofMPsegments=\count277
-\nofMParguments=\count278
-\everyMPshowfont=\toks24
-\MPscratchCnt=\count279
-\MPscratchDim=\dimen163
-\MPnumerator=\count280
-\makeMPintoPDFobject=\count281
-\everyMPtoPDFconversion=\toks25
+\scratchcounter=\count312
+\scratchdimen=\dimen292
+\scratchbox=\box130
+\nofMPsegments=\count313
+\nofMParguments=\count314
+\everyMPshowfont=\toks45
+\MPscratchCnt=\count315
+\MPscratchDim=\dimen293
+\MPnumerator=\count316
+\makeMPintoPDFobject=\count317
+\everyMPtoPDFconversion=\toks46
 )
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
 ase.sty
@@ -300,86 +773,112 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
 )
-<../Immagini/coverpic.png, id=1, 1004.75375pt x 296.10625pt>
+<../Immagini/coverpic.png, id=4, 1004.75375pt x 296.10625pt>
 File: ../Immagini/coverpic.png Graphic file (type png)
 <use ../Immagini/coverpic.png>
-Package pdftex.def Info: ../Immagini/coverpic.png  used on input line 25.
-(pdftex.def)             Requested size: 412.56499pt x 121.58507pt.
+Package pdftex.def Info: ../Immagini/coverpic.png  used on input line 53.
+(pdftex.def)             Requested size: 452.39867pt x 133.32338pt.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
-(Font)              using `OT1/cmr/bx/n' instead on input line 30.
+(Font)              using `OT1/cmr/bx/n' instead on input line 58.
 
 [1
 
 {C:/Users/gioma/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <../Immagini/
 coverpic.png>] (Hackathon_ProgettoBDD2025_TexSource.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 2.
+(Font)              <12> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 2.
+(Font)              <8> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 2.
 )
-\tf@toc=\write3
-\openout3 = `Hackathon_ProgettoBDD2025_TexSource.toc'.
+\tf@toc=\write4
+\openout4 = `Hackathon_ProgettoBDD2025_TexSource.toc'.
 
- [2]
-Overfull \hbox (12.41585pt too wide) in paragraph at lines 66--67
-[]\OT1/cmr/m/n/10 L'organizzatore apre le \OT1/cmr/bx/n/10 reg-is-trazioni\OT1/
-cmr/m/n/10 , che si chi-udono due giorni prima dell'inizio dell'evento. 
- []
-
-[3] [4]
-<../Immagini/EERDiagram_Hackathon.png, id=24, 928.46875pt x 548.0475pt>
+ [2] [3] [4]
+<../Immagini/EERDiagram_Hackathon.png, id=25, 928.46875pt x 548.0475pt>
 File: ../Immagini/EERDiagram_Hackathon.png Graphic file (type png)
 <use ../Immagini/EERDiagram_Hackathon.png>
 Package pdftex.def Info: ../Immagini/EERDiagram_Hackathon.png  used on input li
-ne 98.
-(pdftex.def)             Requested size: 412.56499pt x 243.52496pt.
- [5 <../Immagini/EERDiagram_Hackathon.png>] [6]
-<../Immagini/Hackathon_UMLRistrutturato.png, id=34, 1366.10374pt x 733.74126pt>
+ne 126.
+(pdftex.def)             Requested size: 452.39867pt x 267.04036pt.
+
+Overfull \hbox (0.46788pt too wide) in paragraph at lines 143--145
+\OT1/cmr/m/n/12 Specializzazione dell'entit^^Ra \OT1/cmr/bx/n/12 Utente\OT1/cmr
+/m/n/12 , rap-p-re-sen-tante gli or-ga-niz-za-tori di mara-tone di Hack-
+ []
+
+[5 <../Immagini/EERDiagram_Hackathon.png>] [6] [7]
+<../Immagini/Hackathon_UMLRistrutturato.png, id=39, 1366.10374pt x 733.74126pt>
 
 File: ../Immagini/Hackathon_UMLRistrutturato.png Graphic file (type png)
 <use ../Immagini/Hackathon_UMLRistrutturato.png>
 Package pdftex.def Info: ../Immagini/Hackathon_UMLRistrutturato.png  used on in
-put line 159.
-(pdftex.def)             Requested size: 412.56499pt x 221.59074pt.
-LaTeX Font Info:    Trying to load font information for OT1+zi4 on input line 1
-66.
+put line 187.
+(pdftex.def)             Requested size: 452.39867pt x 242.98625pt.
+ [8 <../Immagini/Hackathon_UMLRistrutturato.png>]
+LaTeX Font Info:    Trying to load font information for OT1+zi4 on input line 2
+14.
 
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/inconsolata\ot1zi4.fd
 File: ot1zi4.fd 2018/01/14 OT1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 10.0pt on input line 166.
+(Font)              scaled to size 10.0pt on input line 214.
 
-Overfull \hbox (7.82689pt too wide) in paragraph at lines 166--167
-\OT1/zi4/m/n/10 DataFine[]registrazione, Descrizione[]problema, DataInizio[]eve
-nto, DataFine[]evento,
- []
-
-[7 <../Immagini/Hackathon_UMLRistrutturato.png>]
-Overfull \hbox (25.15477pt too wide) in paragraph at lines 174--175
-[]\OT1/zi4/m/n/10 Documento($[]$, $[]$, $[]$, Titolo, Contenuto, Data[]stesura)
-
- []
-
-
-Overfull \hbox (20.09084pt too wide) in paragraph at lines 177--178
-[]\OT1/zi4/m/n/10 Membership($[]$, $[]$, $[]$, $[]$, Data[]adesione)
+[9{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i4-
+ot1-0.enc}] [10]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 317.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 317.
+ [11] [12] [13]
+Overfull \hbox (12.61903pt too wide) in alignment at lines 434--438
+ [] [] 
  []
 
 
-Overfull \hbox (16.4269pt too wide) in paragraph at lines 186--187
-[]\OT1/zi4/m/n/10 Valutazione($[]$, $[]$,$[]$, $[]$, $[]$,
+Overfull \hbox (12.61903pt too wide) in alignment at lines 438--442
+ [] [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
-
+Overfull \hbox (12.61903pt too wide) in alignment at lines 442--444
+ [] [] 
  []
 
-[8{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i4-
-ot1-0.enc}] (Hackathon_ProgettoBDD2025_TexSource.aux)
+
+Overfull \hbox (12.61903pt too wide) in alignment at lines 444--446
+ [] [] 
+ []
+
+
+Overfull \hbox (12.61903pt too wide) in alignment at lines 446--491
+ [] [] 
+ []
+
+[14]
+LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
+(Font)              scaled to size 12.0pt on input line 499.
+
+Overfull \hbox (54.61351pt too wide) in paragraph at lines 514--518
+[]\OT1/zi4/m/n/12 Documento($[]$, $[]$, $[]$, Titolo, Contenuto, Data[]stesura)
+ 
+ []
+
+
+Overfull \hbox (48.53679pt too wide) in paragraph at lines 519--524
+[]\OT1/zi4/m/n/12 Membership($[]$, $[]$, $[]$, $[]$, Data[]adesione) 
+ []
+
+
+Overfull \hbox (44.14006pt too wide) in paragraph at lines 532--539
+[]\OT1/zi4/m/n/12 Valutazione($[]$, $[]$,$[]$, $[]$, $[]$,
+ []
+
+[15] [16] (Hackathon_ProgettoBDD2025_TexSource.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
@@ -390,30 +889,31 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 2954 strings out of 475248
- 52134 string characters out of 5757813
- 1934785 words of memory out of 5000000
- 24457 multiletter control sequences out of 15000+600000
- 561373 words of font info for 47 fonts, out of 8000000 for 9000
+ 18496 strings out of 475248
+ 399345 string characters out of 5757813
+ 1949785 words of memory out of 5000000
+ 39702 multiletter control sequences out of 15000+600000
+ 564959 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,65p,530b,349s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 87i,11n,92p,530b,984s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\gioma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
-1000.pk><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/incons
-olata/Inconsolata-zi4r.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/
-type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/gioma/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/gioma/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/gioma/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/gioma
-/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Use
-rs/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb
-><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
-mr17.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmsy10.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmti10.pfb>
-Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (8 pages, 312635 byte
-s).
+1000.pk> <C:\Users\gioma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\tcrm1200.pk><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+inconsolata/Inconsolata-zi4r.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/
+fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/gioma/AppData/Local/Program
+s/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/gioma/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/gioma/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users
+/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr
+12.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmr17.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/typ
+e1/public/amsfonts/cm/cmti12.pfb>
+Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (16 pages, 338070 byt
+es).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
+ 125 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 28 words of extra memory for PDF output out of 10000 (max. 10000000)
 

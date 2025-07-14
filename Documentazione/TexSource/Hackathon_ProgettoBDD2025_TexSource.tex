@@ -1,16 +1,44 @@
-\documentclass[a4paper, 15pt, oneside]{article}
+\documentclass[a4paper, 12pt]{article}
 \linespread{1.15} %interlinea
 \pagestyle{plain}
 \usepackage{geometry} %margini
 \usepackage[]{tabto}
 \geometry{a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, bindingoffset=5mm}
 \usepackage{graphicx}
+\usepackage{adjustbox}
 \graphicspath{Documentazione/Immagini/}
 \usepackage{multicol} %più colonne
 \usepackage{ragged2e} %allineamento testo
 \usepackage{float}
 \usepackage{inconsolata}
 \usepackage[]{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+
+\geometry{margin=2.3cm}
+\renewcommand{\arraystretch}{1.2} % Aumenta altezza delle righe
+\setlist[itemize]{left=0pt, label=\textbullet, itemsep=1pt, topsep=1pt}
+\definecolor{linecolor}{RGB}{200, 200, 200}
+
+\newtcolorbox{graybox}{
+	colback=gray!15,
+	colframe=gray!15,
+	boxrule=0pt,
+	left=1em,
+	top=4pt,          % Spazio interno superiore
+	bottom=4pt,       % Spazio interno inferiore
+	before skip=4pt,  % Spazio prima del box
+	after skip=6pt,   % Rimuove spazio aggiuntivo automatico
+	enhanced,
+	sharp corners
+}
 
 \pagestyle{fancy}
 \fancyhead{}
@@ -27,7 +55,7 @@
 		{\LARGE DOCUMENTAZIONE PER PROGETTAZIONE \\BASE DI DATI \par}
 		{\Large{Progetto in Carico: Hackathon \par}}
 		\vfill
-		{\large{ \textbf{\textsc{CdL Triennale in Informatica}}}}\\
+		{\large{\textbf{\textsc{CdL Triennale in Informatica}}}}\\
 		{\large{\textsc{Corso di Basi di Dati I}}}\\
 		{\large{\textsc{GIOELE MANZONI}}}\\
 		{\large{\textsc{N86004562}}}\\
@@ -157,40 +185,360 @@
 	\subsubsection{Analisi delle Chiavi}
 	\subsection{Class Diagram Ristrutturato}
 	\includegraphics[width=1\textwidth]{../Immagini/Hackathon_UMLRistrutturato}
+	\newpage
 	\subsection{Dizionario delle Classi}
+	{\footnotesize % Testo più piccolo ma leggibile
+		\setlength{\arrayrulewidth}{0.5pt}  % Opzionale: regola lo spessore
+		\renewcommand{\arraystretch}{1.2}  % Opzionale: aumenta lo spazio tra le righe
+		\begin{longtable}{
+			>{\raggedright\arraybackslash}p{4cm} % Colonna 1: allineamento a sinistra
+			>{\centering\arraybackslash}p{4cm}    % Colonna 2: centrato
+			>{\raggedright\arraybackslash}p{6.5cm}% Colonna 3: allineamento a sinistra
+			}
+			\hline
+			\textbf{Classe} & \textbf{Descrizione} & \textbf{Attributi} \\
+			\hline
+			\endfirsthead
+			\hline
+			\textbf{Classe} & \textbf{Descrizione} & \textbf{Attributi} \\
+			\hline
+			\endhead
+			\hline
+			\endfoot
+			\hline
+			\endlastfoot
+			
+			\textbf{HACKATHON} &
+			Evento organizzato a cui partecipano team. &
+			\begin{itemize}
+				\item \texttt{Titolo\_identificativo} (VARCHAR[30]): Titolo univoco che identifica un Hackathon;
+				\item \texttt{Sede} (VARCHAR[30]): Sede dove si svolgerà l'Hackathon;
+				\item \texttt{Classifica} (VARCHAR[1000]): Classifica finale con i posizionamenti dei Team, in ordine di punteggio complessivo;
+				\item \texttt{DataInizio\_registrazione} (DATE);
+				\item \texttt{DataFine\_registrazione} (DATE);
+				\item \texttt{Descrizione\_problema} (VARCHAR[1000]): Descrizione del problema da risolvere offerta dai giudici;
+				\item \texttt{DataInizio\_evento} (DATE);
+				\item \texttt{DataFine\_evento} (DATE);
+				\item \texttt{NumIscritti\_corrente} (INTEGER): Numero degli iscritti all'Hackathon aggiornato fino alla chiusura delle iscrizioni o al raggiungimento del tetto massimo;
+				\item \texttt{MaxNum\_iscritti} (INTEGER): Numero massimo di iscritti per un Hackathon;
+				\item \texttt{MaxNum\_membriTeam} (INTEGER): Numero massimo di membri per team iscritti ad una determinata Hackathon;
+			\end{itemize} \\
+			\hline
+			
+			\textbf{UTENTE} &
+			Utente registrato nel sistema. &
+			\begin{itemize}
+				\item \texttt{Username} (VARCHAR[30]): Nome utente univoco;
+				\item \texttt{Password} (VARCHAR[30])
+			\end{itemize} \\
+			\hline
+			
+			\textbf{ORGANIZZATORE} &
+			Utente con ruolo di organizzatore. &
+			\begin{itemize}
+				\item \texttt{Username\_organizzatore} (VARCHAR[30]): Nome utente univoco per organizzatore;
+				\item \texttt{Password} (VARCHAR[30])
+			\end{itemize} \\
+			\hline
+			
+			\textbf{GIUDICE} &
+			Utente con ruolo di giudice. &
+			\begin{itemize}
+				\item \texttt{ID\_giudice} (INTEGER): Codice identificativo che ordina ciascun giudice alla propria Hackathon in ordine di adesione;
+			\end{itemize} \\
+			\hline
+			
+			\textbf{TEAM} &
+			Team partecipante a un hackathon. &
+			\begin{itemize}
+				\item \texttt{Nome\_team} (VARCHAR[30]): Nome univoco che identifica un team;
+				\item \texttt{Punteggio\_finale} (INTEGER): Punteggio complessivo del team dato dalla somma di tutti i punteggi ottenuti dai giudici;
+			\end{itemize} \\
+			\hline
+			
+			\textbf{MEMBERSHIP} &
+			Adesione di un utente a un team. &
+			\begin{itemize}
+				\item \texttt{ID\_adesione} (INTEGER): Codice identificativo per la singola adesione ad un Team;
+				\item \texttt{Data\_adesione} (DATE)
+			\end{itemize} \\
+			\hline
+			
+			\textbf{VOTO} &
+			Voto assegnato da un giudice a un team. &
+			\begin{itemize}
+				\item \texttt{Punteggio} (INTEGER)
+			\end{itemize} \\
+			\hline
+			
+			\textbf{DOCUMENTO} &
+			Documento prodotto da un team. &
+			\begin{itemize}
+				\item \texttt{ID\_documento} (INTEGER): Codice identificativo per il singolo documento;
+				\item \texttt{Titolo} (VARCHAR[30]): Titolo del documento per riassumerne il contenuto;
+				\item \texttt{Contenuto} (VARCHAR[500]): Testo del documento;
+				\item \texttt{Data\_stesura} (DATE)
+			\end{itemize} \\
+			\hline
+			
+			\textbf{VALUTAZIONE} &
+			Valutazione scritta da un giudice. &
+			\begin{itemize}
+				\item \texttt{Valutazione\_giudice} (VARCHAR[500]): Valutazione di un giudice per un documento;
+			\end{itemize} \\
+			\hline
+			
+		\end{longtable}
+	}
+	\newpage
 	\subsection{Dizionario delle Associazioni}
+	{\footnotesize
+		\setlength{\arrayrulewidth}{0.5pt}
+		\renewcommand{\arraystretch}{1.5}
+		\begin{longtable}{
+				>{\raggedright\arraybackslash}p{4cm} % Colonna 1: allineamento a sinistra
+				>{\centering\arraybackslash}p{4cm}    % Colonna 2: centrato
+				>{\raggedright\arraybackslash}p{6.5cm}% Colonna 3: allineamento a sinistra
+			}
+			\hline
+			\textbf{Nome Associazione} & \textbf{Entità Associate} & \textbf{Descrizione Associazione} \\
+			\hline
+			\endfirsthead
+			\hline
+			\textbf{Nome Associazione} & \textbf{Entità Associate} & \textbf{Descrizione Associazione} \\
+			\hline
+			\endhead
+			\hline
+			\endfoot
+			\hline
+			\endlastfoot
+			
+			\textbf{Partecipazione}  & 
+			HACKATHON $\leftrightarrow$ TEAM &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [0..1 - *]
+				\item Un Hackathon può avere più Team partecipanti. Un Team deve partecipare ad un Hackathon
+				\item Chiave esterna: \texttt{Titolo\_hackathon} in TEAM
+				\item Vincolo: Ogni Team partecipa a un solo Hackathon
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Organizzazione} & 
+			ORGANIZZATORE $\leftrightarrow$ HACKATHON &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [0..* - 1]
+				\item Un organizzatore può organizzare più Hackathon, o può non organizzarne. Un Hackathon è organizzata da un solo organizzatore
+				\item Chiave esterna: \texttt{Username\_organizzatore} in ORGANIZZATORE
+				\item Vincolo: Ciascun Hackathon può essere organizzata da una sola persona
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Supervisione} & 
+			HACKATHON $\leftrightarrow$ GIUDICE &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [1..* - 1]
+				\item Un Hackathon può avere più Giudici assegnati
+				\item Chiave esterna: \texttt{Titolo\_hackathon} in GIUDICE
+				\item Vincolo: Ogni Giudice è assegnato a un solo Hackathon
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Invito} & 
+			ORGANIZZATORE $\leftrightarrow$ UTENTE &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [1..* - 1]
+				\item Un organizzatore deve invitare almeno un utente a diventare giudice
+				\item Vincolo: Un utente può ricevere un solo invito alla volta per essere giudice di un Hackathon
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Aggregazione} & 
+			TEAM $\leftrightarrow$ MEMBERSHIP &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [1..* - 1]
+				\item Un Team può avere più adesioni (Membership)
+				\item Chiave esterna: \texttt{Nome\_team} in MEMBERSHIP
+				\item Vincolo: Ogni Membership è per un solo Team
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Adesione} & 
+			UTENTE $\leftrightarrow$ MEMBERSHIP &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [* - 1]
+				\item Un Utente può appartenere a più Team (tramite Membership)
+				\item Chiave esterna: \texttt{Username\_utente} in MEMBERSHIP
+				\item Vincolo: Ogni Membership è di un solo Utente ed è rivolta ad un solo Team
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Stesura Documento} & 
+			TEAM $\leftrightarrow$ DOCUMENTO &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [* - 1]
+				\item Un Team può produrre più Documenti
+				\item Chiavi esterne: \texttt{Nome\_team} e \texttt{Titolo\_hackathon} in DOCUMENTO
+				\item Vincolo: Ogni Documento è prodotto da un solo Team
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Registrazione Valutazione} & 
+			DOCUMENTO $\leftrightarrow$ VALUTAZIONE &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [* - 1]
+				\item Un Documento può ricevere più Valutazioni
+				\item Chiave esterna: \texttt{ID\_documento} in VALUTAZIONE
+				\item Vincolo: Ogni Valutazione è per un solo Documento
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Immissione Valutazione} & 
+			GIUDICE $\leftrightarrow$ VALUTAZIONE &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [* - 1]
+				\item Un Giudice può scrivere più Valutazioni
+				\item Chiavi esterne: \texttt{ID\_giudice} e \texttt{Username\_giudice} in VALUTAZIONE
+				\item Vincolo: Ogni Valutazione è scritta da un solo Giudice
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Immissione Voto} & 
+			GIUDICE $\leftrightarrow$ VOTO &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [* - 1]
+				\item Un Giudice può assegnare più Voti
+				\item Chiavi esterne: \texttt{ID\_giudice} e \texttt{Username\_giudice} in VOTO
+				\item Vincolo: Ogni Voto è assegnato da un solo Giudice
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Assegnazione Voto} & 
+			TEAM $\leftrightarrow$ VOTO &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [1..* - 1]
+				\item Un Team può ricevere più Voti
+				\item Chiavi esterne: \texttt{Nome\_team} e \texttt{Titolo\_hackathon} in VOTO
+				\item Vincolo: Ogni Voto è assegnato a un solo Team
+			\end{itemize} \\
+			\hline
+		\end{longtable}
+	}
+	\newpage
 	\subsection{Dizionario dei Vincoli}
+	{\footnotesize
+		\setlength{\arrayrulewidth}{0.5pt}
+		\renewcommand{\arraystretch}{1.5}
+		\begin{longtable}{
+				>{\raggedright\arraybackslash}p{5.5cm}
+				>{\raggedright\arraybackslash}p{10cm}
+			}
+			\hline
+			\textbf{Nome Vincolo} & \textbf{Descrizione} \\
+			\hline
+			\endfirsthead
+			\hline
+			\textbf{Nome Vincolo} & \textbf{Descrizione} \\
+			\hline
+			\endhead
+			\hline
+			\endfoot
+			\hline
+			\endlastfoot
+			
+			\textbf{Chiusura Registrazioni} &
+			Le registrazioni devono chiudersi 2 giorni prima dell'evento:
+			\texttt{DataFine\_registrazione} = \texttt{DataInizio\_evento} - 2 giorni \\
+			\hline
+			
+			\textbf{Range Voti} &
+			I voti assegnati dai giudici devono essere interi compresi tra 0 e 10\\
+			\hline
+			
+			\textbf{Numero Minimo Membri Team} &
+			Ogni team deve avere almeno 2 membri per essere valido \\
+			\hline
+			
+			\textbf{Numero Massimo Membri Team} &
+			Un team non può superare il numero massimo di membri definito nell'Hackathon \\
+			\hline
+			
+			\textbf{Documentazione Obbligatoria} &
+			Ogni team deve aver caricato almeno un documento per essere valutato \\
+			\hline
+			
+			\textbf{Temporalità Documenti} &
+			I documenti possono essere caricati solo durante l'Hackathon\\
+			\hline
+			
+			\textbf{Unicità Voto Giudice} &
+			Un giudice non può votare più volte lo stesso team\\
+			\hline
+			
+			\textbf{Classifica Automatica} &
+			La classifica deve essere generata automaticamente come media dei voti\\
+			\hline
+			
+			\textbf{Singolo Ruolo} &
+			Un utente non può essere contemporaneamente organizzatore e giudice nello stesso Hackathon \\
+			\hline
+			
+			\textbf{Completezza Valutazioni} &
+			Tutti i giudici devono aver votato prima della pubblicazione della classifica \\
+			\hline
+			
+			\textbf{Blocco Team} &
+			I team non possono essere modificati dopo la chiusura delle registrazioni
+		\end{longtable}
+	}
+	\newpage
 	\section{Progettazione Logica}
 	\subsection{Schema Logico}
 	\begin{itemize}
-		\item \texttt{Hackathon(\underline{Titolo\_identificativo}, Sede, Classifica, DataInizio\_registrazione, DataFine\_registrazione, Descrizione\_problema, DataInizio\_evento, DataFine\_evento, NumIscritti\_corrente, MaxNum\_iscritti)}
+		\item \texttt{Hackathon(\underline{Titolo\_identificativo}, \underline{\underline{Username\_organizzatore}}, Sede, Classifica,\\
+			DataInizio\_registrazione, DataFine\_registrazione, Descrizione\_problema, 
+			\\DataInizio\_evento, DataFine\_evento, NumIscritti\_corrente, MaxNum\_iscritti, MaxNum\_membriTeam)}
+		\begin{graybox}
+			\texttt{Username\_organizzatore $\Rightarrow$ Organizzatore.Username}
+		\end{graybox}
 		\item \texttt{Utente(\underline{Username}, Password)}
 		\item \texttt{Organizzatore(\underline{Username\_organizzatore}, Password)}
 		\item \texttt{Giudice(\underline{ID\_giudice}, \underline{\underline{Username\_utente}}, \underline{\underline{Titolo\_hackathon}})}
-		\tab \texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
-		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\begin{graybox}
+			\texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
+			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\end{graybox}
 		\item \texttt{Team(\underline{Nome\_team}, \underline{\underline{Titolo\_hackathon}}, Punteggio\_finale)}
-		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\begin{graybox}
+			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\end{graybox}
 		\item \texttt{Documento(\underline{ID\_documento}, \underline{\underline{Nome\_team}}, \underline{\underline{Titolo\_hackathon}}, Titolo, Contenuto, Data\_stesura)}
-		\tab \texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
-		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\begin{graybox}
+			\texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
+			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\end{graybox}
 		\item \texttt{Membership(\underline{ID\_adesione}, \underline{\underline{Username\_utente}}, \underline{\underline{Nome\_team}}, \underline{\underline{Titolo\_hackathon}}, Data\_adesione)}
-		\tab \texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
-		\tab \texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
-		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
-		\item \texttt{Voto(\underline{\underline{ID\_giudice}},\underline{\underline{Username\_giudice}}, \underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, Punteggio)}
-		\tab \texttt{ID\_giudice $\Rightarrow$ Giudice.ID\_giudice}\\
-		\tab \texttt{Username\_giudice $\Rightarrow$ Utente.Username}\\
-		\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
-		\tab \texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}
-			\item \texttt{Valutazione(\underline{\underline{ID\_giudice}}, \underline{\underline{Username\_giudice}},\underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, \underline{\underline{ID\_documento}}, Valutazione\_giudice)}\\
-			\tab \texttt{ID\_giudice $\Rightarrow$ Giudice.ID\_giudice}\\
-			\tab \texttt{Username\_giudice $\Rightarrow$ Utente.Username}\\
-			\tab \texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
-			\tab \texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
-			\tab \texttt{ID\_documento $\Rightarrow$ Documento.ID\_documento}\\
+		\begin{graybox}
+			\texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
+			\texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
+			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\end{graybox}
+		\item \texttt{Voto(\underline{\underline{ID\_giudice}}, \underline{\underline{Username\_giudice}}, \underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, Punteggio)}
+		\begin{graybox}
+			\texttt{ID\_giudice $\Rightarrow$ Giudice.ID\_giudice} \\
+			\texttt{Username\_giudice $\Rightarrow$ Utente.Username} \\
+			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo} \\
+			\texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}
+		\end{graybox}
+		\item \texttt{Valutazione(\underline{\underline{ID\_giudice}}, \underline{\underline{Username\_giudice}},\underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, \underline{\underline{ID\_documento}}, Valutazione\_giudice)}
+		\begin{graybox}
+			\texttt{ID\_giudice $\Rightarrow$ Giudice.ID\_giudice} \\
+			\texttt{Username\_giudice $\Rightarrow$ Utente.Username} \\
+			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo} \\
+			\texttt{Nome\_team $\Rightarrow$ Team.Nome\_team} \\
+			\texttt{ID\_documento $\Rightarrow$ Documento.ID\_documento}
+		\end{graybox}
 	\end{itemize}
-		
+	\newpage
 	\section{Progettazione Fisica}
 	
 \end{document}
