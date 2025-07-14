@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  14 JUL 2025 17:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  14 JUL 2025 18:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -831,50 +831,50 @@ LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
 [9{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i4-
 ot1-0.enc}] [10]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 317.
+(Font)              <7> on input line 314.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 317.
+(Font)              <5> on input line 314.
  [11] [12] [13]
-Overfull \hbox (12.61903pt too wide) in alignment at lines 434--438
+Overfull \hbox (12.61903pt too wide) in alignment at lines 431--435
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 438--442
+Overfull \hbox (12.61903pt too wide) in alignment at lines 435--439
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 442--444
+Overfull \hbox (12.61903pt too wide) in alignment at lines 439--441
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 444--446
+Overfull \hbox (12.61903pt too wide) in alignment at lines 441--443
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 446--491
+Overfull \hbox (12.61903pt too wide) in alignment at lines 443--492
  [] [] 
  []
 
 [14]
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 12.0pt on input line 499.
+(Font)              scaled to size 12.0pt on input line 500.
 
-Overfull \hbox (54.61351pt too wide) in paragraph at lines 514--518
+Overfull \hbox (54.61351pt too wide) in paragraph at lines 515--519
 []\OT1/zi4/m/n/12 Documento($[]$, $[]$, $[]$, Titolo, Contenuto, Data[]stesura)
  
  []
 
 
-Overfull \hbox (48.53679pt too wide) in paragraph at lines 519--524
+Overfull \hbox (48.53679pt too wide) in paragraph at lines 520--525
 []\OT1/zi4/m/n/12 Membership($[]$, $[]$, $[]$, $[]$, Data[]adesione) 
  []
 
 
-Overfull \hbox (44.14006pt too wide) in paragraph at lines 532--539
+Overfull \hbox (44.14006pt too wide) in paragraph at lines 533--540
 []\OT1/zi4/m/n/12 Valutazione($[]$, $[]$,$[]$, $[]$, $[]$,
  []
 
@@ -910,7 +910,7 @@ C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr
 s/cm/cmr17.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /amsfonts/cm/cmsy10.pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/typ
 e1/public/amsfonts/cm/cmti12.pfb>
-Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (16 pages, 338070 byt
+Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (16 pages, 338909 byt
 es).
 PDF statistics:
  125 PDF objects out of 1000 (max. 8388607)

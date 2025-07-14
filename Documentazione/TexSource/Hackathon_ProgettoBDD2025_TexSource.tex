@@ -242,10 +242,7 @@
 			\hline
 			
 			\textbf{GIUDICE} &
-			Utente con ruolo di giudice. &
-			\begin{itemize}
-				\item \texttt{ID\_giudice} (INTEGER): Codice identificativo che ordina ciascun giudice alla propria Hackathon in ordine di adesione;
-			\end{itemize} \\
+			Utente con ruolo di giudice. & \\
 			\hline
 			
 			\textbf{TEAM} &
@@ -445,6 +442,10 @@
 			\hline
 			\endlastfoot
 			
+			\textbf{Password Sicura} &
+			La password di un utente deve avere almeno una lettera maiuscola, una lettera minuscola, un carattere numerico, un carattere speciale e che non sia più breve di 8 caratteri \\
+			\hline
+			
 			\textbf{Chiusura Registrazioni} &
 			Le registrazioni devono chiudersi 2 giorni prima dell'evento:
 			\texttt{DataFine\_registrazione} = \texttt{DataInizio\_evento} - 2 giorni \\
@@ -502,7 +503,7 @@
 		\end{graybox}
 		\item \texttt{Utente(\underline{Username}, Password)}
 		\item \texttt{Organizzatore(\underline{Username\_organizzatore}, Password)}
-		\item \texttt{Giudice(\underline{ID\_giudice}, \underline{\underline{Username\_utente}}, \underline{\underline{Titolo\_hackathon}})}
+		\item \texttt{Giudice(\underline{\underline{Username\_utente}}, \underline{\underline{Titolo\_hackathon}})}
 		\begin{graybox}
 			\texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
 			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
