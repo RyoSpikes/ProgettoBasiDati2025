@@ -1,6 +1,5 @@
-\documentclass[a4paper, 12pt]{article}
-\linespread{1.15} %interlinea
-\pagestyle{plain}
+\documentclass[a4paper, 10pt]{article}
+\linespread{1.0} %interlinea
 \usepackage{geometry} %margini
 \usepackage[]{tabto}
 \geometry{a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, bindingoffset=5mm}
@@ -15,13 +14,15 @@
 \usepackage[utf8]{inputenc}
 \usepackage{array}
 \usepackage{tabularx}
-\usepackage{geometry}
 \usepackage{enumitem}
 \usepackage{multirow}
 \usepackage{longtable}
 \usepackage{tcolorbox}
+\usepackage{xcolor, listings}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \tcbuselibrary{skins}
-
+\renewcommand{\familydefault}{\sfdefault}
 \geometry{margin=2.3cm}
 \renewcommand{\arraystretch}{1.2} % Aumenta altezza delle righe
 \setlist[itemize]{left=0pt, label=\textbullet, itemsep=1pt, topsep=1pt}
@@ -39,6 +40,47 @@
 	enhanced,
 	sharp corners
 }
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Colori coerenti con l'immagine
+\definecolor{sqlgreen}{rgb}{0,0.5,0}
+\definecolor{sqlblack}{rgb}{0,0,0}
+\definecolor{sqlblue}{rgb}{0,0,0.7}
+\definecolor{sqlpurple}{rgb}{0.58,0,0.82}
+\definecolor{sqlgray}{rgb}{0.5,0.5,0.5}
+\definecolor{sqlbg}{rgb}{0.98,0.98,0.98}
+
+\lstdefinestyle{sqlstyle}{
+	language=SQL,
+	backgroundcolor=\color{sqlbg},
+	basicstyle=\footnotesize\ttfamily,
+	commentstyle=\color{sqlgreen}\itshape,
+	keywordstyle=\color{sqlblue}\bfseries,
+	stringstyle=\color{sqlpurple},
+	showstringspaces=false,
+	numbers=left,
+	numberstyle=\tiny\color{sqlblack},
+	numbersep=2pt,
+	breaklines=true,
+	tabsize=2,
+	frame=single,
+	rulecolor=\color{black},
+	framerule=0.5pt,
+	xleftmargin=15pt,
+	framexleftmargin=10pt,
+	aboveskip=10pt,
+	belowskip=10pt,
+	morekeywords={
+		CREATE, TABLE, PRIMARY, KEY, FOREIGN, REFERENCES,
+		CONSTRAINT, CHECK, VARCHAR, INTEGER, DATE, NOT, NULL,
+		AND, OR, BEGIN, END, IF, THEN, ELSE, RETURN, DEFAULT
+	}
+}
+
+% \begin{lstlisting}[style=sqlstyle]
+	%   Il tuo codice SQL qui
+	% \end{lstlisting}
 
 \pagestyle{fancy}
 \fancyhead{}
@@ -213,10 +255,10 @@
 			\begin{itemize}
 				\item \texttt{Titolo\_identificativo} (VARCHAR[30]): Titolo univoco che identifica un Hackathon;
 				\item \texttt{Sede} (VARCHAR[30]): Sede dove si svolgerà l'Hackathon;
-				\item \texttt{Classifica} (VARCHAR[1000]): Classifica finale con i posizionamenti dei Team, in ordine di punteggio complessivo;
+				\item \texttt{Classifica} (TEXT): Classifica finale con i posizionamenti dei Team, in ordine di punteggio complessivo;
 				\item \texttt{DataInizio\_registrazione} (DATE);
 				\item \texttt{DataFine\_registrazione} (DATE);
-				\item \texttt{Descrizione\_problema} (VARCHAR[1000]): Descrizione del problema da risolvere offerta dai giudici;
+				\item \texttt{Descrizione\_problema} (TEXT): Descrizione del problema da risolvere offerta dai giudici;
 				\item \texttt{DataInizio\_evento} (DATE);
 				\item \texttt{DataFine\_evento} (DATE);
 				\item \texttt{NumIscritti\_corrente} (INTEGER): Numero degli iscritti all'Hackathon aggiornato fino alla chiusura delle iscrizioni o al raggiungimento del tetto massimo;
@@ -273,7 +315,7 @@
 			\begin{itemize}
 				\item \texttt{ID\_documento} (INTEGER): Codice identificativo per il singolo documento;
 				\item \texttt{Titolo} (VARCHAR[30]): Titolo del documento per riassumerne il contenuto;
-				\item \texttt{Contenuto} (VARCHAR[500]): Testo del documento;
+				\item \texttt{Contenuto} (TEXT): Testo del documento;
 				\item \texttt{Data\_stesura} (DATE)
 			\end{itemize} \\
 			\hline
@@ -281,13 +323,18 @@
 			\textbf{VALUTAZIONE} &
 			Valutazione scritta da un giudice. &
 			\begin{itemize}
-				\item \texttt{Valutazione\_giudice} (VARCHAR[500]): Valutazione di un giudice per un documento;
+				\item \texttt{Valutazione\_giudice} (TEXT): Valutazione di un giudice per un documento;
 			\end{itemize} \\
 			\hline
 			
+			\textbf{INVITO\_GIUDICE} &
+			Invito a diventare Giudice da parte di un Organizzatore verso un Utente &
+			\begin{itemize}
+				\item \texttt{Stato\_invito} (VARCHAR[20]): Stato di un invito, diviso in tre stati: L'invito è stato inviato all'utente e attende risposta (\textit{Inviato}), l'invito è stato accettato (\textit{Accettato}), L'invito è stato rifiutato (\textit{Rifiutato});
+				\item \texttt{Data\_invito} (DATE);
+			\end{itemize} \\ 
 		\end{longtable}
 	}
-	\newpage
 	\subsection{Dizionario delle Associazioni}
 	{\footnotesize
 		\setlength{\arrayrulewidth}{0.5pt}
@@ -451,6 +498,17 @@
 			\texttt{DataFine\_registrazione} = \texttt{DataInizio\_evento} - 2 giorni \\
 			\hline
 			
+			\textbf{Coerenza Date} &
+			Il periodo di registrazione all'evento non può né combaciare ne susseguire il periodo di durata dell'evento stesso.
+			Le registrazioni possono avvenire solo prima dell'evento e si chiudono esattamente due giorni prima.
+			Le date devono essere di per sé coerenti anche nei singoli casi: l'apertura delle registrazioni non può avvenire dopo
+			la sua chiusura e viceversa, discorso analogo per l'evento.\\
+			\hline
+			
+			\textbf{Coerenza Data di Adesione} &
+			Non può esserci una data di adesione in membership che vada oltre la chiusura delle registrazioni o prima dell'apertura delle registrazioni.\\
+			\hline
+			
 			\textbf{Range Voti} &
 			I voti assegnati dai giudici devono essere interi compresi tra 0 e 10\\
 			\hline
@@ -499,7 +557,7 @@
 			DataInizio\_registrazione, DataFine\_registrazione, Descrizione\_problema, 
 			\\DataInizio\_evento, DataFine\_evento, NumIscritti\_corrente, MaxNum\_iscritti, MaxNum\_membriTeam)}
 		\begin{graybox}
-			\texttt{Username\_organizzatore $\Rightarrow$ Organizzatore.Username}
+			\texttt{Username\_organizzatore $\Rightarrow$ Organizzatore.Username\_organizzatore}
 		\end{graybox}
 		\item \texttt{Utente(\underline{Username}, Password)}
 		\item \texttt{Organizzatore(\underline{Username\_organizzatore}, Password)}
@@ -512,27 +570,31 @@
 		\begin{graybox}
 			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
 		\end{graybox}
-		\item \texttt{Documento(\underline{ID\_documento}, \underline{\underline{Nome\_team}}, \underline{\underline{Titolo\_hackathon}}, Titolo, Contenuto, Data\_stesura)}
+		\item \texttt{Documento(\underline{ID\_documento}, \underline{\underline{Nome\_team}}, \underline{\underline{Titolo\_hackathon}}, Titolo,\\Contenuto, Data\_stesura)}
 		\begin{graybox}
 			\texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
 			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
 		\end{graybox}
-		\item \texttt{Membership(\underline{ID\_adesione}, \underline{\underline{Username\_utente}}, \underline{\underline{Nome\_team}}, \underline{\underline{Titolo\_hackathon}}, Data\_adesione)}
+		\item \texttt{Invito\_giudice(\underline{\underline{Username\_organizzatore}}, \underline{\underline{Username\_utente}}, \underline{\underline{Titolo\_hackathon}}, Stato\_invito, Data\_invito)}
+		\begin{graybox}
+			\texttt{Username\_organizzatore $\Rightarrow$ Organizzatore.Username\_organizzatore} \\
+			\texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
+			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
+		\end{graybox}
+		\item \texttt{Membership(\underline{ID\_adesione}, \underline{\underline{Username\_utente}}, \underline{\underline{Nome\_team}}, \underline{\underline{Titolo\_hackathon}},\\Data\_adesione)}
 		\begin{graybox}
 			\texttt{Username\_utente $\Rightarrow$ Utente.Username}\\
 			\texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}\\
 			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo}
 		\end{graybox}
-		\item \texttt{Voto(\underline{\underline{ID\_giudice}}, \underline{\underline{Username\_giudice}}, \underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, Punteggio)}
+		\item \texttt{Voto(\underline{\underline{Username\_giudice}}, \underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, Punteggio)}
 		\begin{graybox}
-			\texttt{ID\_giudice $\Rightarrow$ Giudice.ID\_giudice} \\
 			\texttt{Username\_giudice $\Rightarrow$ Utente.Username} \\
 			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo} \\
 			\texttt{Nome\_team $\Rightarrow$ Team.Nome\_team}
 		\end{graybox}
-		\item \texttt{Valutazione(\underline{\underline{ID\_giudice}}, \underline{\underline{Username\_giudice}},\underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, \underline{\underline{ID\_documento}}, Valutazione\_giudice)}
+		\item \texttt{Valutazione(\underline{\underline{Username\_giudice}},\underline{\underline{Titolo\_hackathon}}, \underline{\underline{Nome\_team}}, \underline{\underline{ID\_documento}},\\Valutazione\_giudice)}
 		\begin{graybox}
-			\texttt{ID\_giudice $\Rightarrow$ Giudice.ID\_giudice} \\
 			\texttt{Username\_giudice $\Rightarrow$ Utente.Username} \\
 			\texttt{Titolo\_hackathon $\Rightarrow$ Hackathon.Titolo\_identificativo} \\
 			\texttt{Nome\_team $\Rightarrow$ Team.Nome\_team} \\
@@ -541,5 +603,436 @@
 	\end{itemize}
 	\newpage
 	\section{Progettazione Fisica}
-	
+	\subsection{Definzione Tabelle}
+	In questa sezione verranno elencate le definizioni di tutte le tabelle che comporranno la nostra struttura.
+	\subsubsection{Definizione di Organizzatore}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE ORGANIZZATORE
+		(
+			Username_org VARCHAR(30) PRIMARY KEY,
+			Password VARCHAR(30) NOT NULL,
+			-- Controllo validita password
+			CONSTRAINT chk_password_complexity
+			CHECK (
+				-- Lunghezza minima 8 caratteri
+				LENGTH(Password) >= 8 AND
+				-- Almeno una lettera maiuscola
+				Password ~ '[A-Z]' AND
+				-- Almeno una lettera minuscola
+				Password ~ '[a-z]' AND
+				-- Almeno un numero
+				Password ~ '[0-9]' AND
+				-- Almeno un carattere speciale tra quelli consentiti
+				Password ~ '[!@#$%^&*()\-_=+{};:,<.>/?]'
+			)
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Utente}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE UTENTE
+		(
+			Username VARCHAR(30) PRIMARY KEY,
+			Password VARCHAR(30) NOT NULL,
+			-- Controllo validita password
+			CONSTRAINT chk_password_complexity
+			CHECK (
+				-- Lunghezza minima 8 caratteri
+				LENGTH(Password) >= 8 AND
+				-- Almeno una lettera maiuscola
+				Password ~ '[A-Z]' AND
+				-- Almeno una lettera minuscola
+				Password ~ '[a-z]' AND
+				-- Almeno un numero
+				Password ~ '[0-9]' AND
+				-- Almeno un carattere speciale tra quelli consentiti
+				Password ~ '[!@#$%^&*()\-_=+{};:,<.>/?]'
+			)
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Hackathon}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE HACKATHON
+		(
+			Titolo_identificativo VARCHAR(30) PRIMARY KEY,
+			Organizzatore VARCHAR(30) NOT NULL,
+			Sede VARCHAR(30) NOT NULL,
+			Classifica TEXT,
+			DataInizio_registrazione DATE NOT NULL,
+			DataFine_registrazione DATE NOT NULL,
+			DataInizio_evento DATE NOT NULL,
+			DataFine_evento DATE NOT NULL,
+			Descrizione_problema TEXT NOT NULL,
+			NumIscritti_corrente INTEGER,
+			MaxNum_iscritti INTEGER NOT NULL,
+			MaxNum_membriTeam INTEGER NOT NULL,
+			
+			FOREIGN KEY (Organizzatore) REFERENCES ORGANIZZATORE(Username_org) ON DELETE RESTRICT,
+			
+			-- Vincolo: la registrazione termina almeno 2 giorni prima dell'inizio dell'evento
+			CHECK (DataFine_registrazione <= DataInizio_evento - INTERVAL '2 days'),
+			
+			-- Vincolo: l'intera registrazione deve avvenire prima dell'evento
+			CHECK (DataFine_registrazione < DataInizio_evento AND DataInizio_registrazione < DataInizio_evento),
+			
+			-- Vincolo: le date devono risultare coerenti
+			CHECK (DataInizio_registrazione < DataFine_registrazione AND DataInizio_evento < DataFine_evento)
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Giudice}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE GIUDICE
+		(
+			Username_utente VARCHAR(30) NOT NULL,
+			Titolo_hackathon VARCHAR(30) NOT NULL,
+			
+			PRIMARY KEY (Username_utente, Titolo_hackathon),
+			
+			FOREIGN KEY (Username_utente) REFERENCES UTENTE (Username)
+			ON DELETE CASCADE,
+			FOREIGN KEY (Titolo_hackathon) REFERENCES HACKATHON (Titolo_identificativo)
+			ON DELETE CASCADE
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Team}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE TEAM
+		(
+			Nome_team VARCHAR(30) UNIQUE NOT NULL,
+			Punteggio_finale INTEGER,
+			Titolo_hackathon VARCHAR(30) NOT NULL,
+			
+			PRIMARY KEY(Nome_team, Titolo_hackathon),
+			
+			FOREIGN KEY (Titolo_hackathon) REFERENCES HACKATHON (Titolo_identificativo)
+			ON DELETE CASCADE
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Documento}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE DOCUMENTO
+		(
+			ID_documento SERIAL PRIMARY KEY,
+			Nome_team VARCHAR(30) NOT NULL,
+			Titolo_hackathon VARCHAR(30) NOT NULL,
+			Titolo_doc VARCHAR(30) NOT NULL,
+			Contenuto TEXT NOT NULL,
+			Data_stesura DATE,
+			
+			FOREIGN KEY (Nome_team, Titolo_hackathon) REFERENCES TEAM (Nome_team, Titolo_hackathon)
+			ON DELETE CASCADE
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Membership}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE MEMBERSHIP
+		(
+			ID_adesione SERIAL PRIMARY KEY,
+			Username_utente VARCHAR(30) NOT NULL,
+			Team_appartenenza VARCHAR(30) NOT NULL,
+			Titolo_hackathon VARCHAR(30) NOT NULL,
+			Data_adesione DATE NOT NULL,
+			
+			UNIQUE (Username_utente, Team_appartenenza, 
+					Titolo_hackathon),
+			
+			FOREIGN KEY (Username_utente) 
+				REFERENCES UTENTE (Username) 
+				ON DELETE CASCADE,
+			FOREIGN KEY (Team_appartenenza, Titolo_hackathon) 
+				REFERENCES TEAM (Nome_team, Titolo_hackathon) 
+				ON DELETE CASCADE
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Voto}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE VOTO
+		(
+			Username_giudice VARCHAR(30) NOT NULL,
+			Titolo_hackathon VARCHAR(30) NOT NULL,
+			Team_votato VARCHAR(30) NOT NULL,
+			Punteggio INTEGER,
+			
+			UNIQUE (Username_giudice, Titolo_hackathon, 
+				Team_votato),
+				
+			FOREIGN KEY (Username_giudice, Titolo_hackathon) 
+				REFERENCES GIUDICE (Username_utente, Titolo_hackathon) 
+				ON DELETE CASCADE,
+			FOREIGN KEY (Team_votato, Titolo_hackathon) 
+				REFERENCES TEAM (Nome_team, Titolo_hackathon) 
+				ON DELETE CASCADE,
+			
+			CHECK (Punteggio >= 0 AND Punteggio <= 10)
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Valutazione}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE VALUTAZIONE
+		(
+			ID_documento INTEGER,
+			Username_giudice VARCHAR(30) NOT NULL,
+			Titolo_hackathon VARCHAR(30) NOT NULL,
+			Team_valutato VARCHAR(30) NOT NULL,
+			Valutazione_giudice TEXT,
+			
+			UNIQUE(ID_documento, Username_giudice, 
+				Titolo_hackathon, Team_valutato),
+			
+			FOREIGN KEY (ID_documento) 
+				REFERENCES DOCUMENTO (ID_documento) 
+				ON DELETE CASCADE,
+			FOREIGN KEY (Team_valutato, Titolo_hackathon) 
+				REFERENCES TEAM (Nome_team, Titolo_hackathon) 
+				ON DELETE CASCADE,
+			FOREIGN KEY (Username_giudice, Titolo_hackathon) 
+				REFERENCES GIUDICE (Username_utente, Titolo_hackathon) 
+				ON DELETE CASCADE
+		);
+	\end{lstlisting}
+	\subsubsection{Definizione di Invito Giudice}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE TABLE INVITO_GIUDICE
+		(
+			Username_organizzatore VARCHAR(30) NOT NULL,
+			Username_utente VARCHAR(30) NOT NULL,
+			Titolo_hackathon VARCHAR(30) NOT NULL,
+			Data_invito DATE NOT NULL DEFAULT CURRENT_DATE,
+			Stato_invito VARCHAR(20) NOT NULL 
+				CHECK (Stato_invito IN ('Inviato', 'Accettato', 'Rifiutato')),
+			
+			PRIMARY KEY (Username_utente, Titolo_hackathon),
+			
+			FOREIGN KEY (Username_organizzatore) REFERENCES ORGANIZZATORE(Username_org) ON DELETE CASCADE,
+			FOREIGN KEY (Username_utente) REFERENCES UTENTE(Username) ON DELETE CASCADE,
+			FOREIGN KEY (Titolo_hackathon) REFERENCES HACKATHON(Titolo_identificativo) ON DELETE CASCADE
+		);
+	\end{lstlisting}
+	\subsection{Implementazioni Vincoli}
+	In questa sezione verranno riportate le implementazioni dei vincoli più complessi che non sono già stati indicati nelle definizioni delle tabelle.
+	\subsubsection{Implementazione Vincolo di Creazione Giudice su Accettazione Invito}
+	\begin{lstlisting}[style=sqlstyle]
+		CREATE OR REPLACE FUNCTION aggiungi_giudice()
+		RETURNS TRIGGER AS $$
+		BEGIN
+			-- Controlla se lo stato dell'invito e' diventato 'Accettato'
+			IF NEW.Stato_invito = 'Accettato' THEN
+				-- Inserisce il nuovo giudice, solo se non esiste gia'
+				INSERT INTO GIUDICE (Username_utente, Titolo_hackathon)
+				VALUES (NEW.Username_utente, NEW.Titolo_hackathon)
+				ON CONFLICT DO NOTHING; -- evita errore se gia' presente
+			END IF;
+			
+			RETURN NEW;
+		END;
+		$$ LANGUAGE plpgsql;
+		
+		CREATE TRIGGER trigger_aggiungi_giudice
+		AFTER UPDATE ON INVITO_GIUDICE
+		FOR EACH ROW
+		WHEN (OLD.Stato_invito IS DISTINCT FROM NEW.Stato_invito AND NEW.Stato_invito = 'Accettato')
+		EXECUTE FUNCTION aggiungi_giudice();
+	\end{lstlisting}
+	\subsubsection{Implementazione Vincolo di Controllo sull'unicità di un Utente come Giudice}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per verificare la sovrapposizione di date tra hackathon
+		CREATE OR REPLACE FUNCTION verifica_giudice_sovrapposizione()
+		RETURNS TRIGGER AS $$
+		DECLARE
+			nuovo_inizio DATE;
+			nuovo_fine DATE;
+			conteggio INTEGER;
+		BEGIN
+			-- Recupera le date dell'evento hackathon per cui l'utente sta diventando giudice
+			SELECT h.DataInizio_evento, h.DataFine_evento
+			INTO nuovo_inizio, nuovo_fine
+			FROM HACKATHON h
+			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
+			
+			-- Verifica se l'utente e' gia' giudice per un altro hackathon con date sovrapposte
+			SELECT COUNT(*)
+			INTO conteggio
+			FROM GIUDICE g
+			JOIN HACKATHON h ON g.Titolo_hackathon = h.Titolo_identificativo
+			WHERE g.Username_utente = NEW.Username_utente
+			AND g.Titolo_hackathon <> NEW.Titolo_hackathon
+			AND (
+				-- Verifica sovrapposizione date
+				(h.DataInizio_evento <= nuovo_fine AND h.DataFine_evento >= nuovo_inizio)
+			);
+			
+			-- Se c'e' sovrapposizione, genera un errore
+			IF conteggio > 0 THEN
+			RAISE EXCEPTION 'L''utente % non puo' essere giudice per questo hackathon perche' e' gia' giudice 
+				per un hackathon con date sovrapposte', NEW.Username_utente;
+			END IF;
+			
+			RETURN NEW;
+		END;
+		$$ LANGUAGE plpgsql;
+		
+		-- Trigger per controllare la sovrapposizione quando un utente diventa giudice
+		CREATE TRIGGER trigger_verifica_giudice_sovrapposizione
+		BEFORE INSERT OR UPDATE ON GIUDICE
+		FOR EACH ROW
+		EXECUTE FUNCTION verifica_giudice_sovrapposizione();
+	\end{lstlisting}
+	\subsubsection{Implementazione Vincolo di Controllo sulla Data di Adesione ad un Team}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione trigger
+		CREATE OR REPLACE FUNCTION verifica_data_adesione()
+		RETURNS TRIGGER AS $$
+		DECLARE
+			data_inizio DATE;
+			data_fine DATE;
+		BEGIN
+			-- Recupera le date di registrazione dall'Hackathon associato al team
+			SELECT h.DataInizio_registrazione, h.DataFine_registrazione
+			INTO data_inizio, data_fine
+			FROM HACKATHON h
+			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
+			
+			-- Verifica se la Data_adesione e' compresa tra le due date
+			IF NEW.Data_adesione < data_inizio OR NEW.Data_adesione > data_fine THEN
+			RAISE EXCEPTION 'Data_adesione fuori dall''intervallo di registrazione dell''hackathon (% - %)', 
+				data_inizio, data_fine;
+			END IF;
+			
+			RETURN NEW;
+		END;
+		$$ LANGUAGE plpgsql;
+		
+		-- Trigger sulla tabella MEMBERSHIP
+		CREATE TRIGGER trigger_verifica_data_adesione
+		BEFORE INSERT OR UPDATE ON MEMBERSHIP
+		FOR EACH ROW
+		EXECUTE FUNCTION verifica_data_adesione();
+	\end{lstlisting}
+	\subsubsection{Implementazione Vincolo di Controllo sulla Data di Adesione ad un Team}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per verificare se un'adesione e' valida
+		CREATE OR REPLACE FUNCTION verifica_adesione_valida()
+		RETURNS TRIGGER AS $$
+		DECLARE
+			data_fine_registrazione DATE;
+			num_membri_attuali INTEGER;
+			max_membri INTEGER;
+		BEGIN
+			-- Recupera la data di fine registrazione dell'hackathon
+			SELECT h.DataFine_registrazione
+			INTO data_fine_registrazione
+			FROM HACKATHON h
+			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
+			
+			-- Verifica se la data attuale e' successiva alla data di fine registrazione
+			IF CURRENT_DATE > data_fine_registrazione THEN
+				RAISE EXCEPTION 'Non e'' possibile aderire al team: le registrazioni per l''hackathon "%" sono chiuse dal %', 
+				NEW.Titolo_hackathon, data_fine_registrazione;
+			END IF;
+			
+			-- Conta il numero di membri attuali nel team
+			SELECT COUNT(*)
+			INTO num_membri_attuali
+			FROM MEMBERSHIP m
+			WHERE m.Team_appartenenza = NEW.Team_appartenenza
+			AND m.Titolo_hackathon = NEW.Titolo_hackathon;
+			
+			-- Recupera il numero massimo di membri per team dell'hackathon
+			SELECT h.MaxNum_membriTeam
+			INTO max_membri
+			FROM HACKATHON h
+			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
+			
+			-- Verifica se il team e' gia' al completo
+			IF num_membri_attuali >= max_membri THEN
+				RAISE EXCEPTION 'Non e'' possibile aderire al team "%": 
+					il team ha gia'' raggiunto il numero massimo di membri (%)', 
+				NEW.Team_appartenenza, max_membri;
+			END IF;
+			
+			-- Se tutte le verifiche sono passate, permetti l'inserimento
+			RETURN NEW;
+			END;
+		$$ LANGUAGE plpgsql;
+		
+		-- Trigger per controllare l'adesione al team
+		CREATE TRIGGER trigger_verifica_adesione_valida
+		BEFORE INSERT ON MEMBERSHIP
+		FOR EACH ROW
+		EXECUTE FUNCTION verifica_adesione_valida();
+	\end{lstlisting}
+	\subsubsection{Implementazione Vincolo di Controllo sul superamento della soglia massima di membri di un Team}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per verificare che un team non superi il numero massimo di membri
+		CREATE OR REPLACE FUNCTION verifica_max_membri_team()
+		RETURNS TRIGGER AS $$
+		DECLARE
+			num_membri_attuali INTEGER;
+			max_membri INTEGER;
+		BEGIN
+			-- Conta il numero di membri attuali nel team (includendo il nuovo membro)
+			SELECT COUNT(*)
+			INTO num_membri_attuali
+			FROM MEMBERSHIP m
+			WHERE m.Team_appartenenza = NEW.Team_appartenenza
+			AND m.Titolo_hackathon = NEW.Titolo_hackathon;
+			
+			-- Incrementa di 1 per l'inserimento in corso
+			num_membri_attuali := num_membri_attuali + 1;
+			
+			-- Recupera il numero massimo di membri per team dall'hackathon
+			SELECT h.MaxNum_membriTeam
+			INTO max_membri
+			FROM HACKATHON h
+			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
+			
+			-- Verifica se l'aggiunta del nuovo membro supererebbe il limite
+			IF num_membri_attuali > max_membri THEN
+				RAISE EXCEPTION 'Impossibile aggiungere il membro al team "%": 
+					il numero massimo di membri consentito (%) sarebbe superato',
+				NEW.Team_appartenenza, max_membri;
+			END IF;
+			
+			-- Se la verifica e' passata, permetti l'inserimento
+			RETURN NEW;
+		END;
+		$$ LANGUAGE plpgsql;
+		
+		-- Trigger per controllare il numero massimo di membri
+		CREATE TRIGGER trigger_verifica_max_membri_team
+		BEFORE INSERT ON MEMBERSHIP
+		FOR EACH ROW
+		EXECUTE FUNCTION verifica_max_membri_team();
+	\end{lstlisting}
+	\subsubsection{Implementazione Vincolo di Controllo sui Team senza membri sufficienti}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per verificare e cancellare team incompleti
+		CREATE OR REPLACE FUNCTION elimina_team_incompleti()
+		RETURNS void AS $$
+		DECLARE
+			hackathon_record RECORD;
+		BEGIN
+			-- Trova solo gli hackathon la cui data di fine registrazione e' OGGI
+			FOR hackathon_record IN (
+				SELECT h.Titolo_identificativo 
+				FROM HACKATHON h 
+				WHERE h.DataFine_registrazione = CURRENT_DATE
+			) LOOP
+				-- Elimina direttamente i team con meno di 2 membri
+				DELETE FROM TEAM t
+				WHERE t.Titolo_hackathon = hackathon_record.Titolo_identificativo
+				AND (
+					SELECT COUNT(*) 
+					FROM MEMBERSHIP m 
+					WHERE m.Team_appartenenza = t.Nome_team 
+					AND m.Titolo_hackathon = t.Titolo_hackathon
+				) < 2;
+				
+				RAISE NOTICE 'Eliminati tutti i team incompleti per l''hackathon "%"', 
+				hackathon_record.Titolo_identificativo;
+			END LOOP;
+			
+			RETURN;
+		END;
+		$$ LANGUAGE plpgsql;
+	\end{lstlisting}
 \end{document}
