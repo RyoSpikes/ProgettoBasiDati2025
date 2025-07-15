@@ -525,20 +525,12 @@
 			Ogni team deve aver caricato almeno un documento per essere valutato \\
 			\hline
 			
-			\textbf{Temporalità Documenti} &
-			I documenti possono essere caricati solo durante l'Hackathon\\
-			\hline
-			
 			\textbf{Unicità Voto Giudice} &
 			Un giudice non può votare più volte lo stesso team\\
 			\hline
 			
 			\textbf{Classifica Automatica} &
-			La classifica deve essere generata automaticamente come media dei voti\\
-			\hline
-			
-			\textbf{Singolo Ruolo} &
-			Un utente non può essere contemporaneamente organizzatore e giudice nello stesso Hackathon \\
+			La classifica deve essere generata automaticamente come somma dei punteggi\\
 			\hline
 			
 			\textbf{Completezza Valutazioni} &
@@ -876,7 +868,7 @@
 		FOR EACH ROW
 		EXECUTE FUNCTION verifica_giudice_sovrapposizione();
 	\end{lstlisting}
-	\subsubsection{Implementazione Vincolo di Controllo sulla Data di Adesione ad un Team}
+	\subsubsection{Implementazione Vincolo di Controllo sulla validità di Adesione di un Utente ad un Team}
 	\begin{lstlisting}[style=sqlstyle]
 		-- Funzione trigger
 		CREATE OR REPLACE FUNCTION verifica_data_adesione()
@@ -1032,6 +1024,135 @@
 			END LOOP;
 			
 			RETURN;
+		END;
+		$$ LANGUAGE plpgsql;
+	\end{lstlisting}
+	\subsubsection{Implementazione Vincolo di Controllo sui Team senza membri sufficienti}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per verificare che un team abbia caricato almeno un documento prima di ricevere un voto
+		CREATE OR REPLACE FUNCTION verifica_documento_caricato()
+		RETURNS TRIGGER AS $$
+		DECLARE
+			documenti_count INTEGER;
+		BEGIN
+			-- Conta quanti documenti ha caricato il team
+			SELECT COUNT(*)
+			INTO documenti_count
+			FROM DOCUMENTO d
+			WHERE d.nome_team = NEW.team_votato
+			AND d.Titolo_hackathon = NEW.Titolo_hackathon;
+			
+			-- Se il team non ha caricato alcun documento, impedisci l'inserimento del voto
+			IF documenti_count = 0 THEN
+				RAISE EXCEPTION 'Impossibile votare il team "%": 
+					non ha caricato alcun documento per l''hackathon "%"',
+				NEW.team_votato, NEW.Titolo_hackathon;
+			END IF;
+			
+			-- Se la verifica e' passata, permetti l'inserimento del voto
+			RETURN NEW;
+		END;
+		$$ LANGUAGE plpgsql;
+		
+		-- Trigger per controllare che un team abbia caricato documenti prima di ricevere un voto
+		CREATE TRIGGER trigger_verifica_documento_caricato
+		BEFORE INSERT ON VOTO
+		FOR EACH ROW
+		EXECUTE FUNCTION verifica_documento_caricato();
+	\end{lstlisting}
+	\subsubsection{Implementazione Funzione di Generazione della classifica finale con annessi vincoli sulla fine dell'evento e sul controllo dei giudici senza voto}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per generare la classifica finale dell'hackathon
+		CREATE OR REPLACE FUNCTION genera_classifica_hackathon(titolo_hack VARCHAR(30))
+		RETURNS TEXT AS $$
+		DECLARE
+			classifica_text TEXT := '';
+			team_record RECORD;
+			posizione INTEGER := 1;
+			data_fine_evento DATE;
+			num_giudici INTEGER;
+			num_team INTEGER;
+			num_voti INTEGER;
+			voti_attesi INTEGER;
+		BEGIN
+			-- Verifica che l'hackathon esista
+			IF NOT EXISTS (SELECT 1 FROM HACKATHON WHERE Titolo_identificativo = titolo_hack) THEN
+				RETURN 'Errore: Hackathon non trovato';
+			END IF;
+			
+			-- Recupera la data di fine evento dell'hackathon
+			SELECT DataFine_evento INTO data_fine_evento
+			FROM HACKATHON
+			WHERE Titolo_identificativo = titolo_hack;
+			
+			-- Verifica che l'hackathon sia terminato
+			IF CURRENT_DATE < data_fine_evento THEN
+				RETURN 'Errore: Non e' possibile generare la classifica prima della fine dell''hackathon';
+			END IF;
+			
+			-- Conta il numero di giudici per questo hackathon
+			SELECT COUNT(*) INTO num_giudici
+			FROM GIUDICE
+			WHERE Titolo_hackathon = titolo_hack;
+			
+			-- Conta il numero di team per questo hackathon
+			SELECT COUNT(*) INTO num_team
+			FROM TEAM
+			WHERE Titolo_hackathon = titolo_hack;
+			
+			-- Conta il numero totale di voti espressi
+			SELECT COUNT(*) INTO num_voti
+			FROM VOTO
+			WHERE Titolo_hackathon = titolo_hack;
+			
+			-- Calcola il numero di voti attesi (ogni giudice deve votare ogni team)
+			voti_attesi := num_giudici * num_team;
+			
+			-- Verifica se tutti i giudici hanno espresso il proprio voto per tutti i team
+			IF num_voti < voti_attesi THEN
+				RETURN 'Errore: Non e' possibile generare la classifica. Mancano ' || 
+				(voti_attesi - num_voti) || ' voti su ' || voti_attesi || ' attesi. Tutti i giudici devono votare tutti i team.';
+				END IF;
+			
+			-- Aggiorna il punteggio finale di ciascun team
+			UPDATE TEAM t
+			SET Punteggio_finale = (
+				SELECT COALESCE(SUM(v.Punteggio), 0)
+				FROM VOTO v
+				WHERE v.Team_votato = t.Nome_team
+				AND v.Titolo_hackathon = t.Titolo_hackathon
+			)
+			WHERE t.Titolo_hackathon = titolo_hack;
+			
+			-- Costruisce la stringa della classifica
+			FOR team_record IN (
+				SELECT Nome_team, Punteggio_finale
+				FROM TEAM
+				WHERE Titolo_hackathon = titolo_hack
+				ORDER BY Punteggio_finale DESC, Nome_team ASC
+			) LOOP
+				classifica_text := classifica_text || 
+				posizione || ' ' || 
+				team_record.Nome_team || ' ' || 
+				COALESCE(team_record.Punteggio_finale, 0) || E'\n';
+				posizione := posizione + 1;
+			END LOOP;
+			
+			-- Rimuovi l'ultimo carattere newline se la classifica non e' vuota
+			IF LENGTH(classifica_text) > 0 THEN
+				classifica_text := SUBSTRING(classifica_text, 1, LENGTH(classifica_text) - 1);
+			END IF;
+			
+			-- Aggiorna il campo Classifica nella tabella HACKATHON
+			UPDATE HACKATHON
+			SET Classifica = classifica_text
+			WHERE Titolo_identificativo = titolo_hack;
+			
+			-- Registra l'utente e la data/ora di generazione della classifica
+			RAISE NOTICE 'Classifica generata da % il % UTC', 
+			CURRENT_USER, TO_CHAR(CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS');
+			
+			RETURN classifica_text;
 		END;
 		$$ LANGUAGE plpgsql;
 	\end{lstlisting}

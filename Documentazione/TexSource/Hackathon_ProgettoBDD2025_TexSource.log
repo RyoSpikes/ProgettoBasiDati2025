@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  15 JUL 2025 18:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  15 JUL 2025 20:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -965,18 +965,18 @@ Overfull \hbox (12.61903pt too wide) in alignment at lines 488--490
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 490--550
+Overfull \hbox (12.61903pt too wide) in alignment at lines 490--542
  [] [] 
  []
 
 [11]
-Overfull \hbox (48.6279pt too wide) in paragraph at lines 558--561
+Overfull \hbox (48.6279pt too wide) in paragraph at lines 550--553
 \T1/lmtt/m/n/10 DataInizio_evento, DataFine_evento, NumIscritti_corrente, MaxNu
 m_iscritti, MaxNum_membriTeam) 
  []
 
 
-Overfull \hbox (17.12799pt too wide) in paragraph at lines 578--583
+Overfull \hbox (17.12799pt too wide) in paragraph at lines 570--575
 []\T1/lmtt/m/n/10 Invito_giudice($[]$, $[]$, $[]$, Stato_invito,
  []
 
@@ -985,14 +985,15 @@ Overfull \hbox (17.12799pt too wide) in paragraph at lines 578--583
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <8> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 610.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 602.
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-620.
+612.
 
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [13]
-[14] [15] [16] [17] [18] [19] (Hackathon_ProgettoBDD2025_TexSource.aux)
+[14] [15] [16] [17] [18] [19] [20] [21]
+(Hackathon_ProgettoBDD2025_TexSource.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
@@ -1003,10 +1004,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 20959 strings out of 475248
- 433577 string characters out of 5757813
+ 20985 strings out of 475248
+ 433967 string characters out of 5757813
  2340785 words of memory out of 5000000
- 42102 multiletter control sequences out of 15000+600000
+ 42128 multiletter control sequences out of 15000+600000
  618611 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  87i,12n,97p,529b,1946s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1026,10 +1027,10 @@ pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.
 pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.p
 fb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.
 pfb>
-Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (19 pages, 545144 byt
+Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (21 pages, 561472 byt
 es).
 PDF statistics:
- 165 PDF objects out of 1000 (max. 8388607)
+ 171 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  28 words of extra memory for PDF output out of 10000 (max. 10000000)
 
