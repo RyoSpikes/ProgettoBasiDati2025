@@ -100,7 +100,8 @@ CREATE TABLE DOCUMENTO
     Titolo_hackathon VARCHAR(30) NOT NULL,
     Titolo_doc VARCHAR(30) NOT NULL,
     Contenuto TEXT NOT NULL,
-    Data_stesura DATE,
+    -- MODIFICATO: Usiamo TIMESTAMPTZ per data e ora con fuso orario
+    Data_stesura TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (Nome_team, Titolo_hackathon) REFERENCES TEAM (Nome_team, Titolo_hackathon)
         ON DELETE CASCADE
@@ -119,8 +120,6 @@ CREATE TABLE MEMBERSHIP
     FOREIGN KEY (Username_utente) REFERENCES UTENTE (Username) ON DELETE CASCADE,
     FOREIGN KEY (Team_appartenenza, Titolo_hackathon) REFERENCES TEAM (Nome_team, Titolo_hackathon)
         ON DELETE CASCADE
-
-    --todo: VINCOLO SU DATA_ADESIONE
 );
 
 CREATE TABLE VOTO
@@ -183,13 +182,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trigger_aggiungi_giudice
-AFTER UPDATE ON INVITO_GIUDICE
-FOR EACH ROW
-WHEN (OLD.Stato_invito IS DISTINCT FROM NEW.Stato_invito AND NEW.Stato_invito = 'Accettato')
-EXECUTE FUNCTION aggiungi_giudice();
-
--- Funzione per verificare la sovrapposizione di date tra hackathon
 CREATE OR REPLACE FUNCTION verifica_giudice_sovrapposizione()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -210,10 +202,7 @@ BEGIN
     JOIN HACKATHON h ON g.Titolo_hackathon = h.Titolo_identificativo
     WHERE g.Username_utente = NEW.Username_utente
     AND g.Titolo_hackathon <> NEW.Titolo_hackathon
-    AND (
-        -- Verifica sovrapposizione date
-        (h.DataInizio_evento <= nuovo_fine AND h.DataFine_evento >= nuovo_inizio)
-    );
+    AND (h.DataInizio_evento <= nuovo_fine AND h.DataFine_evento >= nuovo_inizio);
 
     -- Se c'è sovrapposizione, genera un errore
     IF conteggio > 0 THEN
@@ -223,12 +212,6 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-
--- Trigger per controllare la sovrapposizione quando un utente diventa giudice
-CREATE TRIGGER trigger_verifica_giudice_sovrapposizione
-BEFORE INSERT OR UPDATE ON GIUDICE
-FOR EACH ROW
-EXECUTE FUNCTION verifica_giudice_sovrapposizione();
 
 CREATE OR REPLACE FUNCTION verifica_adesione_valida()
 RETURNS TRIGGER AS $$
@@ -249,13 +232,13 @@ BEGIN
     -- Verifica se la data attuale è successiva alla data di fine registrazione
     IF CURRENT_DATE > data_fine_registrazione THEN
         RAISE EXCEPTION 'Non è possibile aderire al team: le registrazioni per l''hackathon "%" sono chiuse dal %',
-                        NEW.Titolo_hackathon, data_fine_registrazione;
+                         NEW.Titolo_hackathon, data_fine_registrazione;
     END IF;
 
     -- Verifica se è stato raggiunto il numero massimo di iscritti all'hackathon
     IF num_iscritti_corrente >= max_iscritti THEN
         RAISE EXCEPTION 'Non è possibile aderire al team: l''hackathon "%" ha raggiunto il numero massimo di partecipanti (%)',
-                        NEW.Titolo_hackathon, max_iscritti;
+                         NEW.Titolo_hackathon, max_iscritti;
     END IF;
 
     -- Conta il numero di membri attuali nel team
@@ -268,7 +251,7 @@ BEGIN
     -- Verifica se il team è già al completo
     IF num_membri_attuali >= max_membri THEN
         RAISE EXCEPTION 'Non è possibile aderire al team "%": il team ha già raggiunto il numero massimo di membri (%)',
-                        NEW.Team_appartenenza, max_membri;
+                         NEW.Team_appartenenza, max_membri;
     END IF;
 
     -- Tutto ok, incrementa il contatore di iscritti
@@ -281,7 +264,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Funzione per decrementare il contatore quando un utente viene rimosso da un team
 CREATE OR REPLACE FUNCTION gestisci_rimozione_iscritto()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -294,32 +276,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger per controllare l'adesione al team
-		CREATE TRIGGER trigger_verifica_adesione_valida
-		BEFORE INSERT ON MEMBERSHIP
-		FOR EACH ROW
-		EXECUTE FUNCTION verifica_adesione_valida();
-
--- Funzione per decrementare il contatore quando un utente viene rimosso da un team
-CREATE OR REPLACE FUNCTION gestisci_rimozione_iscritto()
-RETURNS TRIGGER AS $$
-BEGIN
-    -- Decrementa il contatore degli iscritti correnti
-    UPDATE HACKATHON
-    SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - 1, 0)
-    WHERE Titolo_identificativo = OLD.Titolo_hackathon;
-    
-    RETURN OLD;
-END;
-$$ LANGUAGE plpgsql;
-
--- Crea trigger per decrementare il contatore quando un membro viene rimosso
-CREATE TRIGGER trigger_gestisci_rimozione_iscritto
-AFTER DELETE ON MEMBERSHIP
-FOR EACH ROW
-EXECUTE FUNCTION gestisci_rimozione_iscritto();
-
--- Funzione per gestire l'eliminazione di team completi
 CREATE OR REPLACE FUNCTION gestisci_eliminazione_team()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -332,8 +288,6 @@ BEGIN
     AND Titolo_hackathon = OLD.Titolo_hackathon;
     
     -- Decrementa il contatore degli iscritti per ogni membro del team
-    -- Nota: facciamo l'update direttamente qui perché il team e tutti i suoi membri
-    -- verranno eliminati insieme a causa del vincolo ON DELETE CASCADE
     UPDATE HACKATHON
     SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - num_membri, 0)
     WHERE Titolo_identificativo = OLD.Titolo_hackathon;
@@ -342,13 +296,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Crea trigger per gestire l'eliminazione di team completi
-CREATE TRIGGER trigger_gestisci_eliminazione_team
-BEFORE DELETE ON TEAM
-FOR EACH ROW
-EXECUTE FUNCTION gestisci_eliminazione_team();
-
--- Funzione per inizializzare il contatore degli iscritti
 CREATE OR REPLACE FUNCTION inizializza_contatore_iscritti()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -358,13 +305,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger per inizializzare il contatore
-CREATE TRIGGER trigger_inizializza_contatore_iscritti
-BEFORE INSERT ON HACKATHON
-FOR EACH ROW
-EXECUTE FUNCTION inizializza_contatore_iscritti();
-
--- Funzione per verificare e cancellare team incompleti
 CREATE OR REPLACE FUNCTION elimina_team_incompleti()
 RETURNS void AS $$
 DECLARE
@@ -387,14 +327,13 @@ BEGIN
         ) < 2;
         
         RAISE NOTICE 'Eliminati tutti i team incompleti per l''hackathon "%"', 
-                    hackathon_record.Titolo_identificativo;
+                      hackathon_record.Titolo_identificativo;
     END LOOP;
     
     RETURN;
 END;
 $$ LANGUAGE plpgsql;
 
--- Funzione per verificare che un team abbia caricato almeno un documento prima di ricevere un voto
 CREATE OR REPLACE FUNCTION verifica_documento_caricato()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -410,7 +349,7 @@ BEGIN
     -- Se il team non ha caricato alcun documento, impedisci l'inserimento del voto
     IF documenti_count = 0 THEN
         RAISE EXCEPTION 'Impossibile votare il team "%": non ha caricato alcun documento per l''hackathon "%"',
-                        NEW.team_votato, NEW.Titolo_hackathon;
+                         NEW.team_votato, NEW.Titolo_hackathon;
     END IF;
 
     -- Se la verifica è passata, permetti l'inserimento del voto
@@ -418,13 +357,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger per controllare che un team abbia caricato documenti prima di ricevere un voto
-CREATE TRIGGER trigger_verifica_documento_caricato
-BEFORE INSERT ON VOTO
-FOR EACH ROW
-EXECUTE FUNCTION verifica_documento_caricato();
-
--- Funzione per generare la classifica finale dell'hackathon
 CREATE OR REPLACE FUNCTION genera_classifica_hackathon(titolo_hack VARCHAR(30))
 RETURNS TEXT AS $$
 DECLARE
@@ -473,7 +405,7 @@ BEGIN
     -- Verifica se tutti i giudici hanno espresso il proprio voto per tutti i team
     IF num_voti < voti_attesi THEN
         RETURN 'Errore: Non è possibile generare la classifica. Mancano ' || 
-                (voti_attesi - num_voti) || ' voti su ' || voti_attesi || ' attesi. Tutti i giudici devono votare tutti i team.';
+               (voti_attesi - num_voti) || ' voti su ' || voti_attesi || ' attesi. Tutti i giudici devono votare tutti i team.';
     END IF;
     
     -- Aggiorna il punteggio finale di ciascun team
@@ -488,15 +420,23 @@ BEGIN
     
     -- Costruisce la stringa della classifica
     FOR team_record IN (
-        SELECT Nome_team, Punteggio_finale
-        FROM TEAM
-        WHERE Titolo_hackathon = titolo_hack
-        ORDER BY Punteggio_finale DESC, Nome_team ASC
+        SELECT
+            t.Nome_team,
+            t.Punteggio_finale,
+            MIN(d.Data_stesura) as prima_consegna
+        FROM TEAM t
+        LEFT JOIN DOCUMENTO d ON t.Nome_team = d.Nome_team AND t.Titolo_hackathon = d.Titolo_hackathon
+        WHERE t.Titolo_hackathon = titolo_hack
+        GROUP BY t.Nome_team, t.Punteggio_finale
+        ORDER BY
+            t.Punteggio_finale DESC, -- Regola 1: Punteggio più alto prima
+            prima_consegna ASC,      -- Regola 2 (Spareggio): Timestamp di consegna anteriore prima
+            t.Nome_team ASC          -- Regola 3 (Spareggio finale): Ordine alfabetico
     ) LOOP
         classifica_text := classifica_text || 
-                          posizione || ' ' || 
-                          team_record.Nome_team || ' ' || 
-                          COALESCE(team_record.Punteggio_finale, 0) || E'\n';
+                           posizione || ' ' || 
+                           team_record.Nome_team || ' ' || 
+                           COALESCE(team_record.Punteggio_finale, 0) || E'\n';
         posizione := posizione + 1;
     END LOOP;
     
@@ -512,8 +452,52 @@ BEGIN
     
     -- Registra l'utente e la data/ora di generazione della classifica
     RAISE NOTICE 'Classifica generata da % il % UTC', 
-                 CURRENT_USER, TO_CHAR(CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS');
+                  CURRENT_USER, TO_CHAR(CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS');
     
     RETURN classifica_text;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- #############################################################################
+-- ## CREAZIONE DEI TRIGGER                                                   ##
+-- #############################################################################
+
+CREATE TRIGGER trigger_aggiungi_giudice
+AFTER UPDATE ON INVITO_GIUDICE
+FOR EACH ROW
+WHEN (OLD.Stato_invito IS DISTINCT FROM NEW.Stato_invito AND NEW.Stato_invito = 'Accettato')
+EXECUTE FUNCTION aggiungi_giudice();
+
+CREATE TRIGGER trigger_verifica_giudice_sovrapposizione
+BEFORE INSERT OR UPDATE ON GIUDICE
+FOR EACH ROW
+EXECUTE FUNCTION verifica_giudice_sovrapposizione();
+
+CREATE TRIGGER trigger_verifica_adesione_valida
+BEFORE INSERT ON MEMBERSHIP
+FOR EACH ROW
+EXECUTE FUNCTION verifica_adesione_valida();
+
+CREATE TRIGGER trigger_gestisci_rimozione_iscritto
+AFTER DELETE ON MEMBERSHIP
+FOR EACH ROW
+EXECUTE FUNCTION gestisci_rimozione_iscritto();
+
+CREATE TRIGGER trigger_gestisci_eliminazione_team
+BEFORE DELETE ON TEAM
+FOR EACH ROW
+EXECUTE FUNCTION gestisci_eliminazione_team();
+
+CREATE TRIGGER trigger_inizializza_contatore_iscritti
+BEFORE INSERT ON HACKATHON
+FOR EACH ROW
+EXECUTE FUNCTION inizializza_contatore_iscritti();
+
+CREATE TRIGGER trigger_verifica_documento_caricato
+BEFORE INSERT ON VOTO
+FOR EACH ROW
+EXECUTE FUNCTION verifica_documento_caricato();
+
+
+COMMIT;
