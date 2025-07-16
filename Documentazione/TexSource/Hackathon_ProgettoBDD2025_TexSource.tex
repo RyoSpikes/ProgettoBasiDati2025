@@ -116,57 +116,39 @@
 	Ogni hackathon ha un titolo identificativo, si svolge in una certa sede e in un certo intervallo di tempo (solitamente 2 giorni) e ha un organizzatore specifico (registrato alla piattaforma). L'organizzatore seleziona un gruppo di giudici (selezionati tra gli utenti della piattaforma, invitandoli). Infine, l'organizzatore apre le registrazioni, che si chiuderanno 2 giorni prima dell'evento. Ogni evento avrà un numero massimo di iscritti e una dimensione massima del team.
 	Durante il periodo di registrazione, gli utenti possono registrarsi per l'Hackathon di loro scelta (eventualmente registrandosi sulla piattaforma se non lo hanno già fatto). Una volta iscritti, gli utenti possono formare team. I team diventano definitivi quando si chiudono le iscrizioni. All'inizio dell'hackathon, i giudici pubblicano una descrizione del problema da affrontare. 
 	Durante l'hackathon, i team lavorano separatamente per risolvere il problema e devono caricare periodicamente gli aggiornamenti sui "progressi" sulla piattaforma come documento, che può essere esaminato e commentato dai giudici. Alla fine dell'hackathon, ogni giudice assegna un voto (da 0 a 10) a ciascun team e la piattaforma, dopo aver acquisito tutti i voti, pubblica le classifiche dei team.
-	
-	
 	\subsection*{Caratteristiche dell'Hackathon}
-	
 	Ogni Hackathon ha le seguenti caratteristiche:
-	
 	\begin{itemize}
 		\item Un \textbf{titolo identificativo};
 		\item Una \textbf{sede} in cui si svolge;
 		\item Un \textbf{intervallo di tempo}, solitamente di due giorni;
 		\item Un \textbf{organizzatore specifico}, registrato sulla piattaforma.
 	\end{itemize}
-	
 	\subsection*{Giudici e Registrazioni}
-	
 	\begin{itemize}
 		\item L'organizzatore seleziona un gruppo di \textbf{giudici}, invitandoli tra gli utenti registrati sulla piattaforma.
 		\item L'organizzatore apre le \textbf{registrazioni}, che si chiudono due giorni prima dell'inizio dell'evento.
 		\item Ogni evento prevede un \textbf{numero massimo di iscritti} e una \textbf{dimensione massima del team}.
 		\item Durante il periodo di registrazione, gli utenti possono registrarsi all'Hackathon di loro scelta, previa registrazione sulla piattaforma se non ancora effettuata.
 	\end{itemize}
-	
 	\subsection*{Formazione dei Team}
-	
 	\begin{itemize}
 		\item Una volta iscritti, gli utenti possono \textbf{formare team}.
 		\item I team diventano \textbf{definitivi alla chiusura delle iscrizioni}.
 	\end{itemize}
-	
 	\subsection*{Svolgimento dell'Hackathon}
-	
 	\begin{itemize}
 		\item All'inizio dell'evento, i giudici \textbf{pubblicano una descrizione del problema} da affrontare.
 		\item Durante l’Hackathon, i team lavorano separatamente per risolvere il problema.
 		\item I team devono \textbf{caricare periodicamente aggiornamenti sui progressi} tramite documenti sulla piattaforma.
 		\item I documenti possono essere \textbf{esaminati e commentati dai giudici}.
 	\end{itemize}
-	
 	\subsection*{Valutazione e Classifica}
-	
 	\begin{itemize}
 		\item Alla fine dell'Hackathon, ogni giudice assegna un \textbf{voto da 0 a 10} a ciascun team.
 		\item La piattaforma, dopo aver acquisito tutti i voti, \textbf{pubblica le classifiche dei team}.
 	\end{itemize}
 	\section{Progettazione Concettuale}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=1\textwidth]{../Immagini/EERDiagram_Hackathon}
-		\caption[Grafico UML]{Grafico UML Concettuale}
-	\end{figure}
-	\newpage
 	\subsection{Analisi delle Entità e degli Attributi}
 	Seguendo la traccia, nella fase di progettazione concettuale sono state trovate le suddette entità:
 	\subsubsection{Hackathon}
@@ -195,7 +177,6 @@
 	\begin{itemize}
 		\item \textbf{Documento} ($\underline{NomeTeam}$, Testo)
 	\end{itemize}
-	\newpage
 	\subsection{Analisi delle Relazioni}
 	Qui verranno descritte tutte le relazioni e le specializzazioni presenti all'interno della struttura concettuale non ancora ristrutturata.
 	\begin{itemize}
@@ -208,7 +189,13 @@
 		\item \textit{Valutazione} (\textbf{Giudice} - \textbf{Documento}: 1..N - 1..N):\\Un Giudice deve esprimere una valutazione per almeno un documento. Un documento deve ottenere una valutazione da almeno un giudice.
 		\item \textit{Pubblicazione} (\textbf{Documento} - \textbf{Team}: 1 - N):\\Relazione identificante per l'entità debole Documento, in quanto generato direttamente da un Team e non può esistere senza un associazione ad un Team.
 	\end{itemize}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\textwidth]{../Immagini/EERDiagram_Hackathon}
+		\caption[Grafico UML]{Grafico EER Concettuale}
+	\end{figure}
 	\newpage
+	\section{Ristrutturazione Modello Concettuale}
 	\subsection{Ristrutturazione del Modello Concettuale}
 	Dopo aver analizzato i requisiti, le entità e le relazioni ed aver prodotto uno schema concettuale passeremo alla sua Ristrutturazione, seguendo i passaggi necessari elencati nelle prossime sottosezioni, ordinate in:
 	\begin{itemize}
@@ -501,7 +488,7 @@
 	\subsection{Dizionario dei Vincoli}
 	{\footnotesize
 		\setlength{\arrayrulewidth}{0.5pt}
-		\renewcommand{\arraystretch}{1.5}
+		\renewcommand{\arraystretch}{2.5}
 		\begin{longtable}{
 				>{\raggedright\arraybackslash}p{5.5cm}
 				>{\raggedright\arraybackslash}p{10cm}

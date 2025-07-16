@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  16 JUL 2025 16:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  16 JUL 2025 16:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -905,104 +905,104 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 [2]
 LaTeX Font Info:    Trying to load font information for TS1+lmss on input line 
-126.
+122.
  (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmss.fd
 File: ts1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 [3{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
-<../Immagini/EERDiagram_Hackathon.png, id=23, 948.54375pt x 568.1225pt>
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 183.
+[4{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.en
+c}]
+<../Immagini/EERDiagram_Hackathon.png, id=28, 948.54375pt x 568.1225pt>
 File: ../Immagini/EERDiagram_Hackathon.png Graphic file (type png)
 <use ../Immagini/EERDiagram_Hackathon.png>
 Package pdftex.def Info: ../Immagini/EERDiagram_Hackathon.png  used on input li
-ne 166.
+ne 194.
 (pdftex.def)             Requested size: 452.39867pt x 270.96193pt.
-[4 <../Immagini/EERDiagram_Hackathon.png>] [5{C:/Users/gioma/AppData/Local/Prog
-rams/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}]
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 202.
- [6]
-Overfull \hbox (0.49147pt too wide) in paragraph at lines 224--225
+ [5 <../Immagini/EERDiagram_Hackathon.png>]
+Overfull \hbox (0.49147pt too wide) in paragraph at lines 211--212
 \T1/lmss/m/n/10 Sebbene sia ba-nal-mente con-sid-er-abile un at-trib-uto deriv-
 abile dal cal-colo degli utenti is-critti ad un Hackathon
  []
 
-[7]
-Overfull \hbox (9.99115pt too wide) in paragraph at lines 249--250
+[6]
+Overfull \hbox (9.99115pt too wide) in paragraph at lines 236--237
 []\T1/lmss/bx/n/10 Hackathon\T1/lmss/m/n/10 : Si mantiene il Titolo Iden-ti-fic
 a-tivo come chi-ave prin-ci-pale, tenendo l'Username dell'organizzatore
  []
 
-<../Immagini/Hackathon_UMLRistrutturato.png, id=40, 1366.10374pt x 758.835pt>
+<../Immagini/Hackathon_UMLRistrutturato.png, id=36, 1366.10374pt x 758.835pt>
 File: ../Immagini/Hackathon_UMLRistrutturato.png Graphic file (type png)
 <use ../Immagini/Hackathon_UMLRistrutturato.png>
 Package pdftex.def Info: ../Immagini/Hackathon_UMLRistrutturato.png  used on in
-put line 259.
+put line 246.
 (pdftex.def)             Requested size: 452.39867pt x 251.29633pt.
-[8 <../Immagini/Hackathon_UMLRistrutturato.png>]
+[7 <../Immagini/Hackathon_UMLRistrutturato.png>]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-86.
+73.
 
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 363.
- [9]
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 350.
+ [8]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 391.
+(Font)              <8> on input line 378.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 391.
+(Font)              <6> on input line 378.
 
-[10{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.e
-nc}] [11]
-Overfull \hbox (12.61903pt too wide) in alignment at lines 508--512
+[9{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.en
+c}] [10]
+Overfull \hbox (12.61903pt too wide) in alignment at lines 495--499
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 512--516
+Overfull \hbox (12.61903pt too wide) in alignment at lines 499--503
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 516--518
+Overfull \hbox (12.61903pt too wide) in alignment at lines 503--505
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 518--520
+Overfull \hbox (12.61903pt too wide) in alignment at lines 505--507
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 520--576
+Overfull \hbox (12.61903pt too wide) in alignment at lines 507--563
  [] [] 
  []
 
-[12]
-Overfull \hbox (48.6279pt too wide) in paragraph at lines 584--587
+[11]
+Overfull \hbox (48.6279pt too wide) in paragraph at lines 571--574
 \T1/lmtt/m/n/10 DataInizio_evento, DataFine_evento, NumIscritti_corrente, MaxNu
 m_iscritti, MaxNum_membriTeam) 
  []
 
 
-Overfull \hbox (17.12799pt too wide) in paragraph at lines 604--609
+Overfull \hbox (17.12799pt too wide) in paragraph at lines 591--596
 []\T1/lmtt/m/n/10 Invito_giudice($[]$, $[]$, $[]$, Stato_invito,
  []
 
-[13]
+[12]
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <8> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 636.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 623.
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-646.
+633.
 
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [14]
-[15] [16] [17] [18] [19] [20] [21] [22] [23] [24]
+) [13]
+[14] [15] [16] [17] [18] [19] [20] [21] [22] [23]
 (Hackathon_ProgettoBDD2025_TexSource.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
@@ -1037,10 +1037,10 @@ pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.
 pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.p
 fb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.
 pfb>
-Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (24 pages, 571569 byt
+Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (23 pages, 571017 byt
 es).
 PDF statistics:
- 180 PDF objects out of 1000 (max. 8388607)
+ 177 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  28 words of extra memory for PDF output out of 10000 (max. 10000000)
 
