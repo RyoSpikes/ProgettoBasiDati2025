@@ -168,34 +168,6 @@ CREATE TABLE INVITO_GIUDICE
     FOREIGN KEY (Titolo_hackathon) REFERENCES HACKATHON(Titolo_identificativo) ON DELETE CASCADE
 );
 
--- Funzione trigger
-CREATE OR REPLACE FUNCTION verifica_data_adesione()
-RETURNS TRIGGER AS $$
-DECLARE
-    data_inizio DATE;
-    data_fine DATE;
-BEGIN
-    -- Recupera le date di registrazione dall'Hackathon associato al team
-    SELECT h.DataInizio_registrazione, h.DataFine_registrazione
-    INTO data_inizio, data_fine
-    FROM HACKATHON h
-    WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-
-    -- Verifica se la Data_adesione è compresa tra le due date
-    IF NEW.Data_adesione < data_inizio OR NEW.Data_adesione > data_fine THEN
-        RAISE EXCEPTION 'Data_adesione fuori dall''intervallo di registrazione dell''hackathon (% - %)', data_inizio, data_fine;
-    END IF;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Trigger sulla tabella MEMBERSHIP
-CREATE TRIGGER trigger_verifica_data_adesione
-BEFORE INSERT OR UPDATE ON MEMBERSHIP
-FOR EACH ROW
-EXECUTE FUNCTION verifica_data_adesione();
-
 CREATE OR REPLACE FUNCTION aggiungi_giudice()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -258,17 +230,19 @@ BEFORE INSERT OR UPDATE ON GIUDICE
 FOR EACH ROW
 EXECUTE FUNCTION verifica_giudice_sovrapposizione();
 
--- Funzione per verificare se un'adesione è valida
 CREATE OR REPLACE FUNCTION verifica_adesione_valida()
 RETURNS TRIGGER AS $$
 DECLARE
     data_fine_registrazione DATE;
     num_membri_attuali INTEGER;
     max_membri INTEGER;
+    num_iscritti_corrente INTEGER;
+    max_iscritti INTEGER;
 BEGIN
-    -- Recupera la data di fine registrazione dell'hackathon
-    SELECT h.DataFine_registrazione
-    INTO data_fine_registrazione
+    -- Recupera tutti i dati necessari dall'hackathon
+    SELECT h.DataFine_registrazione, h.MaxNum_membriTeam, 
+           COALESCE(h.NumIscritti_corrente, 0), h.MaxNum_iscritti
+    INTO data_fine_registrazione, max_membri, num_iscritti_corrente, max_iscritti
     FROM HACKATHON h
     WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
 
@@ -278,6 +252,12 @@ BEGIN
                         NEW.Titolo_hackathon, data_fine_registrazione;
     END IF;
 
+    -- Verifica se è stato raggiunto il numero massimo di iscritti all'hackathon
+    IF num_iscritti_corrente >= max_iscritti THEN
+        RAISE EXCEPTION 'Non è possibile aderire al team: l''hackathon "%" ha raggiunto il numero massimo di partecipanti (%)',
+                        NEW.Titolo_hackathon, max_iscritti;
+    END IF;
+
     -- Conta il numero di membri attuali nel team
     SELECT COUNT(*)
     INTO num_membri_attuali
@@ -285,68 +265,104 @@ BEGIN
     WHERE m.Team_appartenenza = NEW.Team_appartenenza
     AND m.Titolo_hackathon = NEW.Titolo_hackathon;
 
-    -- Recupera il numero massimo di membri per team dell'hackathon
-    SELECT h.MaxNum_membriTeam
-    INTO max_membri
-    FROM HACKATHON h
-    WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-
     -- Verifica se il team è già al completo
     IF num_membri_attuali >= max_membri THEN
         RAISE EXCEPTION 'Non è possibile aderire al team "%": il team ha già raggiunto il numero massimo di membri (%)',
                         NEW.Team_appartenenza, max_membri;
     END IF;
 
+    -- Tutto ok, incrementa il contatore di iscritti
+    UPDATE HACKATHON
+    SET NumIscritti_corrente = COALESCE(NumIscritti_corrente, 0) + 1
+    WHERE Titolo_identificativo = NEW.Titolo_hackathon;
+
     -- Se tutte le verifiche sono passate, permetti l'inserimento
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger per controllare l'adesione al team
-CREATE TRIGGER trigger_verifica_adesione_valida
-BEFORE INSERT ON MEMBERSHIP
-FOR EACH ROW
-EXECUTE FUNCTION verifica_adesione_valida();
+-- Funzione per decrementare il contatore quando un utente viene rimosso da un team
+CREATE OR REPLACE FUNCTION gestisci_rimozione_iscritto()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Decrementa il contatore degli iscritti correnti
+    UPDATE HACKATHON
+    SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - 1, 0)
+    WHERE Titolo_identificativo = OLD.Titolo_hackathon;
+    
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
 
--- Funzione per verificare che un team non superi il numero massimo di membri
-CREATE OR REPLACE FUNCTION verifica_max_membri_team()
+-- Trigger per controllare l'adesione al team
+		CREATE TRIGGER trigger_verifica_adesione_valida
+		BEFORE INSERT ON MEMBERSHIP
+		FOR EACH ROW
+		EXECUTE FUNCTION verifica_adesione_valida();
+
+-- Funzione per decrementare il contatore quando un utente viene rimosso da un team
+CREATE OR REPLACE FUNCTION gestisci_rimozione_iscritto()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Decrementa il contatore degli iscritti correnti
+    UPDATE HACKATHON
+    SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - 1, 0)
+    WHERE Titolo_identificativo = OLD.Titolo_hackathon;
+    
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Crea trigger per decrementare il contatore quando un membro viene rimosso
+CREATE TRIGGER trigger_gestisci_rimozione_iscritto
+AFTER DELETE ON MEMBERSHIP
+FOR EACH ROW
+EXECUTE FUNCTION gestisci_rimozione_iscritto();
+
+-- Funzione per gestire l'eliminazione di team completi
+CREATE OR REPLACE FUNCTION gestisci_eliminazione_team()
 RETURNS TRIGGER AS $$
 DECLARE
-    num_membri_attuali INTEGER;
-    max_membri INTEGER;
+    num_membri INTEGER;
 BEGIN
-    -- Conta il numero di membri attuali nel team (includendo il nuovo membro)
-    SELECT COUNT(*)
-    INTO num_membri_attuali
-    FROM MEMBERSHIP m
-    WHERE m.Team_appartenenza = NEW.Team_appartenenza
-      AND m.Titolo_hackathon = NEW.Titolo_hackathon;
+    -- Conta quanti membri ha il team
+    SELECT COUNT(*) INTO num_membri
+    FROM MEMBERSHIP
+    WHERE Team_appartenenza = OLD.Nome_team
+    AND Titolo_hackathon = OLD.Titolo_hackathon;
+    
+    -- Decrementa il contatore degli iscritti per ogni membro del team
+    -- Nota: facciamo l'update direttamente qui perché il team e tutti i suoi membri
+    -- verranno eliminati insieme a causa del vincolo ON DELETE CASCADE
+    UPDATE HACKATHON
+    SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - num_membri, 0)
+    WHERE Titolo_identificativo = OLD.Titolo_hackathon;
+    
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
 
-    -- Incrementa di 1 per l'inserimento in corso
-    num_membri_attuali := num_membri_attuali + 1;
+-- Crea trigger per gestire l'eliminazione di team completi
+CREATE TRIGGER trigger_gestisci_eliminazione_team
+BEFORE DELETE ON TEAM
+FOR EACH ROW
+EXECUTE FUNCTION gestisci_eliminazione_team();
 
-    -- Recupera il numero massimo di membri per team dall'hackathon
-    SELECT h.MaxNum_membriTeam
-    INTO max_membri
-    FROM HACKATHON h
-    WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-
-    -- Verifica se l'aggiunta del nuovo membro supererebbe il limite
-    IF num_membri_attuali > max_membri THEN
-        RAISE EXCEPTION 'Impossibile aggiungere il membro al team "%": il numero massimo di membri consentito (%) sarebbe superato',
-                        NEW.Team_appartenenza, max_membri;
-    END IF;
-
-    -- Se la verifica è passata, permetti l'inserimento
+-- Funzione per inizializzare il contatore degli iscritti
+CREATE OR REPLACE FUNCTION inizializza_contatore_iscritti()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Imposta il contatore degli iscritti a 0 se è NULL
+    NEW.NumIscritti_corrente := 0;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger per controllare il numero massimo di membri
-CREATE TRIGGER trigger_verifica_max_membri_team
-BEFORE INSERT ON MEMBERSHIP
+-- Trigger per inizializzare il contatore
+CREATE TRIGGER trigger_inizializza_contatore_iscritti
+BEFORE INSERT ON HACKATHON
 FOR EACH ROW
-EXECUTE FUNCTION verifica_max_membri_team();
+EXECUTE FUNCTION inizializza_contatore_iscritti();
 
 -- Funzione per verificare e cancellare team incompleti
 CREATE OR REPLACE FUNCTION elimina_team_incompleti()

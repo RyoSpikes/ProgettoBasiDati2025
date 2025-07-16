@@ -1,4 +1,4 @@
-\documentclass[a4paper, 10pt]{article}
+\documentclass[a4paper, 11pt]{article}
 \linespread{1.0} %interlinea
 \usepackage{geometry} %margini
 \usepackage[]{tabto}
@@ -160,14 +160,13 @@
 		\item Alla fine dell'Hackathon, ogni giudice assegna un \textbf{voto da 0 a 10} a ciascun team.
 		\item La piattaforma, dopo aver acquisito tutti i voti, \textbf{pubblica le classifiche dei team}.
 	\end{itemize}
-	
-	\newpage
 	\section{Progettazione Concettuale}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1\textwidth]{../Immagini/EERDiagram_Hackathon}
 		\caption[Grafico UML]{Grafico UML Concettuale}
 	\end{figure}
+	\newpage
 	\subsection{Analisi delle Entità e degli Attributi}
 	Seguendo la traccia, nella fase di progettazione concettuale sono state trovate le suddette entità:
 	\subsubsection{Hackathon}
@@ -196,6 +195,7 @@
 	\begin{itemize}
 		\item \textbf{Documento} ($\underline{NomeTeam}$, Testo)
 	\end{itemize}
+	\newpage
 	\subsection{Analisi delle Relazioni}
 	Qui verranno descritte tutte le relazioni e le specializzazioni presenti all'interno della struttura concettuale non ancora ristrutturata.
 	\begin{itemize}
@@ -220,6 +220,7 @@
 		\item Analisi delle Chiavi
 	\end{itemize}
 	\subsubsection{Analisi delle Ridondanze}
+	
 	\subsubsection{Analisi delle Generalizzazioni/Gerarchie di Specializzazione}
 	\subsubsection{Analisi degli Attributi Multivalore}
 	\subsubsection{Analisi degli Attributi Strutturati}
@@ -493,9 +494,13 @@
 			La password di un utente deve avere almeno una lettera maiuscola, una lettera minuscola, un carattere numerico, un carattere speciale e che non sia più breve di 8 caratteri \\
 			\hline
 			
-			\textbf{Chiusura Registrazioni} &
+			\textbf{Chiusura Registrazioni per Data} &
 			Le registrazioni devono chiudersi 2 giorni prima dell'evento:
 			\texttt{DataFine\_registrazione} = \texttt{DataInizio\_evento} - 2 giorni \\
+			\hline
+			
+			\textbf{Chiusura Registrazioni per Limite} &
+			Le registrazioni devono chiudersi quando viene raggiunto il limite massimo di iscritti all'Hackathon \\
 			\hline
 			
 			\textbf{Coerenza Date} &
@@ -870,37 +875,6 @@
 	\end{lstlisting}
 	\subsubsection{Implementazione Vincolo di Controllo sulla validità di Adesione di un Utente ad un Team}
 	\begin{lstlisting}[style=sqlstyle]
-		-- Funzione trigger
-		CREATE OR REPLACE FUNCTION verifica_data_adesione()
-		RETURNS TRIGGER AS $$
-		DECLARE
-			data_inizio DATE;
-			data_fine DATE;
-		BEGIN
-			-- Recupera le date di registrazione dall'Hackathon associato al team
-			SELECT h.DataInizio_registrazione, h.DataFine_registrazione
-			INTO data_inizio, data_fine
-			FROM HACKATHON h
-			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-			
-			-- Verifica se la Data_adesione e' compresa tra le due date
-			IF NEW.Data_adesione < data_inizio OR NEW.Data_adesione > data_fine THEN
-			RAISE EXCEPTION 'Data_adesione fuori dall''intervallo di registrazione dell''hackathon (% - %)', 
-				data_inizio, data_fine;
-			END IF;
-			
-			RETURN NEW;
-		END;
-		$$ LANGUAGE plpgsql;
-		
-		-- Trigger sulla tabella MEMBERSHIP
-		CREATE TRIGGER trigger_verifica_data_adesione
-		BEFORE INSERT OR UPDATE ON MEMBERSHIP
-		FOR EACH ROW
-		EXECUTE FUNCTION verifica_data_adesione();
-	\end{lstlisting}
-	\subsubsection{Implementazione Vincolo di Controllo sulla Data di Adesione ad un Team}
-	\begin{lstlisting}[style=sqlstyle]
 		-- Funzione per verificare se un'adesione e' valida
 		CREATE OR REPLACE FUNCTION verifica_adesione_valida()
 		RETURNS TRIGGER AS $$
@@ -908,17 +882,29 @@
 			data_fine_registrazione DATE;
 			num_membri_attuali INTEGER;
 			max_membri INTEGER;
+			num_iscritti_corrente INTEGER;
+			max_iscritti INTEGER;
 		BEGIN
-			-- Recupera la data di fine registrazione dell'hackathon
-			SELECT h.DataFine_registrazione
-			INTO data_fine_registrazione
+			-- Recupera tutti i dati necessari dall'hackathon
+			SELECT h.DataFine_registrazione, h.MaxNum_membriTeam, 
+			COALESCE(h.NumIscritti_corrente, 0), h.MaxNum_iscritti
+			INTO data_fine_registrazione, max_membri, num_iscritti_corrente, max_iscritti
 			FROM HACKATHON h
 			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
 			
 			-- Verifica se la data attuale e' successiva alla data di fine registrazione
 			IF CURRENT_DATE > data_fine_registrazione THEN
-				RAISE EXCEPTION 'Non e'' possibile aderire al team: le registrazioni per l''hackathon "%" sono chiuse dal %', 
+				RAISE EXCEPTION 'Non e'' possibile aderire al team: 
+					le registrazioni per l''hackathon "%" sono chiuse dal %',
 				NEW.Titolo_hackathon, data_fine_registrazione;
+			END IF;
+			
+			-- Verifica se e' stato raggiunto il numero massimo 
+			-- di iscritti all'hackathon
+			IF num_iscritti_corrente >= max_iscritti THEN
+				RAISE EXCEPTION 'Non e'' possibile aderire al team: 
+					l''hackathon "%" ha raggiunto il numero massimo di partecipanti (%)',
+				NEW.Titolo_hackathon, max_iscritti;
 			END IF;
 			
 			-- Conta il numero di membri attuali nel team
@@ -928,22 +914,21 @@
 			WHERE m.Team_appartenenza = NEW.Team_appartenenza
 			AND m.Titolo_hackathon = NEW.Titolo_hackathon;
 			
-			-- Recupera il numero massimo di membri per team dell'hackathon
-			SELECT h.MaxNum_membriTeam
-			INTO max_membri
-			FROM HACKATHON h
-			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-			
 			-- Verifica se il team e' gia' al completo
 			IF num_membri_attuali >= max_membri THEN
-				RAISE EXCEPTION 'Non e'' possibile aderire al team "%": 
-					il team ha gia'' raggiunto il numero massimo di membri (%)', 
+				RAISE EXCEPTION 'Non e' possibile aderire al team "%": 
+					il team ha gia' raggiunto il numero massimo di membri (%)',
 				NEW.Team_appartenenza, max_membri;
 			END IF;
 			
+			-- Tutto ok, incrementa il contatore di iscritti
+			UPDATE HACKATHON
+			SET NumIscritti_corrente = COALESCE(NumIscritti_corrente, 0) + 1
+			WHERE Titolo_identificativo = NEW.Titolo_hackathon;
+			
 			-- Se tutte le verifiche sono passate, permetti l'inserimento
 			RETURN NEW;
-			END;
+		END;
 		$$ LANGUAGE plpgsql;
 		
 		-- Trigger per controllare l'adesione al team
@@ -951,49 +936,6 @@
 		BEFORE INSERT ON MEMBERSHIP
 		FOR EACH ROW
 		EXECUTE FUNCTION verifica_adesione_valida();
-	\end{lstlisting}
-	\subsubsection{Implementazione Vincolo di Controllo sul superamento della soglia massima di membri di un Team}
-	\begin{lstlisting}[style=sqlstyle]
-		-- Funzione per verificare che un team non superi il numero massimo di membri
-		CREATE OR REPLACE FUNCTION verifica_max_membri_team()
-		RETURNS TRIGGER AS $$
-		DECLARE
-			num_membri_attuali INTEGER;
-			max_membri INTEGER;
-		BEGIN
-			-- Conta il numero di membri attuali nel team (includendo il nuovo membro)
-			SELECT COUNT(*)
-			INTO num_membri_attuali
-			FROM MEMBERSHIP m
-			WHERE m.Team_appartenenza = NEW.Team_appartenenza
-			AND m.Titolo_hackathon = NEW.Titolo_hackathon;
-			
-			-- Incrementa di 1 per l'inserimento in corso
-			num_membri_attuali := num_membri_attuali + 1;
-			
-			-- Recupera il numero massimo di membri per team dall'hackathon
-			SELECT h.MaxNum_membriTeam
-			INTO max_membri
-			FROM HACKATHON h
-			WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-			
-			-- Verifica se l'aggiunta del nuovo membro supererebbe il limite
-			IF num_membri_attuali > max_membri THEN
-				RAISE EXCEPTION 'Impossibile aggiungere il membro al team "%": 
-					il numero massimo di membri consentito (%) sarebbe superato',
-				NEW.Team_appartenenza, max_membri;
-			END IF;
-			
-			-- Se la verifica e' passata, permetti l'inserimento
-			RETURN NEW;
-		END;
-		$$ LANGUAGE plpgsql;
-		
-		-- Trigger per controllare il numero massimo di membri
-		CREATE TRIGGER trigger_verifica_max_membri_team
-		BEFORE INSERT ON MEMBERSHIP
-		FOR EACH ROW
-		EXECUTE FUNCTION verifica_max_membri_team();
 	\end{lstlisting}
 	\subsubsection{Implementazione Vincolo di Controllo sui Team senza membri sufficienti}
 	\begin{lstlisting}[style=sqlstyle]
@@ -1027,7 +969,7 @@
 		END;
 		$$ LANGUAGE plpgsql;
 	\end{lstlisting}
-	\subsubsection{Implementazione Vincolo di Controllo sui Team senza membri sufficienti}
+	\subsubsection{Implementazione Vincolo di Controllo sui Team senza Documenti caricati}
 	\begin{lstlisting}[style=sqlstyle]
 		-- Funzione per verificare che un team abbia caricato almeno un documento prima di ricevere un voto
 		CREATE OR REPLACE FUNCTION verifica_documento_caricato()
@@ -1087,7 +1029,7 @@
 			
 			-- Verifica che l'hackathon sia terminato
 			IF CURRENT_DATE < data_fine_evento THEN
-				RETURN 'Errore: Non e' possibile generare la classifica prima della fine dell''hackathon';
+				RETURN 'Errore: Non e'' possibile generare la classifica prima della fine dell''hackathon';
 			END IF;
 			
 			-- Conta il numero di giudici per questo hackathon
@@ -1110,7 +1052,7 @@
 			
 			-- Verifica se tutti i giudici hanno espresso il proprio voto per tutti i team
 			IF num_voti < voti_attesi THEN
-				RETURN 'Errore: Non e' possibile generare la classifica. Mancano ' || 
+				RETURN 'Errore: Non e'' possibile generare la classifica. Mancano ' || 
 				(voti_attesi - num_voti) || ' voti su ' || voti_attesi || ' attesi. Tutti i giudici devono votare tutti i team.';
 				END IF;
 			
@@ -1156,4 +1098,76 @@
 		END;
 		$$ LANGUAGE plpgsql;
 	\end{lstlisting}
+	\subsection{Implementazione Funzioni Aggiuntive}
+	\subsubsection{Implementazione Funzione per la rimozione di un Utente da un Team}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per decrementare il contatore quando un utente viene rimosso da un team
+		CREATE OR REPLACE FUNCTION gestisci_rimozione_iscritto()
+		RETURNS TRIGGER AS $$
+		BEGIN
+			-- Decrementa il contatore degli iscritti correnti
+			UPDATE HACKATHON
+			SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - 1, 0)
+			WHERE Titolo_identificativo = OLD.Titolo_hackathon;
+			
+			RETURN OLD;
+		END;
+		$$ LANGUAGE plpgsql;
+		
+		-- Crea trigger per decrementare il contatore quando un membro viene rimosso
+		CREATE TRIGGER trigger_gestisci_rimozione_iscritto
+		AFTER DELETE ON MEMBERSHIP
+		FOR EACH ROW
+		EXECUTE FUNCTION gestisci_rimozione_iscritto();
+	\end{lstlisting}
+	\subsubsection{Implementazione Funzione per la rimozione di un Team da un Hackathon}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per gestire l'eliminazione di team completi
+		CREATE OR REPLACE FUNCTION gestisci_eliminazione_team()
+		RETURNS TRIGGER AS $$
+		DECLARE
+			num_membri INTEGER;
+		BEGIN
+			-- Conta quanti membri ha il team
+			SELECT COUNT(*) INTO num_membri
+			FROM MEMBERSHIP
+			WHERE Team_appartenenza = OLD.Nome_team
+			AND Titolo_hackathon = OLD.Titolo_hackathon;
+			
+			-- Decrementa il contatore degli iscritti per ogni membro del team
+			-- Nota: facciamo l'update direttamente qui perche' il team e tutti i suoi membri
+			-- verranno eliminati insieme a causa del vincolo ON DELETE CASCADE
+			UPDATE HACKATHON
+			SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - num_membri, 0)
+			WHERE Titolo_identificativo = OLD.Titolo_hackathon;
+			
+			RETURN OLD;
+		END;
+		$$ LANGUAGE plpgsql;
+		
+		-- Crea trigger per gestire l'eliminazione di team completi
+		CREATE TRIGGER trigger_gestisci_eliminazione_team
+		BEFORE DELETE ON TEAM
+		FOR EACH ROW
+		EXECUTE FUNCTION gestisci_eliminazione_team();
+	\end{lstlisting}
+	\subsubsection{Implementazione Funzione per l'inizializzazione del contatore degli iscritti}
+	\begin{lstlisting}[style=sqlstyle]
+		-- Funzione per inizializzare il contatore degli iscritti
+		CREATE OR REPLACE FUNCTION inizializza_contatore_iscritti()
+		RETURNS TRIGGER AS $$
+		BEGIN
+			-- Imposta il contatore degli iscritti a 0 se e' NULL
+			NEW.NumIscritti_corrente := 0;
+			RETURN NEW;
+		END;
+		$$ LANGUAGE plpgsql;
+		
+		-- Trigger per inizializzare il contatore
+		CREATE TRIGGER trigger_inizializza_contatore_iscritti
+		BEFORE INSERT ON HACKATHON
+		FOR EACH ROW
+		EXECUTE FUNCTION inizializza_contatore_iscritti();
+	\end{lstlisting}
+	
 \end{document}

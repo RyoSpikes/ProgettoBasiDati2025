@@ -5,7 +5,7 @@
 -- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.4
 
--- Started on 2025-07-15 20:22:57
+-- Started on 2025-07-16 12:28:51
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,16 +20,16 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 5004 (class 1262 OID 17266)
--- Name: Hackathon; Type: DATABASE; Schema: -; Owner: postgres
+-- TOC entry 5006 (class 1262 OID 17780)
+-- Name: Hackathon_ProgettoDB_UNINA; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE "Hackathon" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'it-IT';
+CREATE DATABASE "Hackathon_ProgettoDB_UNINA" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'it-IT';
 
 
-ALTER DATABASE "Hackathon" OWNER TO postgres;
+ALTER DATABASE "Hackathon_ProgettoDB_UNINA" OWNER TO postgres;
 
-\connect "Hackathon"
+\connect "Hackathon_ProgettoDB_UNINA"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -44,7 +44,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 230 (class 1255 OID 17433)
+-- TOC entry 229 (class 1255 OID 17928)
 -- Name: aggiungi_giudice(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -68,7 +68,7 @@ $$;
 ALTER FUNCTION public.aggiungi_giudice() OWNER TO postgres;
 
 --
--- TOC entry 245 (class 1255 OID 17441)
+-- TOC entry 235 (class 1255 OID 17940)
 -- Name: elimina_team_incompleti(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -106,7 +106,7 @@ $$;
 ALTER FUNCTION public.elimina_team_incompleti() OWNER TO postgres;
 
 --
--- TOC entry 247 (class 1255 OID 17444)
+-- TOC entry 248 (class 1255 OID 17943)
 -- Name: genera_classifica_hackathon(character varying); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -208,7 +208,77 @@ $$;
 ALTER FUNCTION public.genera_classifica_hackathon(titolo_hack character varying) OWNER TO postgres;
 
 --
--- TOC entry 243 (class 1255 OID 17437)
+-- TOC entry 233 (class 1255 OID 17936)
+-- Name: gestisci_eliminazione_team(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.gestisci_eliminazione_team() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    num_membri INTEGER;
+BEGIN
+    -- Conta quanti membri ha il team
+    SELECT COUNT(*) INTO num_membri
+    FROM MEMBERSHIP
+    WHERE Team_appartenenza = OLD.Nome_team
+    AND Titolo_hackathon = OLD.Titolo_hackathon;
+    
+    -- Decrementa il contatore degli iscritti per ogni membro del team
+    -- Nota: facciamo l'update direttamente qui perché il team e tutti i suoi membri
+    -- verranno eliminati insieme a causa del vincolo ON DELETE CASCADE
+    UPDATE HACKATHON
+    SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - num_membri, 0)
+    WHERE Titolo_identificativo = OLD.Titolo_hackathon;
+    
+    RETURN OLD;
+END;
+$$;
+
+
+ALTER FUNCTION public.gestisci_eliminazione_team() OWNER TO postgres;
+
+--
+-- TOC entry 232 (class 1255 OID 17933)
+-- Name: gestisci_rimozione_iscritto(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.gestisci_rimozione_iscritto() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    -- Decrementa il contatore degli iscritti correnti
+    UPDATE HACKATHON
+    SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - 1, 0)
+    WHERE Titolo_identificativo = OLD.Titolo_hackathon;
+    
+    RETURN OLD;
+END;
+$$;
+
+
+ALTER FUNCTION public.gestisci_rimozione_iscritto() OWNER TO postgres;
+
+--
+-- TOC entry 234 (class 1255 OID 17938)
+-- Name: inizializza_contatore_iscritti(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.inizializza_contatore_iscritti() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    -- Imposta il contatore degli iscritti a 0 se è NULL
+    NEW.NumIscritti_corrente := 0;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.inizializza_contatore_iscritti() OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1255 OID 17932)
 -- Name: verifica_adesione_valida(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -219,10 +289,13 @@ DECLARE
     data_fine_registrazione DATE;
     num_membri_attuali INTEGER;
     max_membri INTEGER;
+    num_iscritti_corrente INTEGER;
+    max_iscritti INTEGER;
 BEGIN
-    -- Recupera la data di fine registrazione dell'hackathon
-    SELECT h.DataFine_registrazione
-    INTO data_fine_registrazione
+    -- Recupera tutti i dati necessari dall'hackathon
+    SELECT h.DataFine_registrazione, h.MaxNum_membriTeam, 
+           COALESCE(h.NumIscritti_corrente, 0), h.MaxNum_iscritti
+    INTO data_fine_registrazione, max_membri, num_iscritti_corrente, max_iscritti
     FROM HACKATHON h
     WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
 
@@ -232,6 +305,12 @@ BEGIN
                         NEW.Titolo_hackathon, data_fine_registrazione;
     END IF;
 
+    -- Verifica se è stato raggiunto il numero massimo di iscritti all'hackathon
+    IF num_iscritti_corrente >= max_iscritti THEN
+        RAISE EXCEPTION 'Non è possibile aderire al team: l''hackathon "%" ha raggiunto il numero massimo di partecipanti (%)',
+                        NEW.Titolo_hackathon, max_iscritti;
+    END IF;
+
     -- Conta il numero di membri attuali nel team
     SELECT COUNT(*)
     INTO num_membri_attuali
@@ -239,17 +318,16 @@ BEGIN
     WHERE m.Team_appartenenza = NEW.Team_appartenenza
     AND m.Titolo_hackathon = NEW.Titolo_hackathon;
 
-    -- Recupera il numero massimo di membri per team dell'hackathon
-    SELECT h.MaxNum_membriTeam
-    INTO max_membri
-    FROM HACKATHON h
-    WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-
     -- Verifica se il team è già al completo
     IF num_membri_attuali >= max_membri THEN
         RAISE EXCEPTION 'Non è possibile aderire al team "%": il team ha già raggiunto il numero massimo di membri (%)',
                         NEW.Team_appartenenza, max_membri;
     END IF;
+
+    -- Tutto ok, incrementa il contatore di iscritti
+    UPDATE HACKATHON
+    SET NumIscritti_corrente = COALESCE(NumIscritti_corrente, 0) + 1
+    WHERE Titolo_identificativo = NEW.Titolo_hackathon;
 
     -- Se tutte le verifiche sono passate, permetti l'inserimento
     RETURN NEW;
@@ -260,37 +338,7 @@ $$;
 ALTER FUNCTION public.verifica_adesione_valida() OWNER TO postgres;
 
 --
--- TOC entry 229 (class 1255 OID 17431)
--- Name: verifica_data_adesione(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.verifica_data_adesione() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    data_inizio DATE;
-    data_fine DATE;
-BEGIN
-    -- Recupera le date di registrazione dall'Hackathon associato al team
-    SELECT h.DataInizio_registrazione, h.DataFine_registrazione
-    INTO data_inizio, data_fine
-    FROM HACKATHON h
-    WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-
-    -- Verifica se la Data_adesione è compresa tra le due date
-    IF NEW.Data_adesione < data_inizio OR NEW.Data_adesione > data_fine THEN
-        RAISE EXCEPTION 'Data_adesione fuori dall''intervallo di registrazione dell''hackathon (% - %)', data_inizio, data_fine;
-    END IF;
-
-    RETURN NEW;
-END;
-$$;
-
-
-ALTER FUNCTION public.verifica_data_adesione() OWNER TO postgres;
-
---
--- TOC entry 246 (class 1255 OID 17442)
+-- TOC entry 247 (class 1255 OID 17941)
 -- Name: verifica_documento_caricato(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -322,7 +370,7 @@ $$;
 ALTER FUNCTION public.verifica_documento_caricato() OWNER TO postgres;
 
 --
--- TOC entry 231 (class 1255 OID 17435)
+-- TOC entry 230 (class 1255 OID 17930)
 -- Name: verifica_giudice_sovrapposizione(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -364,54 +412,12 @@ $$;
 
 ALTER FUNCTION public.verifica_giudice_sovrapposizione() OWNER TO postgres;
 
---
--- TOC entry 244 (class 1255 OID 17439)
--- Name: verifica_max_membri_team(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.verifica_max_membri_team() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    num_membri_attuali INTEGER;
-    max_membri INTEGER;
-BEGIN
-    -- Conta il numero di membri attuali nel team (includendo il nuovo membro)
-    SELECT COUNT(*)
-    INTO num_membri_attuali
-    FROM MEMBERSHIP m
-    WHERE m.Team_appartenenza = NEW.Team_appartenenza
-      AND m.Titolo_hackathon = NEW.Titolo_hackathon;
-
-    -- Incrementa di 1 per l'inserimento in corso
-    num_membri_attuali := num_membri_attuali + 1;
-
-    -- Recupera il numero massimo di membri per team dall'hackathon
-    SELECT h.MaxNum_membriTeam
-    INTO max_membri
-    FROM HACKATHON h
-    WHERE h.Titolo_identificativo = NEW.Titolo_hackathon;
-
-    -- Verifica se l'aggiunta del nuovo membro supererebbe il limite
-    IF num_membri_attuali > max_membri THEN
-        RAISE EXCEPTION 'Impossibile aggiungere il membro al team "%": il numero massimo di membri consentito (%) sarebbe superato',
-                        NEW.Team_appartenenza, max_membri;
-    END IF;
-
-    -- Se la verifica è passata, permetti l'inserimento
-    RETURN NEW;
-END;
-$$;
-
-
-ALTER FUNCTION public.verifica_max_membri_team() OWNER TO postgres;
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- TOC entry 223 (class 1259 OID 17322)
+-- TOC entry 223 (class 1259 OID 17836)
 -- Name: documento; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -428,7 +434,7 @@ CREATE TABLE public.documento (
 ALTER TABLE public.documento OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 17321)
+-- TOC entry 222 (class 1259 OID 17835)
 -- Name: documento_id_documento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -444,7 +450,7 @@ CREATE SEQUENCE public.documento_id_documento_seq
 ALTER SEQUENCE public.documento_id_documento_seq OWNER TO postgres;
 
 --
--- TOC entry 5005 (class 0 OID 0)
+-- TOC entry 5007 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: documento_id_documento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -453,7 +459,7 @@ ALTER SEQUENCE public.documento_id_documento_seq OWNED BY public.documento.id_do
 
 
 --
--- TOC entry 220 (class 1259 OID 17294)
+-- TOC entry 220 (class 1259 OID 17808)
 -- Name: giudice; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -466,7 +472,7 @@ CREATE TABLE public.giudice (
 ALTER TABLE public.giudice OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 17279)
+-- TOC entry 219 (class 1259 OID 17793)
 -- Name: hackathon; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -492,7 +498,7 @@ CREATE TABLE public.hackathon (
 ALTER TABLE public.hackathon OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 17409)
+-- TOC entry 228 (class 1259 OID 17906)
 -- Name: invito_giudice; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -509,7 +515,7 @@ CREATE TABLE public.invito_giudice (
 ALTER TABLE public.invito_giudice OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 17336)
+-- TOC entry 225 (class 1259 OID 17850)
 -- Name: membership; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -525,7 +531,7 @@ CREATE TABLE public.membership (
 ALTER TABLE public.membership OWNER TO postgres;
 
 --
--- TOC entry 224 (class 1259 OID 17335)
+-- TOC entry 224 (class 1259 OID 17849)
 -- Name: membership_id_adesione_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -541,7 +547,7 @@ CREATE SEQUENCE public.membership_id_adesione_seq
 ALTER SEQUENCE public.membership_id_adesione_seq OWNER TO postgres;
 
 --
--- TOC entry 5006 (class 0 OID 0)
+-- TOC entry 5008 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: membership_id_adesione_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -550,7 +556,7 @@ ALTER SEQUENCE public.membership_id_adesione_seq OWNED BY public.membership.id_a
 
 
 --
--- TOC entry 217 (class 1259 OID 17267)
+-- TOC entry 217 (class 1259 OID 17781)
 -- Name: organizzatore; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -564,7 +570,7 @@ CREATE TABLE public.organizzatore (
 ALTER TABLE public.organizzatore OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 17309)
+-- TOC entry 221 (class 1259 OID 17823)
 -- Name: team; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -578,7 +584,7 @@ CREATE TABLE public.team (
 ALTER TABLE public.team OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 17273)
+-- TOC entry 218 (class 1259 OID 17787)
 -- Name: utente; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -592,7 +598,7 @@ CREATE TABLE public.utente (
 ALTER TABLE public.utente OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1259 OID 17387)
+-- TOC entry 227 (class 1259 OID 17884)
 -- Name: valutazione; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -608,7 +614,7 @@ CREATE TABLE public.valutazione (
 ALTER TABLE public.valutazione OWNER TO postgres;
 
 --
--- TOC entry 226 (class 1259 OID 17354)
+-- TOC entry 226 (class 1259 OID 17868)
 -- Name: voto; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -624,7 +630,7 @@ CREATE TABLE public.voto (
 ALTER TABLE public.voto OWNER TO postgres;
 
 --
--- TOC entry 4787 (class 2604 OID 17325)
+-- TOC entry 4788 (class 2604 OID 17839)
 -- Name: documento id_documento; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -632,7 +638,7 @@ ALTER TABLE ONLY public.documento ALTER COLUMN id_documento SET DEFAULT nextval(
 
 
 --
--- TOC entry 4788 (class 2604 OID 17339)
+-- TOC entry 4789 (class 2604 OID 17853)
 -- Name: membership id_adesione; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -640,7 +646,7 @@ ALTER TABLE ONLY public.membership ALTER COLUMN id_adesione SET DEFAULT nextval(
 
 
 --
--- TOC entry 4993 (class 0 OID 17322)
+-- TOC entry 4995 (class 0 OID 17836)
 -- Dependencies: 223
 -- Data for Name: documento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -650,7 +656,7 @@ COPY public.documento (id_documento, nome_team, titolo_hackathon, titolo_doc, co
 
 
 --
--- TOC entry 4990 (class 0 OID 17294)
+-- TOC entry 4992 (class 0 OID 17808)
 -- Dependencies: 220
 -- Data for Name: giudice; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -660,7 +666,7 @@ COPY public.giudice (username_utente, titolo_hackathon) FROM stdin;
 
 
 --
--- TOC entry 4989 (class 0 OID 17279)
+-- TOC entry 4991 (class 0 OID 17793)
 -- Dependencies: 219
 -- Data for Name: hackathon; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -670,7 +676,7 @@ COPY public.hackathon (titolo_identificativo, organizzatore, sede, classifica, d
 
 
 --
--- TOC entry 4998 (class 0 OID 17409)
+-- TOC entry 5000 (class 0 OID 17906)
 -- Dependencies: 228
 -- Data for Name: invito_giudice; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -680,7 +686,7 @@ COPY public.invito_giudice (username_organizzatore, username_utente, titolo_hack
 
 
 --
--- TOC entry 4995 (class 0 OID 17336)
+-- TOC entry 4997 (class 0 OID 17850)
 -- Dependencies: 225
 -- Data for Name: membership; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -690,7 +696,7 @@ COPY public.membership (id_adesione, username_utente, team_appartenenza, titolo_
 
 
 --
--- TOC entry 4987 (class 0 OID 17267)
+-- TOC entry 4989 (class 0 OID 17781)
 -- Dependencies: 217
 -- Data for Name: organizzatore; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -700,7 +706,7 @@ COPY public.organizzatore (username_org, password) FROM stdin;
 
 
 --
--- TOC entry 4991 (class 0 OID 17309)
+-- TOC entry 4993 (class 0 OID 17823)
 -- Dependencies: 221
 -- Data for Name: team; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -710,7 +716,7 @@ COPY public.team (nome_team, punteggio_finale, titolo_hackathon) FROM stdin;
 
 
 --
--- TOC entry 4988 (class 0 OID 17273)
+-- TOC entry 4990 (class 0 OID 17787)
 -- Dependencies: 218
 -- Data for Name: utente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -720,7 +726,7 @@ COPY public.utente (username, password) FROM stdin;
 
 
 --
--- TOC entry 4997 (class 0 OID 17387)
+-- TOC entry 4999 (class 0 OID 17884)
 -- Dependencies: 227
 -- Data for Name: valutazione; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -730,7 +736,7 @@ COPY public.valutazione (id_documento, username_giudice, titolo_hackathon, team_
 
 
 --
--- TOC entry 4996 (class 0 OID 17354)
+-- TOC entry 4998 (class 0 OID 17868)
 -- Dependencies: 226
 -- Data for Name: voto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -740,7 +746,7 @@ COPY public.voto (username_giudice, titolo_hackathon, team_votato, punteggio) FR
 
 
 --
--- TOC entry 5007 (class 0 OID 0)
+-- TOC entry 5009 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: documento_id_documento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -749,7 +755,7 @@ SELECT pg_catalog.setval('public.documento_id_documento_seq', 1, false);
 
 
 --
--- TOC entry 5008 (class 0 OID 0)
+-- TOC entry 5010 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: membership_id_adesione_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -758,7 +764,7 @@ SELECT pg_catalog.setval('public.membership_id_adesione_seq', 1, false);
 
 
 --
--- TOC entry 4810 (class 2606 OID 17329)
+-- TOC entry 4811 (class 2606 OID 17843)
 -- Name: documento documento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -767,7 +773,7 @@ ALTER TABLE ONLY public.documento
 
 
 --
--- TOC entry 4804 (class 2606 OID 17298)
+-- TOC entry 4805 (class 2606 OID 17812)
 -- Name: giudice giudice_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -776,7 +782,7 @@ ALTER TABLE ONLY public.giudice
 
 
 --
--- TOC entry 4802 (class 2606 OID 17288)
+-- TOC entry 4803 (class 2606 OID 17802)
 -- Name: hackathon hackathon_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -785,7 +791,7 @@ ALTER TABLE ONLY public.hackathon
 
 
 --
--- TOC entry 4820 (class 2606 OID 17415)
+-- TOC entry 4821 (class 2606 OID 17912)
 -- Name: invito_giudice invito_giudice_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -794,7 +800,7 @@ ALTER TABLE ONLY public.invito_giudice
 
 
 --
--- TOC entry 4812 (class 2606 OID 17341)
+-- TOC entry 4813 (class 2606 OID 17855)
 -- Name: membership membership_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -803,7 +809,7 @@ ALTER TABLE ONLY public.membership
 
 
 --
--- TOC entry 4814 (class 2606 OID 17343)
+-- TOC entry 4815 (class 2606 OID 17857)
 -- Name: membership membership_username_utente_team_appartenenza_titolo_hackath_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -812,7 +818,7 @@ ALTER TABLE ONLY public.membership
 
 
 --
--- TOC entry 4798 (class 2606 OID 17272)
+-- TOC entry 4799 (class 2606 OID 17786)
 -- Name: organizzatore organizzatore_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -821,7 +827,7 @@ ALTER TABLE ONLY public.organizzatore
 
 
 --
--- TOC entry 4806 (class 2606 OID 17315)
+-- TOC entry 4807 (class 2606 OID 17829)
 -- Name: team team_nome_team_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -830,7 +836,7 @@ ALTER TABLE ONLY public.team
 
 
 --
--- TOC entry 4808 (class 2606 OID 17313)
+-- TOC entry 4809 (class 2606 OID 17827)
 -- Name: team team_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -839,7 +845,7 @@ ALTER TABLE ONLY public.team
 
 
 --
--- TOC entry 4800 (class 2606 OID 17278)
+-- TOC entry 4801 (class 2606 OID 17792)
 -- Name: utente utente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -848,7 +854,7 @@ ALTER TABLE ONLY public.utente
 
 
 --
--- TOC entry 4818 (class 2606 OID 17393)
+-- TOC entry 4819 (class 2606 OID 17890)
 -- Name: valutazione valutazione_id_documento_username_giudice_titolo_hackathon__key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -857,7 +863,7 @@ ALTER TABLE ONLY public.valutazione
 
 
 --
--- TOC entry 4816 (class 2606 OID 17359)
+-- TOC entry 4817 (class 2606 OID 17873)
 -- Name: voto voto_username_giudice_titolo_hackathon_team_votato_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -866,7 +872,7 @@ ALTER TABLE ONLY public.voto
 
 
 --
--- TOC entry 4841 (class 2620 OID 17434)
+-- TOC entry 4843 (class 2620 OID 17929)
 -- Name: invito_giudice trigger_aggiungi_giudice; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -874,7 +880,31 @@ CREATE TRIGGER trigger_aggiungi_giudice AFTER UPDATE ON public.invito_giudice FO
 
 
 --
--- TOC entry 4837 (class 2620 OID 17438)
+-- TOC entry 4839 (class 2620 OID 17937)
+-- Name: team trigger_gestisci_eliminazione_team; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER trigger_gestisci_eliminazione_team BEFORE DELETE ON public.team FOR EACH ROW EXECUTE FUNCTION public.gestisci_eliminazione_team();
+
+
+--
+-- TOC entry 4840 (class 2620 OID 17935)
+-- Name: membership trigger_gestisci_rimozione_iscritto; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER trigger_gestisci_rimozione_iscritto AFTER DELETE ON public.membership FOR EACH ROW EXECUTE FUNCTION public.gestisci_rimozione_iscritto();
+
+
+--
+-- TOC entry 4837 (class 2620 OID 17939)
+-- Name: hackathon trigger_inizializza_contatore_iscritti; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER trigger_inizializza_contatore_iscritti BEFORE INSERT ON public.hackathon FOR EACH ROW EXECUTE FUNCTION public.inizializza_contatore_iscritti();
+
+
+--
+-- TOC entry 4841 (class 2620 OID 17934)
 -- Name: membership trigger_verifica_adesione_valida; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -882,15 +912,7 @@ CREATE TRIGGER trigger_verifica_adesione_valida BEFORE INSERT ON public.membersh
 
 
 --
--- TOC entry 4838 (class 2620 OID 17432)
--- Name: membership trigger_verifica_data_adesione; Type: TRIGGER; Schema: public; Owner: postgres
---
-
-CREATE TRIGGER trigger_verifica_data_adesione BEFORE INSERT OR UPDATE ON public.membership FOR EACH ROW EXECUTE FUNCTION public.verifica_data_adesione();
-
-
---
--- TOC entry 4840 (class 2620 OID 17443)
+-- TOC entry 4842 (class 2620 OID 17942)
 -- Name: voto trigger_verifica_documento_caricato; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -898,7 +920,7 @@ CREATE TRIGGER trigger_verifica_documento_caricato BEFORE INSERT ON public.voto 
 
 
 --
--- TOC entry 4836 (class 2620 OID 17436)
+-- TOC entry 4838 (class 2620 OID 17931)
 -- Name: giudice trigger_verifica_giudice_sovrapposizione; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -906,15 +928,7 @@ CREATE TRIGGER trigger_verifica_giudice_sovrapposizione BEFORE INSERT OR UPDATE 
 
 
 --
--- TOC entry 4839 (class 2620 OID 17440)
--- Name: membership trigger_verifica_max_membri_team; Type: TRIGGER; Schema: public; Owner: postgres
---
-
-CREATE TRIGGER trigger_verifica_max_membri_team BEFORE INSERT ON public.membership FOR EACH ROW EXECUTE FUNCTION public.verifica_max_membri_team();
-
-
---
--- TOC entry 4825 (class 2606 OID 17330)
+-- TOC entry 4826 (class 2606 OID 17844)
 -- Name: documento documento_nome_team_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -923,7 +937,7 @@ ALTER TABLE ONLY public.documento
 
 
 --
--- TOC entry 4822 (class 2606 OID 17304)
+-- TOC entry 4823 (class 2606 OID 17818)
 -- Name: giudice giudice_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -932,7 +946,7 @@ ALTER TABLE ONLY public.giudice
 
 
 --
--- TOC entry 4823 (class 2606 OID 17299)
+-- TOC entry 4824 (class 2606 OID 17813)
 -- Name: giudice giudice_username_utente_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -941,7 +955,7 @@ ALTER TABLE ONLY public.giudice
 
 
 --
--- TOC entry 4821 (class 2606 OID 17289)
+-- TOC entry 4822 (class 2606 OID 17803)
 -- Name: hackathon hackathon_organizzatore_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -950,7 +964,7 @@ ALTER TABLE ONLY public.hackathon
 
 
 --
--- TOC entry 4833 (class 2606 OID 17426)
+-- TOC entry 4834 (class 2606 OID 17923)
 -- Name: invito_giudice invito_giudice_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -959,7 +973,7 @@ ALTER TABLE ONLY public.invito_giudice
 
 
 --
--- TOC entry 4834 (class 2606 OID 17416)
+-- TOC entry 4835 (class 2606 OID 17913)
 -- Name: invito_giudice invito_giudice_username_organizzatore_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -968,7 +982,7 @@ ALTER TABLE ONLY public.invito_giudice
 
 
 --
--- TOC entry 4835 (class 2606 OID 17421)
+-- TOC entry 4836 (class 2606 OID 17918)
 -- Name: invito_giudice invito_giudice_username_utente_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -977,7 +991,7 @@ ALTER TABLE ONLY public.invito_giudice
 
 
 --
--- TOC entry 4826 (class 2606 OID 17349)
+-- TOC entry 4827 (class 2606 OID 17863)
 -- Name: membership membership_team_appartenenza_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -986,7 +1000,7 @@ ALTER TABLE ONLY public.membership
 
 
 --
--- TOC entry 4827 (class 2606 OID 17344)
+-- TOC entry 4828 (class 2606 OID 17858)
 -- Name: membership membership_username_utente_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -995,7 +1009,7 @@ ALTER TABLE ONLY public.membership
 
 
 --
--- TOC entry 4824 (class 2606 OID 17316)
+-- TOC entry 4825 (class 2606 OID 17830)
 -- Name: team team_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1004,7 +1018,7 @@ ALTER TABLE ONLY public.team
 
 
 --
--- TOC entry 4830 (class 2606 OID 17394)
+-- TOC entry 4831 (class 2606 OID 17891)
 -- Name: valutazione valutazione_id_documento_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1013,7 +1027,7 @@ ALTER TABLE ONLY public.valutazione
 
 
 --
--- TOC entry 4831 (class 2606 OID 17399)
+-- TOC entry 4832 (class 2606 OID 17896)
 -- Name: valutazione valutazione_team_valutato_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1022,7 +1036,7 @@ ALTER TABLE ONLY public.valutazione
 
 
 --
--- TOC entry 4832 (class 2606 OID 17404)
+-- TOC entry 4833 (class 2606 OID 17901)
 -- Name: valutazione valutazione_username_giudice_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1031,7 +1045,7 @@ ALTER TABLE ONLY public.valutazione
 
 
 --
--- TOC entry 4828 (class 2606 OID 17365)
+-- TOC entry 4829 (class 2606 OID 17879)
 -- Name: voto voto_team_votato_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1040,7 +1054,7 @@ ALTER TABLE ONLY public.voto
 
 
 --
--- TOC entry 4829 (class 2606 OID 17360)
+-- TOC entry 4830 (class 2606 OID 17874)
 -- Name: voto voto_username_giudice_titolo_hackathon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1048,7 +1062,7 @@ ALTER TABLE ONLY public.voto
     ADD CONSTRAINT voto_username_giudice_titolo_hackathon_fkey FOREIGN KEY (username_giudice, titolo_hackathon) REFERENCES public.giudice(username_utente, titolo_hackathon) ON DELETE CASCADE;
 
 
--- Completed on 2025-07-15 20:22:57
+-- Completed on 2025-07-16 12:28:51
 
 --
 -- PostgreSQL database dump complete
