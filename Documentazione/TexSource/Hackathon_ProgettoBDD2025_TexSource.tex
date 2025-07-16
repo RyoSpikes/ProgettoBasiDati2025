@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt]{article}
+\documentclass[a4paper, 10pt]{article}
 \linespread{1.0} %interlinea
 \usepackage{geometry} %margini
 \usepackage[]{tabto}
@@ -116,57 +116,39 @@
 	Ogni hackathon ha un titolo identificativo, si svolge in una certa sede e in un certo intervallo di tempo (solitamente 2 giorni) e ha un organizzatore specifico (registrato alla piattaforma). L'organizzatore seleziona un gruppo di giudici (selezionati tra gli utenti della piattaforma, invitandoli). Infine, l'organizzatore apre le registrazioni, che si chiuderanno 2 giorni prima dell'evento. Ogni evento avrà un numero massimo di iscritti e una dimensione massima del team.
 	Durante il periodo di registrazione, gli utenti possono registrarsi per l'Hackathon di loro scelta (eventualmente registrandosi sulla piattaforma se non lo hanno già fatto). Una volta iscritti, gli utenti possono formare team. I team diventano definitivi quando si chiudono le iscrizioni. All'inizio dell'hackathon, i giudici pubblicano una descrizione del problema da affrontare. 
 	Durante l'hackathon, i team lavorano separatamente per risolvere il problema e devono caricare periodicamente gli aggiornamenti sui "progressi" sulla piattaforma come documento, che può essere esaminato e commentato dai giudici. Alla fine dell'hackathon, ogni giudice assegna un voto (da 0 a 10) a ciascun team e la piattaforma, dopo aver acquisito tutti i voti, pubblica le classifiche dei team.
-	
-	
 	\subsection*{Caratteristiche dell'Hackathon}
-	
 	Ogni Hackathon ha le seguenti caratteristiche:
-	
 	\begin{itemize}
 		\item Un \textbf{titolo identificativo};
 		\item Una \textbf{sede} in cui si svolge;
 		\item Un \textbf{intervallo di tempo}, solitamente di due giorni;
 		\item Un \textbf{organizzatore specifico}, registrato sulla piattaforma.
 	\end{itemize}
-	
 	\subsection*{Giudici e Registrazioni}
-	
 	\begin{itemize}
 		\item L'organizzatore seleziona un gruppo di \textbf{giudici}, invitandoli tra gli utenti registrati sulla piattaforma.
 		\item L'organizzatore apre le \textbf{registrazioni}, che si chiudono due giorni prima dell'inizio dell'evento.
 		\item Ogni evento prevede un \textbf{numero massimo di iscritti} e una \textbf{dimensione massima del team}.
 		\item Durante il periodo di registrazione, gli utenti possono registrarsi all'Hackathon di loro scelta, previa registrazione sulla piattaforma se non ancora effettuata.
 	\end{itemize}
-	
 	\subsection*{Formazione dei Team}
-	
 	\begin{itemize}
 		\item Una volta iscritti, gli utenti possono \textbf{formare team}.
 		\item I team diventano \textbf{definitivi alla chiusura delle iscrizioni}.
 	\end{itemize}
-	
 	\subsection*{Svolgimento dell'Hackathon}
-	
 	\begin{itemize}
 		\item All'inizio dell'evento, i giudici \textbf{pubblicano una descrizione del problema} da affrontare.
 		\item Durante l’Hackathon, i team lavorano separatamente per risolvere il problema.
 		\item I team devono \textbf{caricare periodicamente aggiornamenti sui progressi} tramite documenti sulla piattaforma.
 		\item I documenti possono essere \textbf{esaminati e commentati dai giudici}.
 	\end{itemize}
-	
 	\subsection*{Valutazione e Classifica}
-	
 	\begin{itemize}
 		\item Alla fine dell'Hackathon, ogni giudice assegna un \textbf{voto da 0 a 10} a ciascun team.
 		\item La piattaforma, dopo aver acquisito tutti i voti, \textbf{pubblica le classifiche dei team}.
 	\end{itemize}
 	\section{Progettazione Concettuale}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=1\textwidth]{../Immagini/EERDiagram_Hackathon}
-		\caption[Grafico UML]{Grafico UML Concettuale}
-	\end{figure}
-	\newpage
 	\subsection{Analisi delle Entità e degli Attributi}
 	Seguendo la traccia, nella fase di progettazione concettuale sono state trovate le suddette entità:
 	\subsubsection{Hackathon}
@@ -195,7 +177,6 @@
 	\begin{itemize}
 		\item \textbf{Documento} ($\underline{NomeTeam}$, Testo)
 	\end{itemize}
-	\newpage
 	\subsection{Analisi delle Relazioni}
 	Qui verranno descritte tutte le relazioni e le specializzazioni presenti all'interno della struttura concettuale non ancora ristrutturata.
 	\begin{itemize}
@@ -206,9 +187,15 @@
 		\item \textit{Invito} (\textbf{Giudice} - \textbf{Hackathon}: 1..N - 1..N):\\Un giudice deve invitare un minimo di un utente fino ad un massimo di N utenti per essere giudici. Un giudice, per ricevere un invito, deve riceverlo da almeno un organizzatore.
 		\item \textit{Voto} (\textbf{Giudice} - \textbf{Team}: 1..N - 1..N):\\Un Giudice può esprimere una votazione ad un minimo di un Team. Un team può ricevere voti da almeno un giudice.
 		\item \textit{Valutazione} (\textbf{Giudice} - \textbf{Documento}: 1..N - 1..N):\\Un Giudice deve esprimere una valutazione per almeno un documento. Un documento deve ottenere una valutazione da almeno un giudice.
-		\item \textit{Pubblicazione} (\textbf{Documento} - \textbf{Team}: 1..N - N):\\Relazione identificante per l'entità debole Documento, in quanto generato direttamente da un Team e non può esistere senza un associazione ad un Team.
+		\item \textit{Pubblicazione} (\textbf{Documento} - \textbf{Team}: 1 - N):\\Relazione identificante per l'entità debole Documento, in quanto generato direttamente da un Team e non può esistere senza un associazione ad un Team.
 	\end{itemize}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\textwidth]{../Immagini/EERDiagram_Hackathon}
+		\caption[Grafico UML]{Grafico EER Concettuale}
+	\end{figure}
 	\newpage
+	\section{Ristrutturazione Modello Concettuale}
 	\subsection{Ristrutturazione del Modello Concettuale}
 	Dopo aver analizzato i requisiti, le entità e le relazioni ed aver prodotto uno schema concettuale passeremo alla sua Ristrutturazione, seguendo i passaggi necessari elencati nelle prossime sottosezioni, ordinate in:
 	\begin{itemize}
@@ -220,12 +207,41 @@
 		\item Analisi delle Chiavi
 	\end{itemize}
 	\subsubsection{Analisi delle Ridondanze}
-	
+	\begin{itemize}
+		\item \textbf{Hackathon - MaxNum\_iscritti}:\\Sebbene sia banalmente considerabile un attributo derivabile dal calcolo degli utenti iscritti ad un Hackathon è evidente che, per semplificarci la vita, sarebbe di gran lunga meglio avere a disposizione un attributo costantemente aggiornato che tenga traccia del numero totale degli iscritti a quell'Hackathon. In questo modo ci è possibile semplificare le operazioni di controllo sui limiti imposti dalla stessa per le iscrizioni.
+	\end{itemize}
 	\subsubsection{Analisi delle Generalizzazioni/Gerarchie di Specializzazione}
+	\begin{itemize}
+		\item \textbf{Gerarchia Disgiunta Parziale: Utente > Organizzatore, Giudice}:\\L'unica gerarchia all'interno della nostra progettazione è quella tra Utente, Organizzatore e Giudice. È definita come \textbf{disgiunta} in quanto un Utente non può essere sia Organizzatore che Giudice e come \textbf{parziale} in quanto possono esistere Utenti neutri che non siano specializzati in nessuno dei due titoli. Poiché abbiamo bisogno di fare una distinzione evidente tra i tre per livello di responsabilità si è deciso di renderle tre entità dipendenti: Organizzatore e Utente avranno entrambi il proprio metodo di accesso distinto (un Organizzatore può creare un account anche come Utente), mentre l'entità Giudice verrà gestita come una \textit{"promozione"} concessa ad un Utente dopo aver accettato l'invito. 
+	\end{itemize}
 	\subsubsection{Analisi degli Attributi Multivalore}
+	Non sono stati riscontrati attributi con valori multipli all'interno della nostra struttura.
 	\subsubsection{Analisi degli Attributi Strutturati}
+	Non sono stati riscontrati attributi con valori strutturati all'interno della nostra struttura.
 	\subsubsection{Partizionamento/Accorpamento di Entità e Relazioni}
+	\begin{itemize}
+		\item \textbf{Invito} \textit{(Organizzatore - Giudice [1..* - 1..*])}\\Questa relazione ha subito più cambiamenti:
+		\begin{itemize}
+			\item È stata spostata da Giudice a Utente, in quanto adesso Giudice verrà trattato come un'entità debole che \textbf{estende} un Utente, e verrà creata solo all'accettazione dell'invito.
+			\item La relazione è stata ridefinita come 1 a N: Un Utente può ricevere un solo invito a partecipare ad un Hackathon e non può riceverne altri finché l'Hackathon alla quale sta partecipando come Giudice non sarà conclusa.
+		\end{itemize}
+		\item \textbf{Voto} \textit{(Giudice - Team [1..* - 1..*])}\\La relazione è stata spezzata con l'ausilio di un'entità associativa chiamata \textbf{Voto} che conserverà il punteggio dato dal Giudice al proprio interno. Un Team può ricevere più Voti da più Giudici, ma un Voto è deciso da un solo Giudice per un solo Team.
+		\item \textbf{Appartenenza} \textit{(Utente - Team [0..* - 1..*])}\\La relazione è stata spezzata con l'ausilio di un'entità associativa chiamata \textbf{Membership} che definisce l'appartenenza di un Utente ad un Team. Un Team è composto da più Membership di più Team, ma una Membership definisce la relazione tra un solo Utente con un solo Team.
+		\item \textbf{Valutazione} \textit{(Giudice - Documento [1..* - 1..*])}\\La relazione è stata spezzata con l'ausilio di un'entità associativa chiamata \textbf{Valutazione} che definisce la singola valutazione di un Giudice verso un Documento. Un Documento può essere valutato da più Giudici, ma la Valutazione è singola per il Documento.
+	\end{itemize}
 	\subsubsection{Analisi delle Chiavi}
+	\begin{itemize}
+		\item \textbf{Utente}: Si cambia il nome della chiave in Username poiché più appropriato. Rimane sufficiente per definire l'entità.
+		\item \textbf{Organizzatore}: Discorso analogo a quello di Utente.
+		\item \textbf{Hackathon}: Si mantiene il Titolo Identificativo come chiave principale, tenendo l'Username dell'organizzatore come chiave esterna. L'Hackathon sarà identificata anche dal proprio organizzatore.
+		\item \textbf{Giudice}: Sarà un'entità debole definita sia dall'Utente al quale è legato che all'Hackathon per la quale l'Utente ha ricevuto l'invito. La sua chiave sarà composta dalle chiavi esterne delle due entità sopra citate.
+		\item \textbf{Team}: Il nome del Team sarà parte della chiave composta, unita alla chiave esterna dell'Hackathon alla quale parteciperà.
+		\item \textbf{Documento}: Nonostante sia essenzialmente un'entità debole generata dal Team al momento della sua stesura, si è comunque vista la necessità di una chiave surrogata (ID Autoincrementante, con l'ausilio del \textit{SERIAL} di \textit{Postgre}) per poter distinguere i vari documenti di un singolo Team. Sarà identificato tramite il Nome del Team e il Titolo dell'Hackathon come chiavi esterne.
+		\item \textbf{Invito Giudice}: Questa entità verrà definita dalle chiavi dell'Organizzatore, l'Utente invitato e il Titolo dell'Hackathon alla quale l'utente parteciperà come Giudice.
+		\item \textbf{Membership}: Questa entità verrà definita dalle chiavi dell'Utente e del Team, insieme ad una chiave surrogata (ID Autoincrementante, con l'ausilio del \textit{SERIAL} di \textit{Postgre}) che permetterà di distinguere le singole membership di un Team.
+		\item \textbf{Voto}: Questa entità verrà definita dalle chiavi del Giudice e del Team.
+		\item \textbf{Membership}: Questa entità verrà definita dalle chiavi del Giudice, del Team e del Documento da valutare.
+	\end{itemize}
 	\subsection{Class Diagram Ristrutturato}
 	\includegraphics[width=1\textwidth]{../Immagini/Hackathon_UMLRistrutturato}
 	\newpage
@@ -388,11 +404,20 @@
 			\end{itemize} \\
 			\hline
 			
-			\textbf{Invito} & 
+			\textbf{Invito Giudice} & 
 			ORGANIZZATORE $\leftrightarrow$ UTENTE &
 			\begin{itemize}
 				\item Tipo: Uno-a-molti [1..* - 1]
 				\item Un organizzatore deve invitare almeno un utente a diventare giudice
+				\item Vincolo: Un utente può ricevere un solo invito alla volta per essere giudice di un Hackathon
+			\end{itemize} \\
+			\hline
+			
+			\textbf{Promozione} & 
+			UTENTE $\leftrightarrow$ GIUDICE &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [0..* - 1]
+				\item Un Utente può essere promosso fino ad N volte per diventare Giudice. Un Giudice è correlato ad un solo Utente per una sola Hackathon.
 				\item Vincolo: Un utente può ricevere un solo invito alla volta per essere giudice di un Hackathon
 			\end{itemize} \\
 			\hline
@@ -472,7 +497,7 @@
 	\subsection{Dizionario dei Vincoli}
 	{\footnotesize
 		\setlength{\arrayrulewidth}{0.5pt}
-		\renewcommand{\arraystretch}{1.5}
+		\renewcommand{\arraystretch}{2.5}
 		\begin{longtable}{
 				>{\raggedright\arraybackslash}p{5.5cm}
 				>{\raggedright\arraybackslash}p{10cm}
@@ -646,6 +671,7 @@
 			)
 		);
 	\end{lstlisting}
+	\newpage
 	\subsubsection{Definizione di Hackathon}
 	\begin{lstlisting}[style=sqlstyle]
 		CREATE TABLE HACKATHON
@@ -704,6 +730,7 @@
 			ON DELETE CASCADE
 		);
 	\end{lstlisting}
+	\newpage
 	\subsubsection{Definizione di Documento}
 	\begin{lstlisting}[style=sqlstyle]
 		CREATE TABLE DOCUMENTO
@@ -762,6 +789,7 @@
 			CHECK (Punteggio >= 0 AND Punteggio <= 10)
 		);
 	\end{lstlisting}
+	\newpage
 	\subsubsection{Definizione di Valutazione}
 	\begin{lstlisting}[style=sqlstyle]
 		CREATE TABLE VALUTAZIONE
@@ -804,6 +832,7 @@
 			FOREIGN KEY (Titolo_hackathon) REFERENCES HACKATHON(Titolo_identificativo) ON DELETE CASCADE
 		);
 	\end{lstlisting}
+	\newpage
 	\subsection{Implementazioni Vincoli}
 	In questa sezione verranno riportate le implementazioni dei vincoli più complessi che non sono già stati indicati nelle definizioni delle tabelle.
 	\subsubsection{Implementazione Vincolo di Creazione Giudice su Accettazione Invito}
@@ -818,7 +847,6 @@
 				VALUES (NEW.Username_utente, NEW.Titolo_hackathon)
 				ON CONFLICT DO NOTHING; -- evita errore se gia' presente
 			END IF;
-			
 			RETURN NEW;
 		END;
 		$$ LANGUAGE plpgsql;
@@ -826,7 +854,8 @@
 		CREATE TRIGGER trigger_aggiungi_giudice
 		AFTER UPDATE ON INVITO_GIUDICE
 		FOR EACH ROW
-		WHEN (OLD.Stato_invito IS DISTINCT FROM NEW.Stato_invito AND NEW.Stato_invito = 'Accettato')
+		WHEN (OLD.Stato_invito IS DISTINCT FROM NEW.Stato_invito 
+			AND NEW.Stato_invito = 'Accettato')
 		EXECUTE FUNCTION aggiungi_giudice();
 	\end{lstlisting}
 	\subsubsection{Implementazione Vincolo di Controllo sull'unicità di un Utente come Giudice}
@@ -859,8 +888,9 @@
 			
 			-- Se c'e' sovrapposizione, genera un errore
 			IF conteggio > 0 THEN
-			RAISE EXCEPTION 'L''utente % non puo' essere giudice per questo hackathon perche' e' gia' giudice 
-				per un hackathon con date sovrapposte', NEW.Username_utente;
+			RAISE EXCEPTION 'L''utente % non puo'' essere giudice per questo hackathon 
+				perche'' e'' gia'' giudice per un hackathon con date sovrapposte', 
+				NEW.Username_utente;
 			END IF;
 			
 			RETURN NEW;
@@ -916,8 +946,8 @@
 			
 			-- Verifica se il team e' gia' al completo
 			IF num_membri_attuali >= max_membri THEN
-				RAISE EXCEPTION 'Non e' possibile aderire al team "%": 
-					il team ha gia' raggiunto il numero massimo di membri (%)',
+				RAISE EXCEPTION 'Non e'' possibile aderire al team "%": 
+					il team ha gia'' raggiunto il numero massimo di membri (%)',
 				NEW.Team_appartenenza, max_membri;
 			END IF;
 			
@@ -971,7 +1001,8 @@
 	\end{lstlisting}
 	\subsubsection{Implementazione Vincolo di Controllo sui Team senza Documenti caricati}
 	\begin{lstlisting}[style=sqlstyle]
-		-- Funzione per verificare che un team abbia caricato almeno un documento prima di ricevere un voto
+		-- Funzione per verificare che un team abbia caricato 
+		-- almeno un documento prima di ricevere un voto
 		CREATE OR REPLACE FUNCTION verifica_documento_caricato()
 		RETURNS TRIGGER AS $$
 		DECLARE
@@ -984,7 +1015,8 @@
 			WHERE d.nome_team = NEW.team_votato
 			AND d.Titolo_hackathon = NEW.Titolo_hackathon;
 			
-			-- Se il team non ha caricato alcun documento, impedisci l'inserimento del voto
+			-- Se il team non ha caricato alcun documento, 
+			-- impedisci l'inserimento del voto
 			IF documenti_count = 0 THEN
 				RAISE EXCEPTION 'Impossibile votare il team "%": 
 					non ha caricato alcun documento per l''hackathon "%"',
@@ -996,7 +1028,8 @@
 		END;
 		$$ LANGUAGE plpgsql;
 		
-		-- Trigger per controllare che un team abbia caricato documenti prima di ricevere un voto
+		-- Trigger per controllare che un team abbia 
+		-- caricato documenti prima di ricevere un voto
 		CREATE TRIGGER trigger_verifica_documento_caricato
 		BEFORE INSERT ON VOTO
 		FOR EACH ROW
@@ -1052,8 +1085,10 @@
 			
 			-- Verifica se tutti i giudici hanno espresso il proprio voto per tutti i team
 			IF num_voti < voti_attesi THEN
-				RETURN 'Errore: Non e'' possibile generare la classifica. Mancano ' || 
-				(voti_attesi - num_voti) || ' voti su ' || voti_attesi || ' attesi. Tutti i giudici devono votare tutti i team.';
+				RETURN 'Errore: Non e'' possibile generare la classifica. 
+					Mancano ' || (voti_attesi - num_voti) || ' voti su ' 
+					|| voti_attesi || ' attesi. 
+					Tutti i giudici devono votare tutti i team.';
 				END IF;
 			
 			-- Aggiorna il punteggio finale di ciascun team
@@ -1092,16 +1127,20 @@
 			
 			-- Registra l'utente e la data/ora di generazione della classifica
 			RAISE NOTICE 'Classifica generata da % il % UTC', 
-			CURRENT_USER, TO_CHAR(CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS');
+			CURRENT_USER, TO_CHAR(
+				CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS'
+				);
 			
 			RETURN classifica_text;
 		END;
 		$$ LANGUAGE plpgsql;
 	\end{lstlisting}
+	\newpage
 	\subsection{Implementazione Funzioni Aggiuntive}
 	\subsubsection{Implementazione Funzione per la rimozione di un Utente da un Team}
 	\begin{lstlisting}[style=sqlstyle]
-		-- Funzione per decrementare il contatore quando un utente viene rimosso da un team
+		-- Funzione per decrementare il contatore 
+		-- quando un utente viene rimosso da un team
 		CREATE OR REPLACE FUNCTION gestisci_rimozione_iscritto()
 		RETURNS TRIGGER AS $$
 		BEGIN
@@ -1135,8 +1174,9 @@
 			AND Titolo_hackathon = OLD.Titolo_hackathon;
 			
 			-- Decrementa il contatore degli iscritti per ogni membro del team
-			-- Nota: facciamo l'update direttamente qui perche' il team e tutti i suoi membri
-			-- verranno eliminati insieme a causa del vincolo ON DELETE CASCADE
+			-- Nota: facciamo l'update direttamente qui perche' il team 
+			-- e tutti i suoi membri verranno eliminati insieme 
+			-- a causa del vincolo ON DELETE CASCADE
 			UPDATE HACKATHON
 			SET NumIscritti_corrente = GREATEST(COALESCE(NumIscritti_corrente, 0) - num_membri, 0)
 			WHERE Titolo_identificativo = OLD.Titolo_hackathon;
@@ -1151,6 +1191,7 @@
 		FOR EACH ROW
 		EXECUTE FUNCTION gestisci_eliminazione_team();
 	\end{lstlisting}
+	\newpage
 	\subsubsection{Implementazione Funzione per l'inizializzazione del contatore degli iscritti}
 	\begin{lstlisting}[style=sqlstyle]
 		-- Funzione per inizializzare il contatore degli iscritti

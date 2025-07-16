@@ -1,47 +1,48 @@
-\contentsline {section}{\numberline {1}Introduzione}{4}{}%
-\contentsline {subsection}{\numberline {1.1}Traccia del Progetto}{4}{}%
-\contentsline {section}{\numberline {2}Progettazione Concettuale}{5}{}%
-\contentsline {subsection}{\numberline {2.1}Analisi delle Entità e degli Attributi}{6}{}%
-\contentsline {subsubsection}{\numberline {2.1.1}Hackathon}{6}{}%
-\contentsline {subsubsection}{\numberline {2.1.2}Utente}{6}{}%
-\contentsline {subsubsection}{\numberline {2.1.3}Organizzatore}{6}{}%
-\contentsline {subsubsection}{\numberline {2.1.4}Giudice}{6}{}%
-\contentsline {subsubsection}{\numberline {2.1.5}Team}{6}{}%
-\contentsline {subsubsection}{\numberline {2.1.6}Documento}{6}{}%
-\contentsline {subsection}{\numberline {2.2}Analisi delle Relazioni}{7}{}%
-\contentsline {subsection}{\numberline {2.3}Ristrutturazione del Modello Concettuale}{8}{}%
-\contentsline {subsubsection}{\numberline {2.3.1}Analisi delle Ridondanze}{8}{}%
-\contentsline {subsubsection}{\numberline {2.3.2}Analisi delle Generalizzazioni/Gerarchie di Specializzazione}{8}{}%
-\contentsline {subsubsection}{\numberline {2.3.3}Analisi degli Attributi Multivalore}{8}{}%
-\contentsline {subsubsection}{\numberline {2.3.4}Analisi degli Attributi Strutturati}{8}{}%
-\contentsline {subsubsection}{\numberline {2.3.5}Partizionamento/Accorpamento di Entità e Relazioni}{8}{}%
-\contentsline {subsubsection}{\numberline {2.3.6}Analisi delle Chiavi}{8}{}%
-\contentsline {subsection}{\numberline {2.4}Class Diagram Ristrutturato}{8}{}%
-\contentsline {subsection}{\numberline {2.5}Dizionario delle Classi}{9}{}%
-\contentsline {subsection}{\numberline {2.6}Dizionario delle Associazioni}{10}{}%
-\contentsline {subsection}{\numberline {2.7}Dizionario dei Vincoli}{13}{}%
-\contentsline {section}{\numberline {3}Progettazione Logica}{14}{}%
-\contentsline {subsection}{\numberline {3.1}Schema Logico}{14}{}%
-\contentsline {section}{\numberline {4}Progettazione Fisica}{15}{}%
-\contentsline {subsection}{\numberline {4.1}Definzione Tabelle}{15}{}%
-\contentsline {subsubsection}{\numberline {4.1.1}Definizione di Organizzatore}{15}{}%
-\contentsline {subsubsection}{\numberline {4.1.2}Definizione di Utente}{15}{}%
-\contentsline {subsubsection}{\numberline {4.1.3}Definizione di Hackathon}{15}{}%
-\contentsline {subsubsection}{\numberline {4.1.4}Definizione di Giudice}{16}{}%
-\contentsline {subsubsection}{\numberline {4.1.5}Definizione di Team}{16}{}%
-\contentsline {subsubsection}{\numberline {4.1.6}Definizione di Documento}{17}{}%
-\contentsline {subsubsection}{\numberline {4.1.7}Definizione di Membership}{17}{}%
-\contentsline {subsubsection}{\numberline {4.1.8}Definizione di Voto}{17}{}%
-\contentsline {subsubsection}{\numberline {4.1.9}Definizione di Valutazione}{18}{}%
-\contentsline {subsubsection}{\numberline {4.1.10}Definizione di Invito Giudice}{18}{}%
-\contentsline {subsection}{\numberline {4.2}Implementazioni Vincoli}{18}{}%
-\contentsline {subsubsection}{\numberline {4.2.1}Implementazione Vincolo di Creazione Giudice su Accettazione Invito}{18}{}%
-\contentsline {subsubsection}{\numberline {4.2.2}Implementazione Vincolo di Controllo sull'unicità di un Utente come Giudice}{19}{}%
-\contentsline {subsubsection}{\numberline {4.2.3}Implementazione Vincolo di Controllo sulla validità di Adesione di un Utente ad un Team}{20}{}%
-\contentsline {subsubsection}{\numberline {4.2.4}Implementazione Vincolo di Controllo sui Team senza membri sufficienti}{21}{}%
-\contentsline {subsubsection}{\numberline {4.2.5}Implementazione Vincolo di Controllo sui Team senza Documenti caricati}{21}{}%
-\contentsline {subsubsection}{\numberline {4.2.6}Implementazione Funzione di Generazione della classifica finale con annessi vincoli sulla fine dell'evento e sul controllo dei giudici senza voto}{22}{}%
-\contentsline {subsection}{\numberline {4.3}Implementazione Funzioni Aggiuntive}{24}{}%
-\contentsline {subsubsection}{\numberline {4.3.1}Implementazione Funzione per la rimozione di un Utente da un Team}{24}{}%
-\contentsline {subsubsection}{\numberline {4.3.2}Implementazione Funzione per la rimozione di un Team da un Hackathon}{24}{}%
-\contentsline {subsubsection}{\numberline {4.3.3}Implementazione Funzione per l'inizializzazione del contatore degli iscritti}{25}{}%
+\contentsline {section}{\numberline {1}Introduzione}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Traccia del Progetto}{3}{}%
+\contentsline {section}{\numberline {2}Progettazione Concettuale}{4}{}%
+\contentsline {subsection}{\numberline {2.1}Analisi delle Entità e degli Attributi}{4}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}Hackathon}{4}{}%
+\contentsline {subsubsection}{\numberline {2.1.2}Utente}{4}{}%
+\contentsline {subsubsection}{\numberline {2.1.3}Organizzatore}{4}{}%
+\contentsline {subsubsection}{\numberline {2.1.4}Giudice}{4}{}%
+\contentsline {subsubsection}{\numberline {2.1.5}Team}{4}{}%
+\contentsline {subsubsection}{\numberline {2.1.6}Documento}{4}{}%
+\contentsline {subsection}{\numberline {2.2}Analisi delle Relazioni}{4}{}%
+\contentsline {section}{\numberline {3}Ristrutturazione Modello Concettuale}{6}{}%
+\contentsline {subsection}{\numberline {3.1}Ristrutturazione del Modello Concettuale}{6}{}%
+\contentsline {subsubsection}{\numberline {3.1.1}Analisi delle Ridondanze}{6}{}%
+\contentsline {subsubsection}{\numberline {3.1.2}Analisi delle Generalizzazioni/Gerarchie di Specializzazione}{6}{}%
+\contentsline {subsubsection}{\numberline {3.1.3}Analisi degli Attributi Multivalore}{6}{}%
+\contentsline {subsubsection}{\numberline {3.1.4}Analisi degli Attributi Strutturati}{6}{}%
+\contentsline {subsubsection}{\numberline {3.1.5}Partizionamento/Accorpamento di Entità e Relazioni}{6}{}%
+\contentsline {subsubsection}{\numberline {3.1.6}Analisi delle Chiavi}{7}{}%
+\contentsline {subsection}{\numberline {3.2}Class Diagram Ristrutturato}{7}{}%
+\contentsline {subsection}{\numberline {3.3}Dizionario delle Classi}{8}{}%
+\contentsline {subsection}{\numberline {3.4}Dizionario delle Associazioni}{9}{}%
+\contentsline {subsection}{\numberline {3.5}Dizionario dei Vincoli}{11}{}%
+\contentsline {section}{\numberline {4}Progettazione Logica}{12}{}%
+\contentsline {subsection}{\numberline {4.1}Schema Logico}{12}{}%
+\contentsline {section}{\numberline {5}Progettazione Fisica}{13}{}%
+\contentsline {subsection}{\numberline {5.1}Definzione Tabelle}{13}{}%
+\contentsline {subsubsection}{\numberline {5.1.1}Definizione di Organizzatore}{13}{}%
+\contentsline {subsubsection}{\numberline {5.1.2}Definizione di Utente}{13}{}%
+\contentsline {subsubsection}{\numberline {5.1.3}Definizione di Hackathon}{14}{}%
+\contentsline {subsubsection}{\numberline {5.1.4}Definizione di Giudice}{14}{}%
+\contentsline {subsubsection}{\numberline {5.1.5}Definizione di Team}{14}{}%
+\contentsline {subsubsection}{\numberline {5.1.6}Definizione di Documento}{15}{}%
+\contentsline {subsubsection}{\numberline {5.1.7}Definizione di Membership}{15}{}%
+\contentsline {subsubsection}{\numberline {5.1.8}Definizione di Voto}{15}{}%
+\contentsline {subsubsection}{\numberline {5.1.9}Definizione di Valutazione}{16}{}%
+\contentsline {subsubsection}{\numberline {5.1.10}Definizione di Invito Giudice}{16}{}%
+\contentsline {subsection}{\numberline {5.2}Implementazioni Vincoli}{17}{}%
+\contentsline {subsubsection}{\numberline {5.2.1}Implementazione Vincolo di Creazione Giudice su Accettazione Invito}{17}{}%
+\contentsline {subsubsection}{\numberline {5.2.2}Implementazione Vincolo di Controllo sull'unicità di un Utente come Giudice}{17}{}%
+\contentsline {subsubsection}{\numberline {5.2.3}Implementazione Vincolo di Controllo sulla validità di Adesione di un Utente ad un Team}{18}{}%
+\contentsline {subsubsection}{\numberline {5.2.4}Implementazione Vincolo di Controllo sui Team senza membri sufficienti}{19}{}%
+\contentsline {subsubsection}{\numberline {5.2.5}Implementazione Vincolo di Controllo sui Team senza Documenti caricati}{19}{}%
+\contentsline {subsubsection}{\numberline {5.2.6}Implementazione Funzione di Generazione della classifica finale con annessi vincoli sulla fine dell'evento e sul controllo dei giudici senza voto}{20}{}%
+\contentsline {subsection}{\numberline {5.3}Implementazione Funzioni Aggiuntive}{22}{}%
+\contentsline {subsubsection}{\numberline {5.3.1}Implementazione Funzione per la rimozione di un Utente da un Team}{22}{}%
+\contentsline {subsubsection}{\numberline {5.3.2}Implementazione Funzione per la rimozione di un Team da un Hackathon}{22}{}%
+\contentsline {subsubsection}{\numberline {5.3.3}Implementazione Funzione per l'inizializzazione del contatore degli iscritti}{23}{}%
