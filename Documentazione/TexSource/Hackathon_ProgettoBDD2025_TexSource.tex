@@ -413,6 +413,15 @@
 			\end{itemize} \\
 			\hline
 			
+			\textbf{Promozione} & 
+			UTENTE $\leftrightarrow$ GIUDICE &
+			\begin{itemize}
+				\item Tipo: Uno-a-molti [0..* - 1]
+				\item Un Utente può essere promosso fino ad N volte per diventare Giudice. Un Giudice è correlato ad un solo Utente per una sola Hackathon.
+				\item Vincolo: Un utente può ricevere un solo invito alla volta per essere giudice di un Hackathon
+			\end{itemize} \\
+			\hline
+			
 			\textbf{Aggregazione} & 
 			TEAM $\leftrightarrow$ MEMBERSHIP &
 			\begin{itemize}

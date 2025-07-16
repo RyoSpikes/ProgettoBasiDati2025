@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  16 JUL 2025 16:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9.24) (preloaded format=pdflatex 2023.10.4)  16 JUL 2025 16:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -955,38 +955,38 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 [9{C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.en
 c}] [10]
-Overfull \hbox (12.61903pt too wide) in alignment at lines 495--499
+Overfull \hbox (12.61903pt too wide) in alignment at lines 504--508
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 499--503
+Overfull \hbox (12.61903pt too wide) in alignment at lines 508--512
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 503--505
+Overfull \hbox (12.61903pt too wide) in alignment at lines 512--514
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 505--507
+Overfull \hbox (12.61903pt too wide) in alignment at lines 514--516
  [] [] 
  []
 
 
-Overfull \hbox (12.61903pt too wide) in alignment at lines 507--563
+Overfull \hbox (12.61903pt too wide) in alignment at lines 516--572
  [] [] 
  []
 
 [11]
-Overfull \hbox (48.6279pt too wide) in paragraph at lines 571--574
+Overfull \hbox (48.6279pt too wide) in paragraph at lines 580--583
 \T1/lmtt/m/n/10 DataInizio_evento, DataFine_evento, NumIscritti_corrente, MaxNu
 m_iscritti, MaxNum_membriTeam) 
  []
 
 
-Overfull \hbox (17.12799pt too wide) in paragraph at lines 591--596
+Overfull \hbox (17.12799pt too wide) in paragraph at lines 600--605
 []\T1/lmtt/m/n/10 Invito_giudice($[]$, $[]$, $[]$, Stato_invito,
  []
 
@@ -995,9 +995,9 @@ Overfull \hbox (17.12799pt too wide) in paragraph at lines 591--596
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <8> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 623.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 632.
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-633.
+642.
 
 (C:\Users\gioma\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -1037,7 +1037,7 @@ pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.
 pfb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.p
 fb><C:/Users/gioma/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.
 pfb>
-Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (23 pages, 571017 byt
+Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (23 pages, 571197 byt
 es).
 PDF statistics:
  177 PDF objects out of 1000 (max. 8388607)
