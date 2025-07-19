@@ -740,10 +740,11 @@
 			Titolo_hackathon VARCHAR(30) NOT NULL,
 			Titolo_doc VARCHAR(30) NOT NULL,
 			Contenuto TEXT NOT NULL,
-			Data_stesura DATE,
-			
+			-- MODIFICATO: Usiamo TIMESTAMPTZ per data e ora con fuso orario
+			Data_stesura TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+
 			FOREIGN KEY (Nome_team, Titolo_hackathon) REFERENCES TEAM (Nome_team, Titolo_hackathon)
-			ON DELETE CASCADE
+				ON DELETE CASCADE
 		);
 	\end{lstlisting}
 	\subsubsection{Definizione di Membership}
@@ -1085,11 +1086,9 @@
 			
 			-- Verifica se tutti i giudici hanno espresso il proprio voto per tutti i team
 			IF num_voti < voti_attesi THEN
-				RETURN 'Errore: Non e'' possibile generare la classifica. 
-					Mancano ' || (voti_attesi - num_voti) || ' voti su ' 
-					|| voti_attesi || ' attesi. 
-					Tutti i giudici devono votare tutti i team.';
-				END IF;
+				RETURN 'Errore: Non e'' possibile generare la classifica. Mancano ' || 
+					(voti_attesi - num_voti) || ' voti su ' || voti_attesi || ' attesi. Tutti i giudici devono votare tutti i team.';
+			END IF;
 			
 			-- Aggiorna il punteggio finale di ciascun team
 			UPDATE TEAM t
@@ -1103,15 +1102,23 @@
 			
 			-- Costruisce la stringa della classifica
 			FOR team_record IN (
-				SELECT Nome_team, Punteggio_finale
-				FROM TEAM
-				WHERE Titolo_hackathon = titolo_hack
-				ORDER BY Punteggio_finale DESC, Nome_team ASC
+				SELECT
+					t.Nome_team,
+					t.Punteggio_finale,
+					MIN(d.Data_stesura) as prima_consegna
+				FROM TEAM t
+				LEFT JOIN DOCUMENTO d ON t.Nome_team = d.Nome_team AND t.Titolo_hackathon = d.Titolo_hackathon
+				WHERE t.Titolo_hackathon = titolo_hack
+				GROUP BY t.Nome_team, t.Punteggio_finale
+				ORDER BY
+					t.Punteggio_finale DESC, -- Regola 1: Punteggio piu' alto prima
+					prima_consegna ASC,      -- Regola 2 (Spareggio): Timestamp di consegna anteriore prima
+					t.Nome_team ASC          -- Regola 3 (Spareggio finale): Ordine alfabetico
 			) LOOP
 				classifica_text := classifica_text || 
-				posizione || ' ' || 
-				team_record.Nome_team || ' ' || 
-				COALESCE(team_record.Punteggio_finale, 0) || E'\n';
+								posizione || ' ' || 
+								team_record.Nome_team || ' ' || 
+								COALESCE(team_record.Punteggio_finale, 0) || E'\n';
 				posizione := posizione + 1;
 			END LOOP;
 			
@@ -1127,9 +1134,7 @@
 			
 			-- Registra l'utente e la data/ora di generazione della classifica
 			RAISE NOTICE 'Classifica generata da % il % UTC', 
-			CURRENT_USER, TO_CHAR(
-				CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS'
-				);
+						CURRENT_USER, TO_CHAR(CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS');
 			
 			RETURN classifica_text;
 		END;
