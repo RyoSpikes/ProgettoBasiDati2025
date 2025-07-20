@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.13)  16 JUL 2025 21:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.13)  20 JUL 2025 19:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -741,11 +741,11 @@ Overfull \hbox (9.99115pt too wide) in paragraph at lines 236--237
 []\T1/lmss/bx/n/10 Hackathon\T1/lmss/m/n/10 : Si mantiene il Titolo Iden-ti-fica-tivo come chi-ave prin-ci-pale, tenendo l'Username dell'organizzatore
  []
 
-<../Immagini/Hackathon_UMLRistrutturato.png, id=36, 1366.10374pt x 758.835pt>
+<../Immagini/Hackathon_UMLRistrutturato.png, id=36, 1346.02875pt x 713.66624pt>
 File: ../Immagini/Hackathon_UMLRistrutturato.png Graphic file (type png)
 <use ../Immagini/Hackathon_UMLRistrutturato.png>
 Package pdftex.def Info: ../Immagini/Hackathon_UMLRistrutturato.png  used on input line 246.
-(pdftex.def)             Requested size: 452.39867pt x 251.29633pt.
+(pdftex.def)             Requested size: 452.39867pt x 239.86644pt.
 
 
 [7 <../Immagini/Hackathon_UMLRistrutturato.png>]
@@ -845,13 +845,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Here is how much of TeX's memory you used:
  21077 strings out of 468221
  437750 string characters out of 5432891
- 1448233 words of memory out of 5000000
+ 1448235 words of memory out of 5000000
  49220 multiletter control sequences out of 15000+600000
  687367 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,12n,106p,964b,1961s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss10.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss8.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso10.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso8.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/Users/lucal/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (23 pages, 571544 bytes).
+Output written on Hackathon_ProgettoBDD2025_TexSource.pdf (23 pages, 564583 bytes).
 PDF statistics:
  177 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
